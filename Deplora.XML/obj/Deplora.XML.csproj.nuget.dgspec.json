@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {}
+    "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {}
   },
   "projects": {
-    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {
+    "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
-        "projectName": "Deplora.WPF",
-        "projectPath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+        "projectName": "Deplora.XML",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "G:\\Development\\Deplora\\Deplora.WPF\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.XML\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -59,9 +59,6 @@
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
-            },
-            "Microsoft.WindowsDesktop.App.WPF": {
-              "privateAssets": "none"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
