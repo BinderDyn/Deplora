@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Deploy.Shared\Deploy.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

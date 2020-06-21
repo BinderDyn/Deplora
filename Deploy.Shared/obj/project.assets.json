@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {
-      "Deploy.Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "compile": {
-          "bin/placeholder/Deploy.Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Deploy.Shared.dll": {}
-        }
-      }
-    }
+    ".NETCoreApp,Version=v3.1": {}
   },
-  "libraries": {
-    "Deploy.Shared/1.0.0": {
-      "type": "project",
-      "path": "../Deploy.Shared/Deploy.Shared.csproj",
-      "msbuildProject": "../Deploy.Shared/Deploy.Shared.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": [
-      "Deploy.Shared >= 1.0.0"
-    ]
+    ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
     "C:\\Users\\marvi\\.nuget\\packages\\": {},
@@ -33,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
-      "projectName": "Deplora.XML",
-      "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+      "projectUniqueName": "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj",
+      "projectName": "Deploy.Shared",
+      "projectPath": "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj",
       "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-      "outputPath": "G:\\Development\\Deplora\\Deplora.XML\\obj\\",
+      "outputPath": "G:\\Development\\Deplora\\Deploy.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -55,11 +36,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {
-            "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj": {
-              "projectPath": "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
