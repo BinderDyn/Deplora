@@ -18,24 +18,33 @@ namespace Deploy.Shared.Models
         /// </summary>
         public IList<DeployConfiguration> DeployConfigurations { get; set; }
 
-        public void AddConfiguration(DeployConfiguration.IUpdateParam param)
+        public void AddDeployConfig(DeployConfiguration.IUpdateParam param)
         {
             var createParam = new DeployConfigurationCreateParam(param);
-            var id = GetValidId(Guid.NewGuid());
+            var id = ApplicationConfiguration.GetValidId(Guid.NewGuid(), this.DeployConfigurations);
             createParam.ID = id;
             this.DeployConfigurations.Add(new DeployConfiguration(createParam));
         }
 
-        private Guid GetValidId(Guid id)
+        public void UpdateDeployConfig(DeployConfiguration.IUpdateParam param, Guid id)
         {
-            if (!this.DeployConfigurations.Any(dc => dc.ID == id))
+            var config = this.DeployConfigurations.SingleOrDefault(dc => dc.ID == id);
+            if (config != null)
+            {
+                config.Update(param);
+            }
+        }
+
+        public static Guid GetValidId(Guid id, IEnumerable<DeployConfiguration> deployConfigurations)
+        {
+            if (!deployConfigurations.Any(dc => dc.ID == id))
             {
                 return id;
             }
             else
             {
                 var newId = Guid.NewGuid();
-                return GetValidId(newId);
+                return ApplicationConfiguration.GetValidId(newId, deployConfigurations);
             }
         }
     }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Deploy.Shared\Deploy.Shared.csproj" />
+    <ProjectReference Include="..\Deploy.Shared\Deplora.Shared.csproj" />
   </ItemGroup>
 
 </Project>

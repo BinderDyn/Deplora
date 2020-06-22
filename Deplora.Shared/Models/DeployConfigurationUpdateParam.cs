@@ -14,5 +14,7 @@ namespace Deploy.Shared.Models
         public string APIKey { get; set; }
         public string DeployPath { get; set; }
         public string Name { get; set; }
+        public string AppPoolName { get; set; }
+        public string WebSiteName { get; set; }
     }
 }

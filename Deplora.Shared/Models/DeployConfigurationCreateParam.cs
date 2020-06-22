@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Deploy.Shared.Models
 {
-    public class DeployConfigurationCreateParam : DeployConfiguration.ICreateParam
+    public class DeployConfigurationCreateParam : DeployConfigurationUpdateParam, DeployConfiguration.ICreateParam
     {
         public DeployConfigurationCreateParam()
         {
@@ -23,11 +23,5 @@ namespace Deploy.Shared.Models
         }
 
         public Guid ID { get; set; }
-        public bool HasSqlCommands { get; set; }
-        public DatabaseAdapter DatabaseAdapter { get; set; }
-        public string NewestVersionUrl { get; set; }
-        public string APIKey { get; set; }
-        public string DeployPath { get; set; }
-        public string Name { get; set; }
     }
 }

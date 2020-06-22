@@ -16,6 +16,8 @@ namespace Deplora.XML.Models
             this.HasSqlCommands = param.HasSqlCommands;
             this.DatabaseAdapter = param.DatabaseAdapter;
             this.APIKey = param.APIKey;
+            this.AppPoolName = param.AppPoolName;
+            this.WebSiteName = param.WebSiteName;
         }
 
         public void Update(IUpdateParam param)
@@ -26,6 +28,8 @@ namespace Deplora.XML.Models
             this.HasSqlCommands = param.HasSqlCommands;
             this.DatabaseAdapter = param.DatabaseAdapter;
             this.APIKey = param.APIKey;
+            this.AppPoolName = param.AppPoolName;
+            this.WebSiteName = param.WebSiteName;
         }
 
         /// <summary>
@@ -56,6 +60,14 @@ namespace Deplora.XML.Models
         /// The key for the API-Call
         /// </summary>
         public string APIKey { get; set; }
+        /// <summary>
+        /// Name of the app pool to shutdown/start for update purposes
+        /// </summary>
+        public string AppPoolName { get; set; }
+        /// <summary>
+        /// Name of the web site to shutdown/start for update purposes
+        /// </summary>
+        public string WebSiteName { get; set; }
 
         public interface ICreateParam : IUpdateParam
         {
@@ -70,6 +82,8 @@ namespace Deplora.XML.Models
             string APIKey { get; set; }
             string DeployPath { get; set; }
             string Name { get; set; }
+            string AppPoolName { get; set; }
+            string WebSiteName { get; set; }
         }
     }
 }
