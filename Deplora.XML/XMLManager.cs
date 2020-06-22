@@ -66,7 +66,7 @@ namespace Deplora.XML
         /// <returns></returns>
         private string GetDefaultPath()
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE_NAME);
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DEFAULT_FILE_NAME);
         }
 
         public const string DEFAULT_FILE_NAME = "DeploraConfig.xml";
