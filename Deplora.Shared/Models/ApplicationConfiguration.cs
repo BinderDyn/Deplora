@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Deploy.Shared.Models
+namespace Deplora.Shared.Models
 {
     public class ApplicationConfiguration
     {

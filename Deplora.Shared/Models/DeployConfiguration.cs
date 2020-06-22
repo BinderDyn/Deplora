@@ -1,4 +1,4 @@
-﻿using Deploy.Shared.Enums;
+﻿using Deplora.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;

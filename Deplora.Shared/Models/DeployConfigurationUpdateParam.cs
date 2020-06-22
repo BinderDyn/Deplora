@@ -1,10 +1,10 @@
 ﻿using Deplora.XML.Models;
-using Deploy.Shared.Enums;
+using Deplora.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Deploy.Shared.Models
+namespace Deplora.Shared.Models
 {
     public class DeployConfigurationUpdateParam : DeployConfiguration.IUpdateParam
     {

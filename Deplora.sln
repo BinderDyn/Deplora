@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.WPF", "Deplora.WPF\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.XML", "Deplora.XML\Deplora.XML.csproj", "{DA1A1A7E-CD79-4B91-955D-5BC16F16E796}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.Shared", "Deploy.Shared\Deplora.Shared.csproj", "{2D749CF9-145F-4A7B-8A0D-EC02B33B9767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.Shared.TESTS", "Deplora.Shared.TESTS\Deplora.Shared.TESTS.csproj", "{A62D203F-1819-4450-8570-9AA13DA6FC91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deplora.Shared.TESTS", "Deplora.Shared.TESTS\Deplora.Shared.TESTS.csproj", "{A62D203F-1819-4450-8570-9AA13DA6FC91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.Shared", "Deplora.Shared\Deplora.Shared.csproj", "{AF76F302-00C8-4024-A32E-3ABAAC1E676A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{DA1A1A7E-CD79-4B91-955D-5BC16F16E796}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1A1A7E-CD79-4B91-955D-5BC16F16E796}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1A1A7E-CD79-4B91-955D-5BC16F16E796}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D749CF9-145F-4A7B-8A0D-EC02B33B9767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D749CF9-145F-4A7B-8A0D-EC02B33B9767}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D749CF9-145F-4A7B-8A0D-EC02B33B9767}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D749CF9-145F-4A7B-8A0D-EC02B33B9767}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A62D203F-1819-4450-8570-9AA13DA6FC91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A62D203F-1819-4450-8570-9AA13DA6FC91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A62D203F-1819-4450-8570-9AA13DA6FC91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A62D203F-1819-4450-8570-9AA13DA6FC91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

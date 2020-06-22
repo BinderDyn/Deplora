@@ -1,5 +1,5 @@
+using Deplora.Shared.Models;
 using Deplora.XML.Models;
-using Deploy.Shared.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -91,7 +91,7 @@ namespace Deplora.Shared.TESTS
             {
                 APIKey = "Testkey",
                 AppPoolName = "Apppool",
-                DatabaseAdapter = Deploy.Shared.Enums.DatabaseAdapter.None,
+                DatabaseAdapter = Deplora.Shared.Enums.DatabaseAdapter.None,
                 DeployPath = Directory.GetCurrentDirectory(),
                 HasSqlCommands = false,
                 ID = new Guid(guidString),

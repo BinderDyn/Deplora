@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Deploy.Shared.Enums
+namespace Deplora.Shared.Enums
 {
     /// <summary>
     /// Which database adapter to use for SQLCommands

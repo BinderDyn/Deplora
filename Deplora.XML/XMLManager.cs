@@ -1,5 +1,5 @@
-﻿using Deplora.XML.Models;
-using Deploy.Shared.Models;
+﻿using Deplora.Shared.Models;
+using Deplora.XML.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
