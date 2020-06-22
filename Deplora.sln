@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.Shared.TESTS", "Dep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.Shared", "Deplora.Shared\Deplora.Shared.csproj", "{AF76F302-00C8-4024-A32E-3ABAAC1E676A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deplora.XML.TESTS", "Deplora.XML.TESTS\Deplora.XML.TESTS.csproj", "{348B8EC1-3005-4077-81E0-B56843D164D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF76F302-00C8-4024-A32E-3ABAAC1E676A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348B8EC1-3005-4077-81E0-B56843D164D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348B8EC1-3005-4077-81E0-B56843D164D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348B8EC1-3005-4077-81E0-B56843D164D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348B8EC1-3005-4077-81E0-B56843D164D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

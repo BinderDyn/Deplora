@@ -85,7 +85,7 @@ namespace Deplora.Shared.TESTS
 
     public class DeployConfigurationFactory
     {
-        internal static DeployConfiguration CreateDeployConfiguration(string guidString)
+        public static DeployConfiguration CreateDeployConfiguration(string guidString)
         {
             return new DeployConfiguration(new DeployConfigurationCreateParam
             {

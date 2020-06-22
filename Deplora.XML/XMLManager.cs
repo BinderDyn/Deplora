@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace Deplora.XML
 {
-    public sealed class XMLManager
+    public class XMLManager
     {
         /// <summary>
         /// Gets the corresponding configuration by GUID
@@ -66,8 +66,9 @@ namespace Deplora.XML
         /// <returns></returns>
         private string GetDefaultPath()
         {
-            const string DEFAULT_FILENAME = "DeploraConfig.xml";
-            return Path.Combine(Assembly.GetExecutingAssembly().Location, DEFAULT_FILENAME);
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE_NAME);
         }
+
+        public const string DEFAULT_FILE_NAME = "DeploraConfig.xml";
     }
 }

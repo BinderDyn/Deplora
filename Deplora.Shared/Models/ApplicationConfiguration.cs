@@ -16,7 +16,7 @@ namespace Deplora.Shared.Models
         /// <summary>
         /// All the configurations set up so far
         /// </summary>
-        public IList<DeployConfiguration> DeployConfigurations { get; set; }
+        public List<DeployConfiguration> DeployConfigurations { get; set; }
 
         public void AddDeployConfig(DeployConfiguration.IUpdateParam param)
         {

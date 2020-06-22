@@ -7,6 +7,10 @@ namespace Deplora.XML.Models
 {
     public class DeployConfiguration
     {
+        public DeployConfiguration()
+        {
+        }
+
         public DeployConfiguration(ICreateParam param)
         {
             this.DeployPath = param.DeployPath;

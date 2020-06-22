@@ -2,28 +2,28 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Deploy.Shared/1.0.0": {
+      "Deplora.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "compile": {
-          "bin/placeholder/Deploy.Shared.dll": {}
+          "bin/placeholder/Deplora.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Deploy.Shared.dll": {}
+          "bin/placeholder/Deplora.Shared.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Deploy.Shared/1.0.0": {
+    "Deplora.Shared/1.0.0": {
       "type": "project",
-      "path": "../Deploy.Shared/Deploy.Shared.csproj",
-      "msbuildProject": "../Deploy.Shared/Deploy.Shared.csproj"
+      "path": "../Deplora.Shared/Deplora.Shared.csproj",
+      "msbuildProject": "../Deplora.Shared/Deplora.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Deploy.Shared >= 1.0.0"
+      "Deplora.Shared >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -56,8 +56,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj": {
-              "projectPath": "G:\\Development\\Deplora\\Deploy.Shared\\Deploy.Shared.csproj"
+            "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+              "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
             }
           }
         }
