@@ -89,6 +89,32 @@ namespace Deplora.XML.TESTS
             Assert.AreEqual(3, savedConfig.DeployConfigurations.Count);
         }
 
+        [TestMethod]
+        public void SaveApplicationConfigurationToSpecificFile_Test()
+        {
+            // ARRANGE
+            var appConfig = new ApplicationConfiguration
+            {
+                DeployConfigurations = new List<DeployConfiguration>
+                {
+                    DeployConfigurationFactory.CreateDeployConfiguration("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c2"),
+                    DeployConfigurationFactory.CreateDeployConfiguration("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c3"),
+                    DeployConfigurationFactory.CreateDeployConfiguration("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c4")
+                }
+            };
+            var xmlManager = new XMLManager();
+            var alternativePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test", "DeploraConfig.xml");
+            Directory.CreateDirectory(Path.GetDirectoryName(alternativePath));
+
+            // ACT
+            xmlManager.SaveApplicationConfigurationToFile(appConfig, alternativePath);
+
+            // ASSERT
+            var savedConfig = xmlManager.GetApplicationConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test", "DeploraConfig.xml"));
+            Assert.IsNotNull(savedConfig);
+            Assert.AreEqual(3, savedConfig.DeployConfigurations.Count);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
@@ -96,6 +122,10 @@ namespace Deplora.XML.TESTS
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
+            }
+            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test")))
+            {
+                Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test"), true);
             }
         }
     }
