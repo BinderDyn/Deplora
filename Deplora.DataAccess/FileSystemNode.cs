@@ -66,11 +66,29 @@ namespace Deplora.DataAccess
             }
         }
 
+        /// <summary>
+        /// Gets the maximum depth from here
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxDepth(int depth = 0)
+        {
+            int maxDepth = 0;
+            foreach (var child in Children)
+            {
+                maxDepth++;
+                var childDepth = child.GetMaxDepth(depth+1);
+                if (childDepth > maxDepth) maxDepth = childDepth;
+            }
+            return maxDepth;
+        }
+
         public int Depth { get; set; }
         public string Path { get; set; }
         public List<DirectoryInfo> Directories { get; set; }
         public List<FileInfo> FileInfos { get; set; }
         public FileSystemNode Parent { get; set; }
         public List<FileSystemNode> Children { get; set; }
+        public bool IsRootNode { get => this.Parent == null; }
+        public int MaxDepthFromHere { get => GetMaxDepth(); }
     }
 }

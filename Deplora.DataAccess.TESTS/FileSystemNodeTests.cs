@@ -116,6 +116,19 @@ namespace Deplora.DataAccess.TESTS
             Assert.AreEqual(0, nodes.Count());
         }
 
+        [TestMethod]
+        public void GetMaxDepth_Test()
+        {
+            // ARRANGE
+            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+
+            // ACT
+            var maxDepth = node.GetMaxDepth();
+
+            // ASSERT
+            Assert.AreEqual(2, maxDepth);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
