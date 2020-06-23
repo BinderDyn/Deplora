@@ -29,6 +29,7 @@ namespace Deplora.DataAccess
             var node = new FileSystemNode();
             node.Directories = directoryInfo.GetDirectories().Where(d => !excludedPaths.Contains(d.FullName)).ToList();
             node.FileInfos = directoryInfo.GetFiles().Where(f => !excludedPaths.Contains(f.FullName)).ToList();
+            node.DirectoryName = directoryInfo.Name;
             node.Path = directoryInfo.FullName;
             node.Depth = depth;
             if (parent != null) node.Parent = parent;
@@ -84,6 +85,7 @@ namespace Deplora.DataAccess
 
         public int Depth { get; set; }
         public string Path { get; set; }
+        public string DirectoryName { get; set; }
         public List<DirectoryInfo> Directories { get; set; }
         public List<FileInfo> FileInfos { get; set; }
         public FileSystemNode Parent { get; set; }
