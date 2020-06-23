@@ -17,7 +17,7 @@ namespace Deplora.DataAccess
         {
             if (directoryInfo == null) throw new InvalidOperationException("DirectoryInfo cannot be null!");
             string temporaryDirectoryPath = CreateTemporaryDirectory(directoryInfo.FullName);
-            // TODO FileStructure
+            var tree = FileSystemNode.GetNodesRecursively(directoryInfo);
         }
 
         public string CreateTemporaryDirectory(string path)

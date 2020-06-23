@@ -23,18 +23,18 @@ namespace Deplora.DataAccess
         /// <param name="depth">The depth of the directory where 0 equals root or starting point</param>
         /// <param name="parent">The parent node if available</param>
         /// <returns></returns>
-        public static FileSystemNode GetNodesRecursively(DirectoryInfo directoryInfo, int depth = 0, FileSystemNode parent = null)
+        public static FileSystemNode GetNodesRecursively(DirectoryInfo directoryInfo, 
+            int depth = 0, FileSystemNode parent = null, params string[] excludedPaths)
         {
             var node = new FileSystemNode();
-            var containingDirectories = directoryInfo.GetDirectories();
-            node.Directories = containingDirectories.ToList();
-            node.FileInfos = directoryInfo.GetFiles().ToList();
+            node.Directories = directoryInfo.GetDirectories().Where(d => !excludedPaths.Contains(d.FullName)).ToList();
+            node.FileInfos = directoryInfo.GetFiles().Where(f => !excludedPaths.Contains(f.FullName)).ToList();
             node.Path = directoryInfo.FullName;
             node.Depth = depth;
             if (parent != null) node.Parent = parent;
-            foreach (var directory in containingDirectories)
+            foreach (var directory in node.Directories)
             {
-                node.Children.Add(GetNodesRecursively(directory, depth+1, node));
+                node.Children.Add(GetNodesRecursively(directory, depth+1, node, excludedPaths));
             }
             return node;
         }

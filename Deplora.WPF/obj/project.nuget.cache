@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ALlNUmeyzx4tItMWf6Ztd/4FZkU08ViQ3elrp7McCWPlu6NXILEEX/kmYWxCOBpbLl7rbDgNyegsqVkH+mohuw==",
+  "dgSpecHash": "w95iru7+/li3maaHznNR5R7ETOOysLkRHBbpoz7ZweeAaGvS9QgKgeJxeWCxo7BgaJEKuI70RiBEYZTvLzZpZg==",
   "success": true,
-  "projectFilePath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+  "projectFilePath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marvi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
   ],

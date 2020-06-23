@@ -65,6 +65,18 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
+        public void GetNodesRecursively_TestExcluded()
+        {
+            // ACT
+            var excluded = Path.Combine(testPath, "depth1_2");
+            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath), excludedPaths: excluded);
+
+            // ASSERT
+            var nodeChildrenDepth1 = node.Children.ToList();
+            Assert.AreEqual(1, nodeChildrenDepth1.Count);
+        }
+
+        [TestMethod]
         public void GetNodesAtDepthZero_Test()
         {
             // ARRANGE
@@ -124,6 +136,19 @@ namespace Deplora.DataAccess.TESTS
 
             // ACT
             var maxDepth = node.GetMaxDepth();
+
+            // ASSERT
+            Assert.AreEqual(2, maxDepth);
+        }
+
+        [TestMethod]
+        public void GetMaxDepthNegative_Test()
+        {
+            // ARRANGE
+            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+
+            // ACT
+            var maxDepth = node.GetMaxDepth(-1);
 
             // ASSERT
             Assert.AreEqual(2, maxDepth);

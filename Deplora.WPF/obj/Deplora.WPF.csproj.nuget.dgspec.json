@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {}
+    "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {}
   },
   "projects": {
-    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {
+    "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
         "projectName": "Deplora.WPF",
-        "projectPath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "G:\\Development\\Deplora\\Deplora.WPF\\obj\\",
+        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
