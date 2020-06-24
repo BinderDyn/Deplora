@@ -29,7 +29,7 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <param name="tree"></param>
-        private void CopyToDestination(string destinationPath, FileSystemNode tree)
+        public void CopyToDestination(string destinationPath, FileSystemNode tree)
         {
             if (Directory.Exists(destinationPath) && tree != null)
             {
@@ -37,14 +37,14 @@ namespace Deplora.DataAccess
                 {
                     file.CopyTo(Path.Combine(destinationPath, file.Name));
                 }
-                foreach (var children in tree.Children)
+                foreach (var child in tree.Children)
                 {
-                    var newDirectoryPath = Path.Combine(destinationPath, children.DirectoryName);
+                    var newDirectoryPath = Path.Combine(destinationPath, child.DirectoryName);
                     if (!Directory.Exists(newDirectoryPath))
                     {
                         Directory.CreateDirectory(newDirectoryPath);
                     }
-                    CopyToDestination(newDirectoryPath, children);
+                    CopyToDestination(newDirectoryPath, child);
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace Deplora.DataAccess
             }
         }
 
-        public string CreateTemporaryDirectory(string path)
+        private string CreateTemporaryDirectory(string path)
         {
             string temporaryDirectoryName = string.Format("{0:yyyyMMdd}_temp", DateTime.Now);
             string tempPath = Path.Combine(path, temporaryDirectoryName);
@@ -65,12 +65,18 @@ namespace Deplora.DataAccess
             return dirInfo.FullName;
         }
 
+        /// <summary>
+        /// Zips contents of a directory info to a designated output path
+        /// </summary>
+        /// <param name="directoryInfo"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="customBackupName"></param>
         public void ZipContents(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null)
         {
             string backupName;
             if (customBackupName != null) backupName = string.Format("{0:yyyyMMdd}_{1}.zip", DateTime.Now, customBackupName);
             else backupName = string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now);
-            ZipFile.CreateFromDirectory(directoryInfo.FullName, backupName);
+            ZipFile.CreateFromDirectory(directoryInfo.FullName, Path.Combine(outputPath, backupName));
         }
     }
 }
