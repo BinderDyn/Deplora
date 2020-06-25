@@ -52,7 +52,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesRecursively_TestDepth()
+        public void GetNodesRecursively_Test_Depth()
         {
             // ACT
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -65,7 +65,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesRecursively_TestExcluded()
+        public void GetNodesRecursively_Test_Excluded()
         {
             // ACT
             var excluded = Path.Combine(testPath, "depth1_2");
@@ -77,7 +77,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesAtDepthZero_Test()
+        public void GetNodesAtDepth_Test_Zero()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -90,7 +90,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesAtDepthOne_Test()
+        public void GetNodesAtDepth_Test_One()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -103,7 +103,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesAtDepthNegative_Test()
+        public void GetNodesAtDepth_Test_Negative()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -116,7 +116,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetNodesAtDepthTooDeep_Test()
+        public void GetNodesAtDepth_Test_TooDeep()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -142,7 +142,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void GetMaxDepthNegative_Test()
+        public void GetMaxDepth_Test_Negative()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));

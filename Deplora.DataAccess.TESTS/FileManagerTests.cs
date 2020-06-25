@@ -17,6 +17,7 @@ namespace Deplora.DataAccess.TESTS
         private string zipPath { get => Path.Combine(initialPath, "zipToPath"); }
         private string copyToPath { get => Path.Combine(initialPath, "copyToPath"); }
         private string backupPath { get => Path.Combine(initialPath, "backupPath"); }
+        private string extractPath { get => Path.Combine(initialPath, "extractPath"); }
 
         [TestInitialize]
         public void Initialize()
@@ -80,7 +81,7 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        public void ZipContents_TestCustomName()
+        public void ZipContents_Test_CustomName()
         {
             // ARRANGE
             var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
@@ -153,6 +154,42 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(Directory.Exists(Path.Combine(extractedPath, "depth0", "depth1", "depth2")));
         }
 
+        [TestMethod]
+        public void ExtractToDestination_Test()
+        {
+            // ARRANGE
+            var fileManager = new FileManager();
+            fileManager.Backup(new DirectoryInfo(testPath), backupPath);
+            var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
+            Directory.CreateDirectory(extractPath);
+
+            // ACT
+            fileManager.ExtractToDestination(filePath, extractPath);
+
+            // ASSERT
+            Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
+            Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
+            Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IOException))]
+        public void ExtractToDestination_Test_Exception()
+        {
+            // ARRANGE
+            var fileManager = new FileManager();
+            fileManager.Backup(new DirectoryInfo(testPath), backupPath);
+            var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
+
+            // ACT
+            fileManager.ExtractToDestination(filePath, extractPath);
+
+            // ASSERT
+            Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
+            Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
+            Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
@@ -171,6 +208,10 @@ namespace Deplora.DataAccess.TESTS
             if (Directory.Exists(backupPath))
             {
                 Directory.Delete(backupPath, true);
+            }
+            if (Directory.Exists(extractPath))
+            {
+                Directory.Delete(extractPath, true);
             }
         }
     }

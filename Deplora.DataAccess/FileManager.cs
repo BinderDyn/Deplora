@@ -88,5 +88,22 @@ namespace Deplora.DataAccess
             else backupName = string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now);
             ZipFile.CreateFromDirectory(directoryInfo.FullName, Path.Combine(outputPath, backupName));
         }
+
+        /// <summary>
+        /// Extracts the contents of the zip inside the destinationPath - WARNING: Will overwrite files and folders!
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destinationPath"></param>
+        public void ExtractToDestination(string sourcePath, string destinationPath)
+        {
+            if (Directory.Exists(destinationPath))
+            {
+                ZipFile.ExtractToDirectory(sourcePath, destinationPath, true);
+            }
+            else
+            {
+                throw new IOException("Folder not available!");
+            }
+        }
     }
 }
