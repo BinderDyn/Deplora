@@ -18,7 +18,7 @@ namespace Deplora.XML.TESTS
         private Guid id = Guid.Parse("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c2");
 
         [TestInitialize]
-        public void CreateXMLFile()
+        public void CreateXMLFile_Test()
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DeploraConfig.xml");
             ApplicationConfiguration applicationConfigurationState = new ApplicationConfiguration
@@ -66,7 +66,7 @@ namespace Deplora.XML.TESTS
         }
 
         [TestMethod]
-        public void SaveApplicationConfigurationToFile_Test()
+        public void SaveApplicationConfigurationToFile_Test_DefaultFile()
         {
             // ARRANGE
             var appConfig = new ApplicationConfiguration
@@ -90,7 +90,7 @@ namespace Deplora.XML.TESTS
         }
 
         [TestMethod]
-        public void SaveApplicationConfigurationToSpecificFile_Test()
+        public void SaveApplicationConfigurationToFile_Test_SpecificFile()
         {
             // ARRANGE
             var appConfig = new ApplicationConfiguration

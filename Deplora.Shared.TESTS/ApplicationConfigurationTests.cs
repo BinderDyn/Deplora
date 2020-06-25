@@ -12,7 +12,7 @@ namespace Deplora.Shared.TESTS
     public class ApplicationConfigurationTests
     {
         [TestMethod]
-        public void AddDeployConfig_Test()
+        public void CreateDeployConfiguration_Test()
         {
             // ARRANGE
             var applicationConfiguration = new ApplicationConfiguration
