@@ -33,11 +33,11 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <param name="tree"></param>
-        public void CopyToDestination(string destinationPath, FileSystemNode tree, bool isRoot = true)
+        public void CopyToDestination(string destinationPath, FileSystemNode tree, bool copyRoot = true)
         {
             if (tree != null)
             {
-                if (isRoot)
+                if (copyRoot)
                 {
                     destinationPath = Path.Combine(destinationPath, tree.DirectoryName);
                 }
