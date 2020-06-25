@@ -14,13 +14,17 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="directoryInfo"></param>
         /// <param name="exclude"></param>
-        public void Backup(DirectoryInfo directoryInfo, string outputPath, params string[] exclude)
+        public void Backup(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null, params string[] exclude)
         {
             if (directoryInfo == null) throw new InvalidOperationException("DirectoryInfo cannot be null!");
             string temporaryDirectoryPath = CreateTemporaryDirectory(directoryInfo.FullName);
             var tree = FileSystemNode.GetNodesRecursively(directoryInfo, excludedPaths: exclude);
             CopyToDestination(temporaryDirectoryPath, tree);
-            ZipContents(new DirectoryInfo(temporaryDirectoryPath), outputPath);
+            if (!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
+            ZipContents(new DirectoryInfo(temporaryDirectoryPath), outputPath, customBackupName);
             DeleteTemporaryDirectory(temporaryDirectoryPath);
         }
 
@@ -29,10 +33,18 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="destinationPath"></param>
         /// <param name="tree"></param>
-        public void CopyToDestination(string destinationPath, FileSystemNode tree)
+        public void CopyToDestination(string destinationPath, FileSystemNode tree, bool isRoot = true)
         {
-            if (Directory.Exists(destinationPath) && tree != null)
+            if (tree != null)
             {
+                if (isRoot)
+                {
+                    destinationPath = Path.Combine(destinationPath, tree.DirectoryName);
+                }
+                if (!Directory.Exists(destinationPath))
+                {
+                    Directory.CreateDirectory(destinationPath);
+                }
                 foreach (var file in tree.FileInfos)
                 {
                     file.CopyTo(Path.Combine(destinationPath, file.Name));
@@ -40,11 +52,7 @@ namespace Deplora.DataAccess
                 foreach (var child in tree.Children)
                 {
                     var newDirectoryPath = Path.Combine(destinationPath, child.DirectoryName);
-                    if (!Directory.Exists(newDirectoryPath))
-                    {
-                        Directory.CreateDirectory(newDirectoryPath);
-                    }
-                    CopyToDestination(newDirectoryPath, child);
+                    CopyToDestination(newDirectoryPath, child, false);
                 }
             }
         }
@@ -60,9 +68,11 @@ namespace Deplora.DataAccess
         private string CreateTemporaryDirectory(string path)
         {
             string temporaryDirectoryName = string.Format("{0:yyyyMMdd}_temp", DateTime.Now);
-            string tempPath = Path.Combine(path, temporaryDirectoryName);
-            var dirInfo = Directory.CreateDirectory(tempPath);
-            return dirInfo.FullName;
+            var parentDirectoryPath = new DirectoryInfo(path)?.Parent?.FullName;
+            if (string.IsNullOrEmpty(parentDirectoryPath)) return null;
+            string tempPath = Path.Combine(parentDirectoryPath, temporaryDirectoryName);
+            var tempInfo = Directory.CreateDirectory(tempPath);
+            return tempInfo.FullName;
         }
 
         /// <summary>
