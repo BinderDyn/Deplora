@@ -47,5 +47,7 @@ namespace Deplora.Shared.Models
                 return ApplicationConfiguration.GetValidId(newId, deployConfigurations);
             }
         }
+
+        public int IISPath { get; set; }
     }
 }
