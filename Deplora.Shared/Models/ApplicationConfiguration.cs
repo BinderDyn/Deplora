@@ -48,6 +48,6 @@ namespace Deplora.Shared.Models
             }
         }
 
-        public int IISPath { get; set; }
+        public string IISPath { get; set; }
     }
 }
