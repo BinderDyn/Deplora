@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Deplora.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Deplora.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Deplora.Shared.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Deplora.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Deplora.Shared/Deplora.Shared.csproj",
+      "msbuildProject": "../Deplora.Shared/Deplora.Shared.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Deplora.Shared >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\marvi\\.nuget\\packages\\": {},
@@ -36,7 +55,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+              "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

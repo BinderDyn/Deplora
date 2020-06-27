@@ -2,6 +2,7 @@
 using Deplora.XML;
 using Deplora.XML.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -27,6 +28,25 @@ namespace Deplora.Application
                 applicationConfiguration = xmlManager.GetApplicationConfiguration();
             }
             return applicationConfiguration;
+        }
+
+        /// <summary>
+        /// Returns all available deploy configurations
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<DeployConfiguration> GetDeployConfigurations()
+        {
+            var xmlManager = new XMLManager();
+            ApplicationConfiguration applicationConfiguration = null;
+            try
+            {
+                applicationConfiguration = xmlManager.GetApplicationConfiguration();
+                return applicationConfiguration.DeployConfigurations.OrderBy(dc => dc.Name);
+            }
+            catch (IOException)
+            {
+                throw;
+            }
         }
 
         /// <summary>
