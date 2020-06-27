@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <ProjectReference Include="..\Deplora.Application\Deplora.App.csproj" />
+    <ProjectReference Include="..\Deplora.Shared\Deplora.Shared.csproj" />
   </ItemGroup>
 
 </Project>

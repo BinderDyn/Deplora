@@ -98,6 +98,16 @@ namespace Deplora.Application
             xmlManager.SaveApplicationConfigurationToFile(CreateDefaultConfiguration(), defaultPath);
         }
 
+        /// <summary>
+        /// Saves the configuration to the xml file
+        /// </summary>
+        /// <returns></returns>
+        public static void SaveApplicationConfiguration(ApplicationConfiguration.ICreateParam param)
+        {
+            var xmlManager = new XMLManager();
+            xmlManager.SaveApplicationConfigurationToFile(param);
+        }
+
         private static ApplicationConfiguration CreateDefaultConfiguration()
         {
             string defaultIISPath = null;

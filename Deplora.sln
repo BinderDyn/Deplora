@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.DataAccess.TESTS", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.IIS.TESTS", "Deplora.IIS.TESTS\Deplora.IIS.TESTS.csproj", "{02EEB627-B125-425A-AA72-B83B013C72C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deplora.WPF", "Deplora.WPF\Deplora.WPF.csproj", "{C1B4CF72-E8AC-4DA1-A6AA-6F81187FAE66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.WPF", "Deplora.WPF\Deplora.WPF.csproj", "{C1B4CF72-E8AC-4DA1-A6AA-6F81187FAE66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deplora.Application", "Deplora.Application\Deplora.Application.csproj", "{F8C8156D-3ECE-47AD-AD0A-216A9C7F7DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deplora.App", "Deplora.Application\Deplora.App.csproj", "{F8C8156D-3ECE-47AD-AD0A-216A9C7F7DA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

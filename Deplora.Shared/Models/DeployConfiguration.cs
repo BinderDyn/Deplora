@@ -75,7 +75,7 @@ namespace Deplora.XML.Models
         /// <summary>
         /// Excluded paths for backup/overwrite
         /// </summary>
-        public IEnumerable<string> ExcludedPaths { get; set; }
+        public List<string> ExcludedPaths { get; set; }
 
         public interface ICreateParam : IUpdateParam
         {

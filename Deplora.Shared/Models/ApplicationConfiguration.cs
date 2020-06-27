@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Deplora.Shared.Models
 {
-    public class ApplicationConfiguration
+    public class ApplicationConfiguration : ApplicationConfiguration.ICreateParam
     {
         public ApplicationConfiguration()
         {
@@ -49,5 +49,10 @@ namespace Deplora.Shared.Models
         }
 
         public string IISPath { get; set; }
+
+        public interface ICreateParam
+        {
+            string IISPath { get; set; }
+        }
     }
 }

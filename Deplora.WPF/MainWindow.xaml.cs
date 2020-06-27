@@ -34,5 +34,11 @@ namespace Deplora.WPF
             Process.Start(new ProcessStartInfo(navigateUri) { UseShellExecute = true });
             e.Handled = true;
         }
+
+        private void btn_showSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var appSettings = new ApplicationSettings();
+            appSettings.Show();
+        }
     }
 }

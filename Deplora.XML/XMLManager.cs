@@ -48,13 +48,13 @@ namespace Deplora.XML
         /// </summary>
         /// <param name="applicationConfigurationState"></param>
         /// <param name="configFilePath"></param>
-        public void SaveApplicationConfigurationToFile(ApplicationConfiguration applicationConfigurationState, string configFilePath = null)
+        public void SaveApplicationConfigurationToFile(ApplicationConfiguration.ICreateParam applicationConfigurationState, string configFilePath = null)
         {
             if (string.IsNullOrEmpty(configFilePath)) configFilePath = GetDefaultPath();
             var serializer = new XmlSerializer(typeof(ApplicationConfiguration));
             using (Stream writer = new FileStream(configFilePath, FileMode.OpenOrCreate))
             {
-                var xmlWriter = new XmlTextWriter(writer, Encoding.Unicode);
+                var xmlWriter = new XmlTextWriter(writer, Encoding.UTF8);
                 serializer.Serialize(xmlWriter, applicationConfigurationState);
                 xmlWriter.Close();
             }
