@@ -1,6 +1,7 @@
 ﻿using Deplora.Shared.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Deplora.XML.Models
@@ -11,7 +12,7 @@ namespace Deplora.XML.Models
         {
         }
 
-        public DeployConfiguration(ICreateParam param)
+        public DeployConfiguration(ICreateParam param, string[] excludedPaths = null, string[] excludedPathsForBackup = null)
         {
             this.DeployPath = param.DeployPath;
             this.Name = param.Name;
@@ -23,8 +24,13 @@ namespace Deplora.XML.Models
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
+            UpdatePaths(excludedPaths, excludedPathsForBackup);
         }
 
+        /// <summary>
+        /// Update the configuration without the excluding paths
+        /// </summary>
+        /// <param name="param"></param>
         public void Update(IUpdateParam param)
         {
             this.DeployPath = param.DeployPath;
@@ -36,6 +42,17 @@ namespace Deplora.XML.Models
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
+        }
+
+        /// <summary>
+        /// Updates the paths of the configuration
+        /// </summary>
+        /// <param name="excludedPaths"></param>
+        /// <param name="excludedPathsForBackup"></param>
+        public void UpdatePaths(string[] excludedPaths, string[] excludedPathsForBackup)
+        {
+            this.ExcludedPaths = excludedPaths?.ToList() ?? new List<string>();
+            this.ExcludedForBackupPaths= excludedPathsForBackup?.ToList() ?? new List<string>();
         }
 
         /// <summary>
@@ -79,9 +96,14 @@ namespace Deplora.XML.Models
         /// </summary>
         public string WebSiteName { get; set; }
         /// <summary>
-        /// Excluded paths for backup/overwrite
+        /// Excluded paths for overwrite
         /// </summary>
         public List<string> ExcludedPaths { get; set; }
+
+        /// <summary>
+        /// Excluded paths for the backup
+        /// </summary>
+        public List<string> ExcludedForBackupPaths { get; set; }
 
         public interface ICreateParam : IUpdateParam
         {
