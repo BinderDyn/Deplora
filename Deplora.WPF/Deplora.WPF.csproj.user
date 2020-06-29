@@ -2,8 +2,13 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
+    <Compile Update="ApplicationSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ApplicationSettings.xaml">
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
   </ItemGroup>
 </Project>

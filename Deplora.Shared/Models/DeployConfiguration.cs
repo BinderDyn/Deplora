@@ -72,6 +72,10 @@ namespace Deplora.XML.Models
         /// Name of the web site to shutdown/start for update purposes
         /// </summary>
         public string WebSiteName { get; set; }
+        /// <summary>
+        /// Excluded paths for backup/overwrite
+        /// </summary>
+        public List<string> ExcludedPaths { get; set; }
 
         public interface ICreateParam : IUpdateParam
         {
