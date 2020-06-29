@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Deplora.Application;
+using Deplora.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +24,8 @@ namespace Deplora.WPF
         public DeployConfigurationList()
         {
             InitializeComponent();
+            var viewModelItems = ConfigurationController.GetDeployConfigurations().Select(dc => new DeployConfigurationViewModel(dc));
+            this.DataContext = new DeployConfigurationListViewModel(viewModelItems);
         }
     }
 }

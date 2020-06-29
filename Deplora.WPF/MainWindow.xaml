@@ -14,9 +14,8 @@
         </Grid.RowDefinitions>
         <StackPanel MinWidth="300" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
             <Button Margin="15" Padding="10" Content="Manual Deploy"></Button>
-            <Button Margin="15" Padding="10" Content="Manage deploys"></Button>
-            <Button x:Name="btn_showSettings" Margin="15" Padding="10" Content="Settings"
-                    Click="btn_showSettings_Click"></Button>
+            <Button Margin="15" Padding="10" Content="Manage Deploys" Command="{Binding ShowDeployConfigurations}"></Button>
+            <Button x:Name="btn_showSettings" Margin="15" Padding="10" Content="Settings" Command="{Binding ShowAppSettings}"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
             <TextBlock Text="Marvin Binder (c) 2020"></TextBlock>

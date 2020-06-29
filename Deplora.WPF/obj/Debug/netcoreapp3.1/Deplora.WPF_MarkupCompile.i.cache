@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
 Deplora.WPF
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-G:\Development\Deplora\Deplora.WPF\App.xaml
+C:\Development\Deplora\Deplora\Deplora.WPF\App.xaml
 3660232848
 
-13-1411022336
-1991878736371
+161375114691
+1992084446630
 ApplicationSettings.xaml;DeployConfigurationList.xaml;MainWindow.xaml;
 
-False
+True
 

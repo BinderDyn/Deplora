@@ -16,5 +16,6 @@ namespace Deplora.Shared.Models
         public string Name { get; set; }
         public string AppPoolName { get; set; }
         public string WebSiteName { get; set; }
+        public string BackupPath { get; set; }
     }
 }

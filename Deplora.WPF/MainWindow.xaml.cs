@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Deplora.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace Deplora.WPF
         public MainWindow()
         {
             InitializeComponent();
+            var viewModel = new MainWindowViewModel();
+            this.DataContext = viewModel;
         }
 
         private void GithubLink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -33,12 +36,6 @@ namespace Deplora.WPF
             string navigateUri = hl.NavigateUri.ToString();
             Process.Start(new ProcessStartInfo(navigateUri) { UseShellExecute = true });
             e.Handled = true;
-        }
-
-        private void btn_showSettings_Click(object sender, RoutedEventArgs e)
-        {
-            var appSettings = new ApplicationSettings();
-            appSettings.Show();
         }
     }
 }

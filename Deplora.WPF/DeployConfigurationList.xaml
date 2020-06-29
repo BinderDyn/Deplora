@@ -11,18 +11,20 @@
             <RowDefinition Height="0.75*"></RowDefinition>
             <RowDefinition Height="0.25*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid IsReadOnly="True">
+        <DataGrid IsReadOnly="True" Grid.Row="0" Margin="5" Width="Auto" ItemsSource="{Binding DeployConfigurations}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" MinWidth="250" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="SQL" Width="40" Binding="{Binding HasSqlCommands}"></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="SQL Adapter" MinWidth="100" Binding="{Binding DatabaseAdapter}"></DataGridTextColumn>
-                <DataGridTextColumn Header="AppPool Name" MinWidth="250" Binding="{Binding AppPoolName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Website name" MinWidth="250" Binding="{Binding WebSiteName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="SQL Adapter" Width="100" Binding="{Binding DatabaseAdapterAsString}"></DataGridTextColumn>
+                <DataGridTextColumn Header="AppPool Name" Width="250" Binding="{Binding AppPoolName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Website name" Width="250" Binding="{Binding WebSiteName}"></DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="Auto deploy" Width="110" Binding="{Binding AutoDeploy}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50">
+            <Button x:Name="Btn_NewConfiguration" Content="New" Width="150"  Margin="5"></Button>
+            <Button x:Name="Btn_EditConfiguration" Content="Edit" Width="150" Margin="5"></Button>
+            <Button x:Name="Btn_DeleteConfiguration" Content="Delete" Width="150" Margin="5"></Button>
         </StackPanel>
     </Grid>
 </Window>
