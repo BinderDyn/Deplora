@@ -8,7 +8,10 @@ using System.Linq;
 
 namespace Deplora.Application
 {
-    public class SettingsController
+    /// <summary>
+    /// Manages the application settings
+    /// </summary>
+    public static class ConfigurationController
     {
         /// <summary>
         /// Gets the current configuration or creates a new

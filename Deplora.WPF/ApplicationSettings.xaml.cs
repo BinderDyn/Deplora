@@ -23,7 +23,7 @@ namespace Deplora.WPF
         public ApplicationSettings()
         {
             InitializeComponent();
-            this.ViewModel = new ApplicationConfigurationViewModel(SettingsController.GetCurrentSettings());
+            this.ViewModel = new ApplicationConfigurationViewModel(ConfigurationController.GetCurrentSettings());
             this.DataContext = this.ViewModel;
         }
 
@@ -35,7 +35,7 @@ namespace Deplora.WPF
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             var configuration = ApplicationConfigurationViewModel.CreateConfigurationFromViewModel(ViewModel);
-            SettingsController.SaveApplicationConfiguration(configuration);
+            ConfigurationController.SaveApplicationConfiguration(configuration);
             this.Close();
         }
 

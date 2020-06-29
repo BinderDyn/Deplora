@@ -48,6 +48,7 @@ namespace Deplora.WPF.ViewModels
 
         private DatabaseAdapter databaseAdapter;
         public DatabaseAdapter DatabaseAdapter { get => databaseAdapter; set => SetProperty(ref databaseAdapter, value); }
+        public string DatabaseAdapterAsString { get => Shared.Enums.EnumConverter.ConvertDatabaseAdapterToString(databaseAdapter); }
 
         private string newestVersionUrl;
         public string NewestVersionUrl { get => newestVersionUrl; set => SetProperty(ref newestVersionUrl, value); }
@@ -63,6 +64,10 @@ namespace Deplora.WPF.ViewModels
 
         private readonly ObservableCollection<string> excludedPaths;
         public ObservableCollection<string> ExcludedPaths { get => excludedPaths; }
+
+        private string backupPath;
+        public string BackupPath { get => backupPath; set => SetProperty(ref backupPath, value); }
+
         private void ExcludedPaths_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SetCollection("ExcludedPaths");
