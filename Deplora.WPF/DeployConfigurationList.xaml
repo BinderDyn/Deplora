@@ -1,0 +1,28 @@
+﻿<Window x:Class="Deplora.WPF.DeployConfigurationList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Deplora.WPF"
+        mc:Ignorable="d"
+        Title="Manage deploy configurations" Height="450" Width="1000" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"></RowDefinition>
+            <RowDefinition Height="0.25*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" MinWidth="250" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="SQL" Width="40" Binding="{Binding HasSqlCommands}"></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="SQL Adapter" MinWidth="100" Binding="{Binding DatabaseAdapter}"></DataGridTextColumn>
+                <DataGridTextColumn Header="AppPool Name" MinWidth="250" Binding="{Binding AppPoolName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Website name" MinWidth="250" Binding="{Binding WebSiteName}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Auto deploy" Width="110" Binding="{Binding AutoDeploy}"></DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

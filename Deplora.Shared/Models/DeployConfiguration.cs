@@ -22,6 +22,7 @@ namespace Deplora.XML.Models
             this.APIKey = param.APIKey;
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
+            this.BackupPath = param.BackupPath;
         }
 
         public void Update(IUpdateParam param)
@@ -34,12 +35,17 @@ namespace Deplora.XML.Models
             this.APIKey = param.APIKey;
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
+            this.BackupPath = param.BackupPath;
         }
 
         /// <summary>
         /// The path to deploy the files to
         /// </summary>
         public string DeployPath { get; set; }
+        /// <summary>
+        /// The path to backup the files to
+        /// </summary>
+        public string BackupPath { get; set; }
         /// <summary>
         /// The custom name for this configuration
         /// </summary>
@@ -92,6 +98,7 @@ namespace Deplora.XML.Models
             string Name { get; set; }
             string AppPoolName { get; set; }
             string WebSiteName { get; set; }
+            string BackupPath { get; set; }
         }
     }
 }
