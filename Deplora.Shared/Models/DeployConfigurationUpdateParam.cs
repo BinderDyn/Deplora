@@ -17,5 +17,7 @@ namespace Deplora.Shared.Models
         public string AppPoolName { get; set; }
         public string WebSiteName { get; set; }
         public string BackupPath { get; set; }
+        public string[] ExcludedPaths { get; set; }
+        public string[] ExcludedPathsForBackup { get; set; }
     }
 }

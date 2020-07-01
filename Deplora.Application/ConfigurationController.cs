@@ -73,7 +73,7 @@ namespace Deplora.Application
         {
             var xmlManager = new XMLManager();
             var currentConfig = xmlManager.GetApplicationConfiguration(customConfigPath);
-            currentConfig.AddDeployConfig(param);
+            currentConfig.AddDeployConfig(param, param.ExcludedPaths, param.ExcludedPathsForBackup);
             xmlManager.SaveApplicationConfigurationToFile(currentConfig, customConfigPath);
         }
 
@@ -87,7 +87,7 @@ namespace Deplora.Application
         {
             var xmlManager = new XMLManager();
             var currentConfig = xmlManager.GetApplicationConfiguration(customConfigPath);
-            currentConfig.UpdateDeployConfig(param, configurationId);
+            currentConfig.UpdateDeployConfig(param, configurationId, param.ExcludedPaths, param.ExcludedPathsForBackup);
             xmlManager.SaveApplicationConfigurationToFile(currentConfig, customConfigPath);
         }
 

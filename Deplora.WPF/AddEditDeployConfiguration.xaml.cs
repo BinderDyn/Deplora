@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Deplora.WPF.ViewModels;
+using Deplora.XML.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +22,17 @@ namespace Deplora.WPF
         public AddEditDeployConfiguration()
         {
             InitializeComponent();
+            this.DataContext = new EditDeployConfigurationViewModel(this);
+        }
+
+        public AddEditDeployConfiguration(DeployConfiguration configuration)
+        {
+            this.DataContext = new EditDeployConfigurationViewModel(this, configuration);
+        }
+
+        private void btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

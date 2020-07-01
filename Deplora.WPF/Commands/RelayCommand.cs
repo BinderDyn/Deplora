@@ -3,13 +3,15 @@ using System.Windows.Input;
 
 namespace Deplora.WPF.Commands
 {
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
+        public Action action;
+
         public RelayCommand(Action action)
         {
-            action.Invoke();
+            this.action += action;
         }
 
         public bool CanExecute(object parameter)
@@ -19,6 +21,7 @@ namespace Deplora.WPF.Commands
 
         public void Execute(object parameter)
         {
+            action.Invoke();
         }
     }
 }

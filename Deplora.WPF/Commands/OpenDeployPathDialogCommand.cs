@@ -10,8 +10,14 @@ namespace Deplora.WPF.Commands
     /// Opens a file dialog window to select a file. The directory will be taken from the parent directory of an existing file
     /// </summary>
     [Obsolete("Needs refactoring concerning the limited directory select options")]
-    public class OpenIISDirectoryPathDialogCommand : ICommand
+    public class OpenDeployPathDialogCommand : ICommand
     {
+        EditDeployConfigurationViewModel viewModel;
+        public OpenDeployPathDialogCommand(EditDeployConfigurationViewModel viewModel)
+        {
+            this.viewModel = viewModel;
+        }
+
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
@@ -24,7 +30,7 @@ namespace Deplora.WPF.Commands
             var dialog = new OpenFileDialog() { Multiselect = false };
             if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
             {
-                ((ApplicationConfigurationViewModel)parameter).IISPath = new FileInfo(dialog.FileName).DirectoryName;
+                this.viewModel.DeployPath = new FileInfo(dialog.FileName).DirectoryName;
             }
             return;
         }

@@ -30,45 +30,74 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="0.1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lbl_Name" Grid.Column="0" Grid.Row="0" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"></Label>
-            <Label x:Name="lbl_DeployPath" Grid.Column="0" Grid.Row="1" Content="Deploy path" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_BackupPath" Grid.Column="0" Grid.Row="2" Content="Backup path" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_DatabaseAdapter" Grid.Column="0" Grid.Row="3" Content="Database adapter" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_SqlCommands" Grid.Column="0" Grid.Row="4" Content="Uses SQL commands" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_NewestVersionURL" Grid.Column="0" Grid.Row="5" Content="Update-API URL" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_APIKey" Grid.Column="0" Grid.Row="6" Content="API Key" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_WebsiteName" Grid.Column="0" Grid.Row="7" Content="IIS Website name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_AppPoolName" Grid.Column="0" Grid.Row="8" Content="IIS AppPool name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
-            <Label x:Name="lbl_ExcludedPaths" Grid.Column="0" Grid.Row="9" Content="Excluded paths for overwrite" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
-            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="0" Grid.Row="10" Content="Excluded paths for backup" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
-            <TextBox x:Name="txt_Name" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_DeployPath" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_BackupPath" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <ComboBox x:Name="txt_DatabaseAdapter" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></ComboBox>
-            <CheckBox x:Name="txt_HasSQLCommands" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9 0 0 0"></CheckBox>
-            <TextBox x:Name="txt_NewestVersionUrl" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_APIKey" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_WebsiteName" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_AppPoolName" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10"></TextBox>
-            <TextBox x:Name="txt_ExcludedPaths" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Margin="10"></TextBox>
-            <TextBox x:Name="txt_ExcludedPathsForBackup" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Margin="10"></TextBox>
+            <Label x:Name="lbl_Name" Grid.Column="0" Grid.Row="0" Content="Name" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"></Label>
+            <Label x:Name="lbl_DeployPath" Grid.Column="0" Grid.Row="1" Content="Deploy path" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_BackupPath" Grid.Column="0" Grid.Row="2" Content="Backup path" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_DatabaseAdapter" Grid.Column="0" Grid.Row="3" Content="Database adapter" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_SqlCommands" Grid.Column="0" Grid.Row="4" Content="Uses SQL commands" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_NewestVersionURL" Grid.Column="0" Grid.Row="5" Content="Update-API URL" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_APIKey" Grid.Column="0" Grid.Row="6" Content="API Key" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_WebsiteName" Grid.Column="0" Grid.Row="7" Content="IIS Website name" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_AppPoolName" Grid.Column="0" Grid.Row="8" Content="IIS AppPool name" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
+            <Label x:Name="lbl_ExcludedPaths" Grid.Column="0" Grid.Row="9" Content="Excluded paths for overwrite" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
+            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="0" Grid.Row="10" Content="Excluded paths for backup" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
+            <TextBox x:Name="txt_Name" Grid.Column="1" Grid.Row="0" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding Name, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_DeployPath" Grid.Column="1" Grid.Row="1" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding DeployPath, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_BackupPath" Grid.Column="1" Grid.Row="2" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding BackupPath, Mode=TwoWay}"></TextBox>
+            <ComboBox x:Name="txt_DatabaseAdapter" Grid.Column="1" Grid.Row="3" 
+                      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" 
+                      ItemsSource="{Binding DatabaseAdapterSelectItems}"
+                      DisplayMemberPath="Value"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding DatabaseAdapter, Mode=TwoWay}"
+                      SelectedItem="{Binding DatabaseAdapter, Mode=TwoWay}"></ComboBox>
+            <CheckBox x:Name="txt_HasSQLCommands" Grid.Column="1" Grid.Row="4" 
+                      HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9 0 0 0" IsChecked="{Binding HasSqlCommands, Mode=TwoWay}"></CheckBox>
+            <TextBox x:Name="txt_NewestVersionUrl" Grid.Column="1" Grid.Row="5" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" IsEnabled="False" Text="{Binding NewestVersionUrl, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_APIKey" Grid.Column="1" Grid.Row="6" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" IsEnabled="False" Text="{Binding APIKey, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_WebsiteName" Grid.Column="1" Grid.Row="7" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding WebSiteName, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_AppPoolName" Grid.Column="1" Grid.Row="8" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding AppPoolName, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_ExcludedPaths" Grid.Column="1" Grid.Row="9" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Margin="10" Text="{Binding ExcludedPathsAsString, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_ExcludedPathsForBackup" Grid.Column="1" Grid.Row="10" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Margin="10" Text="{Binding ExcludedBackupPathsAsString, Mode=TwoWay}"></TextBox>
             <Button x:Name="btn_DeployPathSelect" 
                     Grid.Column="2" Grid.Row="1" 
                     Content="..." 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
-                    Width="25"></Button>
+                    Width="25"
+                    Command="{Binding SelectDeployPath}"></Button>
             <Button x:Name="btn_BackupPathSelect" 
                     Grid.Column="2" 
                     Grid.Row="2" 
                     Content="..." 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
-                    Width="25"></Button>
+                    Width="25"
+                    Command="{Binding SelectBackupPath}"></Button>
         </Grid>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Height="40">
-            <Button Content="Save" Margin="0 0 10 0" Width="80"></Button>
-            <Button Content="Cancel" Margin="10 0 0 0" Width="80"></Button>
+            <Button x:Name="btn_Save" Content="Save" Margin="0 0 10 0" Width="80" Command="{Binding SaveConfiguration}"></Button>
+            <Button x:Name="btn_Close" Content="Cancel" Margin="10 0 0 0" Width="80" Click="btn_Close_Click"></Button>
         </StackPanel>
     </Grid>
     
