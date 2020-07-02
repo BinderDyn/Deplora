@@ -24,8 +24,7 @@ namespace Deplora.WPF
         public DeployConfigurationList()
         {
             InitializeComponent();
-            var viewModelItems = ConfigurationController.GetDeployConfigurations().Select(dc => new DeployConfigurationViewModel(dc));
-            this.DataContext = new DeployConfigurationListViewModel(viewModelItems);
+            this.DataContext = new DeployConfigurationListViewModel();
         }
     }
 }

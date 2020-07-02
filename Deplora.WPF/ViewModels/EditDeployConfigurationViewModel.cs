@@ -26,8 +26,9 @@ namespace Deplora.WPF.ViewModels
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new OpenBackupPathDialogCommand(this);
             SelectDeployPath = new OpenDeployPathDialogCommand(this);
-            this.SaveConfiguration = new RelayCommand(SaveNewConfiguration);
+            this.SaveConfiguration = new SaveConfigurationCommand(this, view, false);
             this.View = view;
+            this.WindowTitle = "Add new deploy configuration";
         }
 
         public EditDeployConfigurationViewModel(AddEditDeployConfiguration view, DeployConfiguration configuration)
@@ -48,9 +49,12 @@ namespace Deplora.WPF.ViewModels
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new OpenBackupPathDialogCommand(this);
             SelectDeployPath = new OpenDeployPathDialogCommand(this);
-            this.SaveConfiguration = new RelayCommand(UpdateConfiguration);
+            this.SaveConfiguration = new SaveConfigurationCommand(this, view, true);
             this.View = view;
+            this.WindowTitle = "Edit deploy configuration";
         }
+
+        public string WindowTitle { get; set; }
 
         private string deployPath;
         public string DeployPath { get => deployPath; set => SetProperty(ref deployPath, value); }
@@ -125,46 +129,6 @@ namespace Deplora.WPF.ViewModels
         private void ExcludedPathsForBackup_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SetCollection("ExcludedPathsForBackup");
-        }
-
-        private void SaveNewConfiguration()
-        {
-            var createParam = new DeployConfigurationCreateParam
-            {
-                APIKey = this.apiKey,
-                AppPoolName = this.appPoolName,
-                BackupPath = this.backupPath,
-                DatabaseAdapter = this.databaseAdapter,
-                DeployPath = this.deployPath,
-                HasSqlCommands = this.hasSqlCommands,
-                Name = this.name,
-                NewestVersionUrl = this.newestVersionUrl,
-                WebSiteName = this.webSiteName,
-                ExcludedPaths = this.excludedPaths.ToArray(),
-                ExcludedPathsForBackup = this.excludedPathsForBackup.ToArray()
-            };
-            ConfigurationController.CreateDeployConfiguration(createParam);
-            this.View.Close();
-        }
-
-        private void UpdateConfiguration()
-        {
-            var updateParam = new DeployConfigurationUpdateParam
-            {
-                APIKey = this.apiKey,
-                AppPoolName = this.appPoolName,
-                BackupPath = this.backupPath,
-                DatabaseAdapter = this.databaseAdapter,
-                DeployPath = this.deployPath,
-                HasSqlCommands = this.hasSqlCommands,
-                Name = this.name,
-                NewestVersionUrl = this.newestVersionUrl,
-                WebSiteName = this.webSiteName,
-                ExcludedPaths = this.excludedPaths.ToArray(),
-                ExcludedPathsForBackup = this.excludedPathsForBackup.ToArray()
-            };
-            ConfigurationController.UpdateDeployConfiguration(updateParam, this.id);
-            this.View.Close();
         }
 
         public AddEditDeployConfiguration View { get; set; }
