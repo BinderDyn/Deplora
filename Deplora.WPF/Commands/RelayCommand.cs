@@ -5,23 +5,30 @@ namespace Deplora.WPF.Commands
 {
     public class RelayCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
 
         public Action action;
+        public Func<object, bool> canExecute;
 
-        public RelayCommand(Action action)
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public RelayCommand(Action action, Func<object, bool> canExecute = null)
         {
             this.action += action;
+            this.canExecute += canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return this.canExecute == null || this.canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            action.Invoke();
+            this.action.Invoke();
         }
     }
 }
