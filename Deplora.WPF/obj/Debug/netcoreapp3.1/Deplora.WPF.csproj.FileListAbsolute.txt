@@ -82,3 +82,5 @@ G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\AddEditDeployConfigur
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\DeployConfigurationList.g.cs
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\AddEditDeployConfiguration.baml
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\DeployConfigurationList.baml
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\AddEditDeployConfiguration.g.cs
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\AddEditDeployConfiguration.baml
