@@ -7,7 +7,7 @@ namespace Deplora.WPF.Commands
     {
 
         public Action action;
-        public Func<object, bool> canExecute;
+        public Func<bool> canExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -15,15 +15,15 @@ namespace Deplora.WPF.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public RelayCommand(Action action, Func<object, bool> canExecute = null)
+        public RelayCommand(Action action, Func<bool> canExecute = null)
         {
             this.action += action;
             this.canExecute += canExecute;
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object parameter = null)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            return this.canExecute == null || this.canExecute();
         }
 
         public void Execute(object parameter)

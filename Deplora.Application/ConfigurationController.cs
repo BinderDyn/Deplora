@@ -112,6 +112,20 @@ namespace Deplora.Application
             xmlManager.SaveApplicationConfigurationToFile(param);
         }
 
+        /// <summary>
+        /// Deletes all configurations with given guids
+        /// </summary>
+        /// <param name="guids"></param>
+        public static void DeleteDeployConfigurations(IEnumerable<Guid> guids)
+        {
+            var currentSettings = GetCurrentSettings();
+            foreach (var guid in guids)
+            {
+                currentSettings.DeleteDeployConfig(guid);
+            }
+            SaveApplicationConfiguration(currentSettings);
+        }
+
         private static ApplicationConfiguration CreateDefaultConfiguration()
         {
             string defaultIISPath = null;
