@@ -43,11 +43,11 @@ namespace Deplora.Shared.TESTS
             };
 
             // ACT
-            applicationConfiguration.UpdateDeployConfig(new DeployConfigurationUpdateParam(), Guid.Parse("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c2"));
+            applicationConfiguration.UpdateDeployConfig(new DeployConfigurationUpdateParam() { Name = "Test2" }, Guid.Parse("1b058142-cd99-4e66-9ec6-3b1a0bf3e3c2"));
 
             // ASSERT
             Assert.AreEqual(1, applicationConfiguration.DeployConfigurations.Count);
-            Assert.IsNull(applicationConfiguration.DeployConfigurations.FirstOrDefault().Name);
+            Assert.AreEqual("Test2", applicationConfiguration.DeployConfigurations.FirstOrDefault().Name);
         }
 
         [TestMethod]
