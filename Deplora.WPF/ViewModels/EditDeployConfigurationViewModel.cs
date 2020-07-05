@@ -3,10 +3,12 @@ using Deplora.Shared.Enums;
 using Deplora.Shared.Models;
 using Deplora.WPF.Commands;
 using Deplora.XML.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -24,8 +26,8 @@ namespace Deplora.WPF.ViewModels
             excludedPathsForBackup = new ObservableCollection<string>();
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
-            SelectBackupPath = new OpenBackupPathDialogCommand(this);
-            SelectDeployPath = new OpenDeployPathDialogCommand(this);
+            SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
+            SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
             this.SaveConfiguration = new RelayCommand(this.SaveNewConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = "Add new deploy configuration";
@@ -47,8 +49,8 @@ namespace Deplora.WPF.ViewModels
             this.backupPath = configuration.BackupPath;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged; ;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
-            SelectBackupPath = new OpenBackupPathDialogCommand(this);
-            SelectDeployPath = new OpenDeployPathDialogCommand(this);
+            SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
+            SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
             this.SaveConfiguration = new RelayCommand(this.UpdateConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = "Edit deploy configuration";
@@ -136,6 +138,9 @@ namespace Deplora.WPF.ViewModels
             return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(DeployPath) && !string.IsNullOrWhiteSpace(BackupPath);
         }
 
+        /// <summary>
+        /// If in edit/update mode, this will overwrite the existing configuration with new values
+        /// </summary>
         private void UpdateConfiguration()
         {
             var updateParam = new DeployConfigurationUpdateParam
@@ -153,8 +158,12 @@ namespace Deplora.WPF.ViewModels
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray()
             };
             ConfigurationController.UpdateDeployConfiguration(updateParam, this.ID);
+            this.View.Close();
         }
 
+        /// <summary>
+        /// If in creation mode, this will create a new deploy configuration
+        /// </summary>
         private void SaveNewConfiguration()
         {
             var createParam = new DeployConfigurationCreateParam
@@ -172,8 +181,33 @@ namespace Deplora.WPF.ViewModels
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray()
             };
             ConfigurationController.CreateDeployConfiguration(createParam);
+            this.View.Close();
         }
 
-        public AddEditDeployConfiguration View { get; set; }
+        /// <summary>
+        /// Opens the dialog for choosing the path to the folder to save the backups in
+        /// </summary>
+        private void OpenBackupPathDialog()
+        {
+            var dialog = new OpenFileDialog() { Multiselect = false };
+            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            {
+                this.BackupPath = new FileInfo(dialog.FileName).DirectoryName;
+            }
+        }
+
+        /// <summary>
+        /// Opens the dialog for choosing the path to deploy to
+        /// </summary>
+        private void OpenDeployPathDialog()
+        {
+            var dialog = new OpenFileDialog() { Multiselect = false };
+            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            {
+                this.DeployPath = new FileInfo(dialog.FileName).DirectoryName;
+            }
+        }
+
+        private AddEditDeployConfiguration View { get; set; }
     }
 }

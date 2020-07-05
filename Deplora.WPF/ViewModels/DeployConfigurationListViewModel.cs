@@ -17,7 +17,7 @@ namespace Deplora.WPF.ViewModels
         {
             LoadDeployConfigurations();
             deployConfigurations.CollectionChanged += DeployConfigurations_CollectionChanged;
-            this.AddNewDeployConfiguration = new ShowAddDeployConfigurationCommand(this);
+            this.AddNewDeployConfiguration = new RelayCommand(ShowAddDeployConfiguration);
         }
 
         private void LoadDeployConfigurations()
@@ -37,6 +37,16 @@ namespace Deplora.WPF.ViewModels
         {
             this.LoadDeployConfigurations();
             this.DeployConfigurations_CollectionChanged(this, new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Reset));
+        }
+
+        private void ShowAddDeployConfiguration()
+        {
+            var addEditDeployConfiguration = new AddEditDeployConfiguration();
+            var closed = addEditDeployConfiguration.ShowDialog();
+            if (closed != null)
+            {
+                this.TriggerRefresh();
+            }
         }
     }
 }

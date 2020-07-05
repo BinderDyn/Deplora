@@ -1,11 +1,15 @@
 ﻿using Deplora.Shared.Models;
+using Deplora.WPF.Commands;
 using Deplora.XML.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +25,7 @@ namespace Deplora.WPF.ViewModels
 
         public ApplicationConfigurationViewModel(ApplicationConfiguration appConfig)
         {
-            OpenIISDirectyPathDialog = new Commands.OpenIISDirectoryPathDialogCommand();
+            OpenIISDirectyPathDialog = new RelayCommand(OpenIISPathDialog);
             iisPath = appConfig.IISPath;
             deployConfigurations = new ObservableCollection<DeployConfigurationViewModel>(appConfig.DeployConfigurations.Select(dc => new DeployConfigurationViewModel(dc)));
             deployConfigurations.CollectionChanged += DeployConfigurations_CollectionChanged;
@@ -70,6 +74,15 @@ namespace Deplora.WPF.ViewModels
                 });
             }
             return configuration;
+        }
+
+        private void OpenIISPathDialog()
+        {
+            var dialog = new OpenFileDialog() { Multiselect = false };
+            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+{
+                this.IISPath = new FileInfo(dialog.FileName).DirectoryName;
+            }
         }
     }
 }
