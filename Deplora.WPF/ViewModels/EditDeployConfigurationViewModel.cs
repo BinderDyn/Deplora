@@ -53,7 +53,7 @@ namespace Deplora.WPF.ViewModels
             SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
             this.SaveConfiguration = new RelayCommand(this.UpdateConfiguration, CanSave);
             this.View = view;
-            this.WindowTitle = "Edit deploy configuration";
+            this.WindowTitle = string.Format("Edit configuration \"{0}\"", this.Name);
         }
 
         public string WindowTitle { get; set; }
@@ -118,7 +118,7 @@ namespace Deplora.WPF.ViewModels
         public ObservableCollection<string> ExcludedPaths { get => excludedPaths; }
 
         private ObservableCollection<string> excludedPathsForBackup;
-        public ObservableCollection<string> ExcludedPathsForBackup { get => excludedPaths; }
+        public ObservableCollection<string> ExcludedPathsForBackup { get => excludedPathsForBackup; }
 
         private string backupPath;
         public string BackupPath { get => backupPath; set => SetProperty(ref backupPath, value); }
