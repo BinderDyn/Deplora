@@ -26,5 +26,18 @@ namespace Deplora.WPF
             InitializeComponent();
             this.DataContext = new DeployConfigurationListViewModel();
         }
+
+        private void gv_DeployConfigurationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var addedItem in e.AddedItems)
+            {
+                ((DeployConfigurationListViewModel)DataContext).SelectedConfigurations.Add((DeployConfigurationViewModel)addedItem);
+            }
+            foreach (var removedItem in e.RemovedItems)
+            {
+                ((DeployConfigurationListViewModel)DataContext).SelectedConfigurations.Remove((DeployConfigurationViewModel)removedItem);
+            }
+            e.Handled = true;
+        }
     }
 }

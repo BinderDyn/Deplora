@@ -11,7 +11,15 @@
             <RowDefinition Height="0.75*"></RowDefinition>
             <RowDefinition Height="0.25*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid IsReadOnly="True" Grid.Row="0" Margin="5" Width="Auto" ItemsSource="{Binding DeployConfigurations}" AutoGenerateColumns="False">
+        <DataGrid x:Name="gv_DeployConfigurationList"
+                  IsReadOnly="True" 
+                  Grid.Row="0" 
+                  Margin="5" 
+                  Width="Auto" 
+                  ItemsSource="{Binding DeployConfigurations}"
+                  AutoGenerateColumns="False"
+                  SelectionChanged="gv_DeployConfigurationList_SelectionChanged" 
+                  SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="SQL" Width="40" Binding="{Binding HasSqlCommands}"></DataGridCheckBoxColumn>
@@ -24,7 +32,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50">
             <Button x:Name="Btn_NewConfiguration" Content="New" Width="150"  Margin="5" Command="{Binding AddNewDeployConfiguration}"></Button>
             <Button x:Name="Btn_EditConfiguration" Content="Edit" Width="150" Margin="5"></Button>
-            <Button x:Name="Btn_DeleteConfiguration" Content="Delete" Width="150" Margin="5"></Button>
+            <Button x:Name="Btn_DeleteConfiguration" Content="Delete" Width="150" Margin="5" Command="{Binding DeleteConfigurations}"></Button>
         </StackPanel>
     </Grid>
 </Window>

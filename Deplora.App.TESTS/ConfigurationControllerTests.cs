@@ -166,6 +166,45 @@ namespace Deplora.App.TESTS
             Assert.IsNotNull(ConfigurationController.GetCurrentSettings());
         }
 
+        [TestMethod]
+        public void DeleteDeployConfigurations_Test()
+        {
+            // ARRANGE
+            var xmlManager = new XMLManager();
+            var guid = Guid.Parse("7ff27323-d1fd-4ec2-abad-b86ccb6f783e");
+            var guid2 = Guid.Parse("7ff27323-d1fd-4ec2-abad-b86ccb6f783d");
+            var guid3 = Guid.Parse("7ff27323-d1fd-4ec2-abad-b86ccb6f783c");
+            var guid4 = Guid.Parse("7ff27323-d1fd-4ec2-abad-b86ccb6f783b");
+            var guid5 = Guid.Parse("7ff27323-d1fd-4ec2-abad-b86ccb6f783a");
+            var applicationConfiguration = new ApplicationConfiguration()
+            {
+                DeployConfigurations = new System.Collections.Generic.List<XML.Models.DeployConfiguration>
+                {
+                    new XML.Models.DeployConfiguration { Name = "Test", ID = guid },
+                    new XML.Models.DeployConfiguration { Name = "Test2", ID = guid2 },
+                    new XML.Models.DeployConfiguration { Name = "Test3", ID = guid3 },
+                    new XML.Models.DeployConfiguration { Name = "Test4", ID = guid4 },
+                    new XML.Models.DeployConfiguration { Name = "Test5", ID = guid5 },
+                },
+                IISPath = "empty"
+            };
+            ConfigurationController.SaveApplicationConfiguration(applicationConfiguration);
+
+            // ACT
+            var guidsToDelete = new Guid[] { guid3, guid4, guid5 };
+            ConfigurationController.DeleteDeployConfigurations(guidsToDelete);
+
+            // ASSERT
+            var currentSettings = ConfigurationController.GetCurrentSettings();
+            Assert.AreEqual(2, currentSettings.DeployConfigurations.Count);
+            Assert.IsNotNull(currentSettings.DeployConfigurations.FirstOrDefault(dc => dc.ID == guid));
+            Assert.IsNotNull(currentSettings.DeployConfigurations.FirstOrDefault(dc => dc.ID == guid2)); 
+            Assert.IsNull(currentSettings.DeployConfigurations.FirstOrDefault(dc => dc.ID == guid3));
+            Assert.IsNull(currentSettings.DeployConfigurations.FirstOrDefault(dc => dc.ID == guid4));
+            Assert.IsNull(currentSettings.DeployConfigurations.FirstOrDefault(dc => dc.ID == guid5));
+            
+        }
+
         [TestCleanup]
         public void Cleanup()
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Deplora.WPF.ViewModels
@@ -12,12 +13,16 @@ namespace Deplora.WPF.ViewModels
     public class DeployConfigurationListViewModel : ViewModelBase
     {
         public ICommand AddNewDeployConfiguration { get; private set; }
+        public ICommand DeleteConfigurations { get; private set; }
 
         public DeployConfigurationListViewModel()
         {
             LoadDeployConfigurations();
             deployConfigurations.CollectionChanged += DeployConfigurations_CollectionChanged;
+            this.selectedConfigurations = new ObservableCollection<DeployConfigurationViewModel>();
+            selectedConfigurations.CollectionChanged += SelectedConfigurations_CollectionChanged;
             this.AddNewDeployConfiguration = new RelayCommand(ShowAddDeployConfiguration);
+            this.DeleteConfigurations = new RelayCommand(DeleteSelectedConfigurations, CanDelete);
         }
 
         private void LoadDeployConfigurations()
@@ -33,7 +38,7 @@ namespace Deplora.WPF.ViewModels
             SetCollection("DeployConfigurations");
         }
 
-        public void TriggerRefresh()
+        public void Refresh()
         {
             this.LoadDeployConfigurations();
             this.DeployConfigurations_CollectionChanged(this, new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Reset));
@@ -45,7 +50,30 @@ namespace Deplora.WPF.ViewModels
             var closed = addEditDeployConfiguration.ShowDialog();
             if (closed != null)
             {
-                this.TriggerRefresh();
+                this.Refresh();
+            }
+        }
+
+        private void SelectedConfigurations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SetCollection("SelectedConfigurations");
+        }
+
+        private ObservableCollection<DeployConfigurationViewModel> selectedConfigurations;
+        public ObservableCollection<DeployConfigurationViewModel> SelectedConfigurations { get => selectedConfigurations; set => this.selectedConfigurations = value; }
+
+        private bool CanDelete()
+        {
+            return this.selectedConfigurations.Any();
+        }
+
+        private void DeleteSelectedConfigurations()
+        {
+            var result = MessageBox.Show("Delete selected configurations?", "Confirm delete", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                ConfigurationController.DeleteDeployConfigurations(this.SelectedConfigurations.Select(sc => sc.ID));
+                this.Refresh();
             }
         }
     }

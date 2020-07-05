@@ -133,7 +133,7 @@ namespace Deplora.WPF.ViewModels
             SetCollection("ExcludedPathsForBackup");
         }
 
-        private bool CanSave(object viewModel)
+        private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(DeployPath) && !string.IsNullOrWhiteSpace(BackupPath);
         }
