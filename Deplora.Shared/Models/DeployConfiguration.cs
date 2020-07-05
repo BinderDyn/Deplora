@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Deplora.XML.Models
 {
+    [Serializable, XmlRoot("DeployConfiguration")]
     public class DeployConfiguration
     {
         public DeployConfiguration()

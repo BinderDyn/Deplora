@@ -54,6 +54,7 @@ namespace Deplora.XML
             var serializer = new XmlSerializer(typeof(ApplicationConfiguration));
             using (Stream writer = new FileStream(configFilePath, FileMode.OpenOrCreate))
             {
+                writer.SetLength(0);
                 var xmlWriter = new XmlTextWriter(writer, Encoding.UTF8);
                 serializer.Serialize(xmlWriter, applicationConfigurationState);
                 xmlWriter.Close();

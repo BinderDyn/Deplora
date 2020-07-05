@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Deplora.Shared.Models
 {
+    [Serializable, XmlRoot("ApplicationConfiguration")]
     public class ApplicationConfiguration : ApplicationConfiguration.ICreateParam
     {
         public ApplicationConfiguration()
@@ -16,6 +18,7 @@ namespace Deplora.Shared.Models
         /// <summary>
         /// All the configurations set up so far
         /// </summary>
+        [XmlArray("DeployConfigurations")]
         public List<DeployConfiguration> DeployConfigurations { get; set; }
 
         /// <summary>
@@ -24,12 +27,13 @@ namespace Deplora.Shared.Models
         /// <param name="param"></param>
         /// <param name="excludedPaths"></param>
         /// <param name="excludedPathsForBackup"></param>
-        public void AddDeployConfig(DeployConfiguration.IUpdateParam param, string[] excludedPaths = null, string[] excludedPathsForBackup = null)
+        public Guid AddDeployConfig(DeployConfiguration.IUpdateParam param, string[] excludedPaths = null, string[] excludedPathsForBackup = null)
         {
             var createParam = new DeployConfigurationCreateParam(param);
             var id = ApplicationConfiguration.GetValidId(Guid.NewGuid(), this.DeployConfigurations);
             createParam.ID = id;
             this.DeployConfigurations.Add(new DeployConfiguration(createParam));
+            return id;
         }
 
         /// <summary>
@@ -81,6 +85,7 @@ namespace Deplora.Shared.Models
             }
         }
 
+        [XmlElement("IISPath")]
         public string IISPath { get; set; }
 
         public interface ICreateParam
