@@ -102,6 +102,31 @@ namespace Deplora.App.TESTS
         }
 
         [TestMethod]
+        public void CreateDeployConfiguration_Test_WithExcludedPaths()
+        {
+            // ARRANGE
+            var deployConfigurationParam = new DeployConfigurationCreateParam
+            {
+                Name = "Test",
+                HasSqlCommands = true,
+                ExcludedPaths = new string[] { "testExcluded" },
+                ExcludedPathsForBackup = new string[] { "testExcludedForBackup" },
+            };
+            var config = ConfigurationController.GetCurrentSettings();
+
+            // ACT
+            var id = ConfigurationController.CreateDeployConfiguration(deployConfigurationParam);
+
+            // ASSERT
+            Assert.AreNotEqual(Guid.Empty, id);
+            var currentConfig = ConfigurationController.GetCurrentSettings();
+            Assert.AreEqual(1, currentConfig.DeployConfigurations.Count);
+            Assert.AreEqual("testExcluded", currentConfig.DeployConfigurations.First().ExcludedPaths.First());
+            Assert.AreEqual("testExcludedForBackup", currentConfig.DeployConfigurations.First().ExcludedForBackupPaths.First());
+        }
+
+
+        [TestMethod]
         public void UpdateDeployConfiguration_Test()
         {
             // ARRANGE

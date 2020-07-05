@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f0pQZ89Fl/LeTtZ+CMvejWO14h10oVjzzUsLO0qZ98HafzCRRhOPxb8mQZpVu/hE5AEH1/NpXPO5VxZB8BLfOQ==",
+  "dgSpecHash": "hnyBBbANbA2Jnt2/DHA5pKjTT4v6Dqu7G1x3w1l6jFd8eLUL3iBme3rrBmlTaI3uUtJQQbQacZ96zwgjQrUUvg==",
   "success": true,
   "projectFilePath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\marvi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
