@@ -3,22 +3,32 @@ using System.Windows.Input;
 
 namespace Deplora.WPF.Commands
 {
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
 
-        public RelayCommand(Action action)
+        public Action action;
+        public Func<object, bool> canExecute;
+
+        public event EventHandler CanExecuteChanged
         {
-            action.Invoke();
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public RelayCommand(Action action, Func<object, bool> canExecute = null)
+        {
+            this.action += action;
+            this.canExecute += canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return this.canExecute == null || this.canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
+            this.action.Invoke();
         }
     }
 }

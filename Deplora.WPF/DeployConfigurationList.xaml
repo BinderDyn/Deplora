@@ -22,7 +22,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50">
-            <Button x:Name="Btn_NewConfiguration" Content="New" Width="150"  Margin="5"></Button>
+            <Button x:Name="Btn_NewConfiguration" Content="New" Width="150"  Margin="5" Command="{Binding AddNewDeployConfiguration}"></Button>
             <Button x:Name="Btn_EditConfiguration" Content="Edit" Width="150" Margin="5"></Button>
             <Button x:Name="Btn_DeleteConfiguration" Content="Delete" Width="150" Margin="5"></Button>
         </StackPanel>

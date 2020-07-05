@@ -11,16 +11,22 @@ namespace Deplora.Shared.Models
         {
         }
 
-        public DeployConfigurationCreateParam(DeployConfiguration.IUpdateParam param)
+        public DeployConfigurationCreateParam(DeployConfiguration.IUpdateParam param, string[] excludedPaths = null, string[] excludedPathsForBackup = null)
         {
             this.APIKey = param.APIKey;
             this.DatabaseAdapter = param.DatabaseAdapter;
             this.DeployPath = param.DeployPath;
+            this.BackupPath = param.BackupPath;
             this.NewestVersionUrl = param.NewestVersionUrl;
             this.HasSqlCommands = param.HasSqlCommands;
             this.Name = param.Name;
+            this.ExcludedPaths = excludedPaths;
+            this.ExcludedPathsForBackup = excludedPathsForBackup;
+            this.AppPoolName = param.AppPoolName;
+            this.WebSiteName = param.WebSiteName;
         }
 
         public Guid ID { get; set; }
+        
     }
 }

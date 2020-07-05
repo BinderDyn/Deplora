@@ -15,9 +15,10 @@ namespace Deplora.WPF.ViewModels
         public DeployConfigurationViewModel()
         {
             excludedPaths = new ObservableCollection<string>();
+            excludedPathsForBackup = new ObservableCollection<string>();
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged;
+            excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
         }
-
 
         public DeployConfigurationViewModel(DeployConfiguration configuration)
         {
@@ -31,7 +32,10 @@ namespace Deplora.WPF.ViewModels
             this.NewestVersionUrl = configuration.NewestVersionUrl;
             this.WebSiteName = configuration.WebSiteName;
             this.excludedPaths = new ObservableCollection<string>(configuration.ExcludedPaths);
+            this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
+            this.backupPath = configuration.BackupPath;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged;
+            excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
         }
 
         private string deployPath;
@@ -65,12 +69,20 @@ namespace Deplora.WPF.ViewModels
         private readonly ObservableCollection<string> excludedPaths;
         public ObservableCollection<string> ExcludedPaths { get => excludedPaths; }
 
+        private readonly ObservableCollection<string> excludedPathsForBackup;
+        public ObservableCollection<string> ExcludedPathsForBackup { get => excludedPaths; }
+
         private string backupPath;
         public string BackupPath { get => backupPath; set => SetProperty(ref backupPath, value); }
 
         private void ExcludedPaths_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SetCollection("ExcludedPaths");
+        }
+
+        private void ExcludedPathsForBackup_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            SetCollection("ExcludedPathsForBackup");
         }
     }
 }

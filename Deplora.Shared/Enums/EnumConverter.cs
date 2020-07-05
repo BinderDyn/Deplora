@@ -24,5 +24,16 @@ namespace Deplora.Shared.Enums
                 _ => throw new NotImplementedException(databaseAdapter.ToString())
             };
         }
+
+        [Obsolete("Refactor and abstract")]
+        public static Dictionary<string, DatabaseAdapter> GetDatabaseAdapterSelectItems()
+        {
+            var dict = new Dictionary<string, DatabaseAdapter>();
+            foreach (var e in Enum.GetValues(typeof(DatabaseAdapter)))
+            {
+                dict.Add(Enum.GetName(typeof(DatabaseAdapter), e), (DatabaseAdapter)e);
+            }
+            return dict;
+        }
     }
 }

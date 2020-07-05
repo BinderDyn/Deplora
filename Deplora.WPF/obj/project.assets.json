@@ -578,17 +578,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marvi\\.nuget\\packages\\": {}
+    "C:\\Users\\marvi\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+      "projectUniqueName": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
       "projectName": "Deplora.WPF",
-      "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+      "projectPath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
       "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\obj\\",
+      "outputPath": "G:\\Development\\Deplora\\Deplora.WPF\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -603,11 +607,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
-              "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj"
+            "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
+              "projectPath": "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj"
             },
-            "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-              "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+            "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+              "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
             }
           }
         }
