@@ -27,6 +27,7 @@ namespace Deplora.WPF
 
         public AddEditDeployConfiguration(DeployConfiguration configuration)
         {
+            InitializeComponent();
             this.DataContext = new EditDeployConfigurationViewModel(this, configuration);
         }
 

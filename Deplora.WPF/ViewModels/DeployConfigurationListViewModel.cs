@@ -14,6 +14,7 @@ namespace Deplora.WPF.ViewModels
     {
         public ICommand AddNewDeployConfiguration { get; private set; }
         public ICommand DeleteConfigurations { get; private set; }
+        public ICommand EditDeployConfiguration { get; private set; }
 
         public DeployConfigurationListViewModel()
         {
@@ -23,6 +24,7 @@ namespace Deplora.WPF.ViewModels
             selectedConfigurations.CollectionChanged += SelectedConfigurations_CollectionChanged;
             this.AddNewDeployConfiguration = new RelayCommand(ShowAddDeployConfiguration);
             this.DeleteConfigurations = new RelayCommand(DeleteSelectedConfigurations, CanDelete);
+            this.EditDeployConfiguration = new RelayCommand(EditSelectedConfiguration, CanEdit);
         }
 
         private void LoadDeployConfigurations()
@@ -74,6 +76,26 @@ namespace Deplora.WPF.ViewModels
             {
                 ConfigurationController.DeleteDeployConfigurations(this.SelectedConfigurations.Select(sc => sc.ID));
                 this.Refresh();
+            }
+        }
+
+        private bool CanEdit()
+        {
+            return this.selectedConfigurations.Any();
+        }
+
+        private void EditSelectedConfiguration()
+        {
+            var configurationViewModel = this.SelectedConfigurations.LastOrDefault();
+            if (configurationViewModel != null)
+            {
+                var correspondingConfiguration = ConfigurationController.GetDeployConfiguration(configurationViewModel.ID);
+                var addEditDeployConfiguration = new AddEditDeployConfiguration(correspondingConfiguration);
+                var closed = addEditDeployConfiguration.ShowDialog();
+                if (closed != null)
+                {
+                    this.Refresh();
+                }
             }
         }
     }

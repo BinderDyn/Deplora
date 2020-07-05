@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {}
+    "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {}
   },
   "projects": {
-    "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+    "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
+        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
         "projectName": "Deplora.Shared",
-        "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
+        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "G:\\Development\\Deplora\\Deplora.Shared\\obj\\",
+        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -65,18 +62,15 @@
         }
       }
     },
-    "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
+    "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
         "projectName": "Deplora.XML",
-        "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "G:\\Development\\Deplora\\Deplora.XML\\obj\\",
+        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -91,8 +85,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-                "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+              "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
               }
             }
           }

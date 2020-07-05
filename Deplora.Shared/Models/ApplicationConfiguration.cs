@@ -32,7 +32,7 @@ namespace Deplora.Shared.Models
             var createParam = new DeployConfigurationCreateParam(param);
             var id = ApplicationConfiguration.GetValidId(Guid.NewGuid(), this.DeployConfigurations);
             createParam.ID = id;
-            this.DeployConfigurations.Add(new DeployConfiguration(createParam));
+            this.DeployConfigurations.Add(new DeployConfiguration(createParam, excludedPaths, excludedPathsForBackup));
             return id;
         }
 
