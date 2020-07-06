@@ -25,13 +25,12 @@ namespace Deplora.Shared.Enums
             };
         }
 
-        [Obsolete("Refactor and abstract")]
-        public static Dictionary<string, DatabaseAdapter> GetDatabaseAdapterSelectItems()
+        public static Dictionary<string, T> GetSelectItemsInferredFromEnum<T>() where T : Enum
         {
-            var dict = new Dictionary<string, DatabaseAdapter>();
-            foreach (var e in Enum.GetValues(typeof(DatabaseAdapter)))
+            var dict = new Dictionary<string, T>();
+            foreach (var e in Enum.GetValues(typeof(T)))
             {
-                dict.Add(Enum.GetName(typeof(DatabaseAdapter), e), (DatabaseAdapter)e);
+                dict.Add(Enum.GetName(typeof(T), e), (T)e);
             }
             return dict;
         }

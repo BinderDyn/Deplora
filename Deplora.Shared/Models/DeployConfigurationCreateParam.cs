@@ -24,6 +24,7 @@ namespace Deplora.Shared.Models
             this.ExcludedPathsForBackup = excludedPathsForBackup;
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
+            this.ConnectionString = param.ConnectionString;
         }
 
         public Guid ID { get; set; }

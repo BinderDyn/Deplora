@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Configuration.Internal;
 using System.Text;
 
@@ -34,6 +35,7 @@ namespace Deplora.WPF.ViewModels
             this.excludedPaths = new ObservableCollection<string>(configuration.ExcludedPaths);
             this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
             this.backupPath = configuration.BackupPath;
+            this.connectionString = configuration.ConnectionString;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
         }
@@ -74,6 +76,8 @@ namespace Deplora.WPF.ViewModels
 
         private string backupPath;
         public string BackupPath { get => backupPath; set => SetProperty(ref backupPath, value); }
+        private string connectionString;
+        public string ConnectionString { get => connectionString; set => SetProperty(ref connectionString, value); }
 
         private void ExcludedPaths_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

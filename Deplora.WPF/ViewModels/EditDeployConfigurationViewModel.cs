@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,8 @@ namespace Deplora.WPF.ViewModels
             this.WebSiteName = configuration.WebSiteName;
             this.excludedPaths = new ObservableCollection<string>(configuration.ExcludedPaths);
             this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
-            this.backupPath = configuration.BackupPath;
+            this.BackupPath = configuration.BackupPath;
+            this.ConnectionString = configuration.ConnectionString;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged; ;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
@@ -75,7 +77,7 @@ namespace Deplora.WPF.ViewModels
 
         public Dictionary<string, DatabaseAdapter> DatabaseAdapterSelectItems
         {
-            get { return EnumConverter.GetDatabaseAdapterSelectItems(); }
+            get { return EnumConverter.GetSelectItemsInferredFromEnum<DatabaseAdapter>(); }
         }
 
         private string newestVersionUrl;
@@ -89,6 +91,9 @@ namespace Deplora.WPF.ViewModels
 
         private string webSiteName;
         public string WebSiteName { get => webSiteName; set => SetProperty(ref webSiteName, value); }
+
+        private string connectionString;
+        public string ConnectionString { get => connectionString; set => SetProperty(ref connectionString, value); }
         
         public string ExcludedPathsAsString 
         { 
@@ -155,7 +160,8 @@ namespace Deplora.WPF.ViewModels
                 NewestVersionUrl = this.NewestVersionUrl,
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
-                ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray()
+                ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
+                ConnectionString = this.ConnectionString
             };
             ConfigurationController.UpdateDeployConfiguration(updateParam, this.ID);
             this.View.Close();
@@ -178,7 +184,8 @@ namespace Deplora.WPF.ViewModels
                 NewestVersionUrl = this.NewestVersionUrl,
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
-                ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray()
+                ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
+                ConnectionString = this.ConnectionString
             };
             ConfigurationController.CreateDeployConfiguration(createParam);
             this.View.Close();

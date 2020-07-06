@@ -82,6 +82,10 @@ namespace Deplora.XML.Models
         /// </summary>
         public DatabaseAdapter DatabaseAdapter { get; set; }
         /// <summary>
+        /// The connection string for the database
+        /// </summary>
+        public string ConnectionString { get; set; }
+        /// <summary>
         /// The URL to the newest version (FTP or API-Call)
         /// </summary>
         public string NewestVersionUrl { get; set; }
@@ -116,6 +120,7 @@ namespace Deplora.XML.Models
         {
             bool HasSqlCommands { get; set; }
             DatabaseAdapter DatabaseAdapter { get; set; }
+            string ConnectionString { get; set; }
             string NewestVersionUrl { get; set; }
             string APIKey { get; set; }
             string DeployPath { get; set; }
