@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
@@ -151,6 +152,46 @@ namespace Deplora.DataAccess
                 DatabaseAdapter.MySQL => await ExecuteMySqlCommands(commands),
                 _ => throw new NotImplementedException(databaseAdapter.ToString())
             };
+        }
+
+        /// <summary>
+        /// Creates a backup of the database in the specified folder
+        /// </summary>
+        /// <param name="backupPath"></param>
+        /// <returns></returns>
+        public async Task<SqlCommandExecutionResult> BackupDatabase(string backupPath)
+        {
+            var command = string.Format("BACKUP DATABASE {0} TO DISK = '{1}';", GetDatabaseName(connectionString), backupPath);
+            return await ExecuteSqlCommands(command);
+        }
+
+        /// <summary>
+        /// Gets the initial catalog of a given connection string
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static string GetDatabaseName(string connectionString)
+        {
+            var databaseName = string.Empty;
+            if (connectionString.Contains("Initial catalog="))
+                databaseName = GetConnectionStringValue("Initial catalog", connectionString);
+            else if (connectionString.Contains("Database="))
+                databaseName = GetConnectionStringValue("Database", connectionString);
+            return databaseName;
+        }
+
+        /// <summary>
+        /// Gets part of the connection string value by its identifier
+        /// </summary>
+        /// <param name="separationSegment">E.g. "Database=", "Initial catalog="</param>
+        /// <returns></returns>
+        private static string GetConnectionStringValue(string separationSegment, string connectionString)
+        {
+            if (string.IsNullOrWhiteSpace(separationSegment)) throw new ArgumentNullException("separationSegment");
+            if (separationSegment.LastOrDefault() != '=') separationSegment += "=";
+            var twoPartConnectionString = connectionString.Split(separationSegment);
+            var initialCatalog = twoPartConnectionString[1].Split(";");
+            return initialCatalog[0];
         }
 
         public class SqlCommandExecutionResult
