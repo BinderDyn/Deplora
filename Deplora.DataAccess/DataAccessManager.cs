@@ -147,7 +147,7 @@ namespace Deplora.DataAccess
         {
             return databaseAdapter switch
             {
-                DatabaseAdapter.None => new SqlCommandExecutionResult() { Success = true, Message = "No database adapter specified" },
+                DatabaseAdapter.None => new SqlCommandExecutionResult() { Success = false, Message = "No database adapter specified" },
                 DatabaseAdapter.MSSQL => await ExecuteMsSqlCommands(commands),
                 DatabaseAdapter.MySQL => await ExecuteMySqlCommands(commands),
                 _ => throw new NotImplementedException(databaseAdapter.ToString())

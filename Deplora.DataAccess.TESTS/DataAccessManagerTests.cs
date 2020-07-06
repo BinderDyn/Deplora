@@ -53,5 +53,95 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(result.Success);
             Assert.IsTrue(File.Exists(backupFilePath));
         }
+
+        [TestMethod]
+        public void CanEstablishConnection_Test_MSSQL()
+        {
+            // ARRANGE
+            var dataAccessManager = new DataAccessManager(defaultConnectionString, Shared.Enums.DatabaseAdapter.MSSQL);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.CanEstablishConnection()).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void CanEstablishConnection_Test_MSSQL_WrongConnectionString()
+        {
+            // ARRANGE
+            var falseConnectionString = @"Server=(localdb)\MSSQLLocalDB;Database=xyz;Integrated Security=true;";
+            var dataAccessManager = new DataAccessManager(falseConnectionString, Shared.Enums.DatabaseAdapter.MSSQL);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.CanEstablishConnection()).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void CanEstablishConnection_Test_MSSQL_WrongAdapter()
+        {
+            // ARRANGE
+            var falseConnectionString = @"Server=(localdb)\MSSQLLocalDB;Database=xyz;Integrated Security=true;";
+            var dataAccessManager = new DataAccessManager(falseConnectionString, Shared.Enums.DatabaseAdapter.MySQL);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.CanEstablishConnection()).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ExecuteSqlCommands_Test_MSSQL()
+        {
+            // ARRANGE
+            var sqlCommands = "SELECT * FROM ApplicationUsers";
+            var dataAccessManager = new DataAccessManager(defaultConnectionString, Shared.Enums.DatabaseAdapter.MSSQL);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.ExecuteSqlCommands(sqlCommands)).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsNotNull(result);
+            Assert.AreEqual("-1 rows affected", result.Message);
+            Assert.IsTrue(result.Success);
+        }
+
+        [TestMethod]
+        public void ExecuteSqlCommands_Test_MSSQL_MultipleRows()
+        {
+            // ARRANGE
+            var sqlCommands = @"SELECT * FROM spt_fallback_db
+                                SELECT * FROM MSreplication_options";
+            var dataAccessManager = new DataAccessManager(defaultConnectionString, Shared.Enums.DatabaseAdapter.MSSQL);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.ExecuteSqlCommands(sqlCommands)).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsNotNull(result);
+            Assert.AreEqual("-1 rows affected", result.Message);
+            Assert.IsTrue(result.Success);
+        }
+
+        [TestMethod]
+        public void ExecuteSqlCommands_Test_NoAdapter()
+        {
+            // ARRANGE
+            var sqlCommands = "SELECT * FROM ApplicationUsers";
+            var dataAccessManager = new DataAccessManager(defaultConnectionString, Shared.Enums.DatabaseAdapter.None);
+
+            // ACT
+            var result = Task.Run(() => dataAccessManager.ExecuteSqlCommands(sqlCommands)).GetAwaiter().GetResult();
+
+            // ASSERT
+            Assert.IsNotNull(result);
+            Assert.AreEqual("No database adapter specified", result.Message);
+            Assert.IsFalse(result.Success);
+        }
     }
 }
