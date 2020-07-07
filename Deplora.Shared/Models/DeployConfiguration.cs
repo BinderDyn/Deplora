@@ -26,6 +26,7 @@ namespace Deplora.XML.Models
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
+            this.ConnectionString = param.ConnectionString;
             UpdatePaths(excludedPaths, excludedPathsForBackup);
         }
 
@@ -44,6 +45,7 @@ namespace Deplora.XML.Models
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
+            this.ConnectionString = param.ConnectionString;
         }
 
         /// <summary>

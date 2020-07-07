@@ -34,8 +34,8 @@ namespace Deplora.WPF.ViewModels
             this.WebSiteName = configuration.WebSiteName;
             this.excludedPaths = new ObservableCollection<string>(configuration.ExcludedPaths);
             this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
-            this.backupPath = configuration.BackupPath;
-            this.connectionString = configuration.ConnectionString;
+            this.BackupPath = configuration.BackupPath;
+            this.ConnectionString = configuration.ConnectionString;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
         }

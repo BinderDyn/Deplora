@@ -18,10 +18,10 @@ namespace Deplora.IIS
             this.webSiteName = webSiteName;
         }
 
-        private string startApplicationPoolCommand { get => $"{iisPath}appcmd start apppool /apppool.name:\"{appPoolName}\""; }
-        private string stopApplicationPoolCommand { get => $"{iisPath}appcmd stop apppool /apppool.name:\"{appPoolName}\""; }
-        private string startWebSiteCommand { get => $"{iisPath}appcmd start site /site.name:\"{webSiteName}\""; }
-        private string stopWebSiteCommand { get => $"{iisPath}appcmd stop site /site.name:\"{webSiteName}\""; }
+        private string startApplicationPoolCommand { get => $"{iisPath}/appcmd start apppool /apppool.name:\"{appPoolName}\""; }
+        private string stopApplicationPoolCommand { get => $"{iisPath}/appcmd stop apppool /apppool.name:\"{appPoolName}\""; }
+        private string startWebSiteCommand { get => $"{iisPath}/appcmd start site /site.name:\"{webSiteName}\""; }
+        private string stopWebSiteCommand { get => $"{iisPath}/appcmd stop site /site.name:\"{webSiteName}\""; }
 
         /// <summary>
         /// Executes the commands given and terminates
@@ -39,7 +39,7 @@ namespace Deplora.IIS
             process.StartInfo = startInfo;
             process.Start();
             process.WaitForExit();
-            if (process.ExitCode == 0)
+            if (process.ExitCode == 0 || process.ExitCode == 1062) // 1062 is the code for iis for already terminated website/app pool so this would be fine
             {
                 return true;
             }

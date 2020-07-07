@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -47,7 +49,7 @@ namespace Deplora.DataAccess
                 }
                 foreach (var file in tree.FileInfos)
                 {
-                    file.CopyTo(Path.Combine(destinationPath, file.Name));
+                    file.CopyTo(Path.Combine(destinationPath, file.Name), true);
                 }
                 foreach (var child in tree.Children)
                 {
@@ -86,6 +88,12 @@ namespace Deplora.DataAccess
             string backupName;
             if (customBackupName != null) backupName = string.Format("{0:yyyyMMdd}_{1}.zip", DateTime.Now, customBackupName);
             else backupName = string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now);
+            if (File.Exists(Path.Combine(outputPath, backupName)))
+            {
+                var firstPart = backupName.Split(".zip")[0];
+                var maxFilesWithSameNameCount = Directory.GetFiles(outputPath).Count(f => f.StartsWith(Path.Combine(outputPath, firstPart)));
+                backupName = firstPart + $"({maxFilesWithSameNameCount}).zip";
+            }
             ZipFile.CreateFromDirectory(directoryInfo.FullName, Path.Combine(outputPath, backupName));
         }
 
@@ -102,7 +110,8 @@ namespace Deplora.DataAccess
             }
             else
             {
-                throw new IOException("Folder not available!");
+                Directory.CreateDirectory(destinationPath);
+                ExtractToDestination(sourcePath, destinationPath);
             }
         }
     }

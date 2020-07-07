@@ -13,7 +13,7 @@ namespace Deplora.App.Utility
         }
 
         public DeployStep DeployStep { get; set; }
-        public decimal ProgressPercentage { get => GetProgressBasedOnStep(this.DeployStep); }
+        public decimal ProgressPercentage { get => GetProgressBasedOnStep(this.DeployStep) * 100; }
         public string Message { get; set; }
 
         private decimal GetProgressBasedOnStep(DeployStep step)

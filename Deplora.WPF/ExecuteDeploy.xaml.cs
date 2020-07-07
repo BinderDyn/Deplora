@@ -14,25 +14,19 @@ using System.Windows.Shapes;
 namespace Deplora.WPF
 {
     /// <summary>
-    /// Interaktionslogik für ManualDeploy.xaml
+    /// Interaktionslogik für ExecuteDeploy.xaml
     /// </summary>
-    public partial class ManualDeploy : Window
+    public partial class ExecuteDeploy : Window
     {
-        public ManualDeploy()
+        public ExecuteDeploy(ExecuteDeployViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = new ManualDeployViewModel();
+            this.DataContext = viewModel;
         }
 
-        private void btn_Cancel_Click(object sender, RoutedEventArgs e)
+        public void Execute()
         {
-            this.Close();
-        }
-
-        private void drop_Dropzone_Drop(object sender, DragEventArgs e)
-        {
-            ((ManualDeployViewModel)this.DataContext).FileDropped(e);
-            e.Handled = true;
+            ((ExecuteDeployViewModel)this.DataContext).ExecuteDeploy();
         }
     }
 }

@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Deplora.WPF"
         mc:Ignorable="d"
-        Title="Configure manual deploy..." Height="450" Width="800">
+        Title="Configure manual deploy..." Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.8*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.15*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
@@ -23,19 +24,29 @@
                 <ColumnDefinition Width="0.33*"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" x:Name="lbl_ConfigurationSelection" Content="Configuration" Margin="20"></Label>
-            <Label Grid.Row="1" Grid.Column="0" x:Name="lbl_HasSqlCommands" Content="Has SQL changes" Margin="20"></Label>
-            <Label Grid.Row="2" Grid.Column="0" x:Name="lbl_HasDatabaseChanges" Content="Has database changes" Margin="20"></Label>
-            <Label Grid.Row="3" Grid.Column="0" x:Name="lbl_CustomBackupName" Content="Custom backup name" Margin="20" ToolTip="(e.g. version)"></Label>
-            <Label Grid.Row="4" Grid.Column="0" x:Name="lbl_SqlCommands" Content="SQL Commands" Margin="20"></Label>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="lbl_ConfigurationSelection" Content="Configuration" Margin="25"></Label>
+            <Label Grid.Row="1" Grid.Column="0" x:Name="lbl_HasSqlCommands" Content="Has SQL changes" Margin="25"></Label>
+            <Label Grid.Row="2" Grid.Column="0" x:Name="lbl_HasDatabaseChanges" Content="Has database changes" Margin="25"></Label>
+            <Label Grid.Row="3" Grid.Column="0" x:Name="lbl_CustomBackupName" Content="Custom backup name" Margin="25" ToolTip="(e.g. version)"></Label>
+            <Label Grid.Row="4" Grid.Column="0" x:Name="lbl_SqlCommands" Content="SQL Commands" Margin="25"></Label>
 
-            <ComboBox x:Name="cbo_Configurations" Grid.Row="0" Grid.Column="1" Margin="20" ItemsSource="{Binding DeployConfigurations}" DisplayMemberPath="Name"></ComboBox>
-            <CheckBox x:Name="cb_HasSqlCommands" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="20" IsChecked="{Binding HasSqlCommands, Mode=TwoWay}"></CheckBox>
-            <CheckBox x:Name="cb_HasDatabaseChanges" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="20" IsChecked="{Binding HasDatabaseChanges, Mode=TwoWay}"></CheckBox>
-            <TextBox x:Name="txt_CustomBackupName" Grid.Row="3" Grid.Column="1" Margin="20 20 20 20" Text="{Binding CustomBackupName, Mode=TwoWay}"></TextBox>
-            <TextBox x:Name="txt_SqlCommands" Grid.Row="4" Grid.Column="1" Margin="20 0 20 0" Text="{Binding SqlCommands, Mode=TwoWay}"></TextBox>
+            <ComboBox x:Name="cbo_Configurations" Grid.Row="0" Grid.Column="1" Margin="25 25 20 25" Padding="5" ItemsSource="{Binding DeployConfigurations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedConfiguration}"></ComboBox>
+            <CheckBox x:Name="cb_HasSqlCommands" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="25" IsEnabled="{Binding SelectedConfigurationUsesCommands}" IsChecked="{Binding HasSqlCommands, Mode=TwoWay}"></CheckBox>
+            <CheckBox x:Name="cb_HasDatabaseChanges" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="25" IsEnabled="{Binding SelectedConfigurationUsesCommands}" IsChecked="{Binding HasDatabaseChanges, Mode=TwoWay}"></CheckBox>
+            <TextBox x:Name="txt_CustomBackupName" Grid.Row="3" Grid.Column="1" Padding="5" Margin="25 25 20 25" Text="{Binding CustomBackupName, Mode=TwoWay}"></TextBox>
+            <TextBox x:Name="txt_SqlCommands" Grid.Row="4" Grid.Column="1" Padding="5" Margin="25 0 20 0" AcceptsReturn="True"
+                     IsEnabled="{Binding HasSqlCommandsAndUsesThemForDeploy}" Text="{Binding SqlCommands, Mode=TwoWay}">
+            </TextBox>
         </Grid>
         <Grid Grid.Row="1">
+            <StackPanel x:Name="drop_Dropzone" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" 
+                         Drop="drop_Dropzone_Drop" AllowDrop="True" MinWidth="900">
+                <TextBlock Text="{Binding ZipFilePath}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="900" Background="LightGray" Padding="7"></TextBlock>
+                <Button x:Name="btn_ChooseFile" Content="..." VerticalAlignment="Center" HorizontalAlignment="Right" Height="30" Width="30"
+                            Command="{Binding ChooseFile}"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
             <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button x:Name="btn_LaunchDeploy" Command="{Binding LaunchDeploy}" Content="Deploy" Margin="5" Height="35" Width="100"></Button>
                 <Button x:Name="btn_Cancel" Click="btn_Cancel_Click" Content="Cancel" Margin="5" Height="35" Width="100"></Button>

@@ -43,7 +43,7 @@ namespace Deplora.App
             await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
 
             // Step 4 - Backing up files
-            BackupFiles(onProgressChanged, configuration, fileManager);
+            BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
 
             // Step 5 - Deploy files
             DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
@@ -58,7 +58,7 @@ namespace Deplora.App
             RestartWebsite(onProgressChanged, iisManager);
 
             // Step 9 - Finishing
-            onProgressChanged.Report(new DeployProgress(DeployStep.StartingAppPool, "Deploy completed successfully."));
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Deplora.App
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files and directories into deploy directory..."));
                 fileManager.CopyToDestination(configuration.DeployPath,
                     FileSystemNode.GetNodesRecursively(new DirectoryInfo(temporaryExtractionDestination),
-                    excludedPaths: configuration.ExcludedPaths.ToArray()));
+                    excludedPaths: configuration.ExcludedPaths.ToArray()), false);
                 if (Directory.Exists(temporaryExtractionDestination))
                 {
                     onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deleting temporary directory..."));
@@ -102,7 +102,7 @@ namespace Deplora.App
         {
             onProgressChanged.Report(new DeployProgress(DeployStep.StartingWebsite, "Restarting website..."));
             iisManager.StartWebsite();
-            onProgressChanged.Report(new DeployProgress(DeployStep.StartingAppPool, "Website: Restarting complete."));
+            onProgressChanged.Report(new DeployProgress(DeployStep.StartingWebsite, "Website: Restarting complete."));
         }
 
         /// <summary>

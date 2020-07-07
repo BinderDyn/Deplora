@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 G:\Development\Deplora\Deplora.WPF\App.xaml
-5-387624460
+6-601359568
 
-171719969705
+19-1175008577
 1991878736371
-AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;MainWindow.xaml;ManualDeploy.xaml;
+AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;ExecuteDeploy.xaml;MainWindow.xaml;ManualDeploy.xaml;
 
-False
+True
 
