@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace Deplora.WPF.ViewModels
 {
     public class ManualDeployViewModel : ViewModelBase
     {
+        public ICommand LaunchDeploy { get; private set; }
+
         public ManualDeployViewModel()
         {
             deployConfigurations.CollectionChanged += DeployConfigurations_CollectionChanged;
