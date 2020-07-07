@@ -40,7 +40,7 @@ namespace Deplora.App
             StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
 
             // Step 3 - Backing up database
-            await BackupDatabase(onProgressChanged, configuration, dataAccessManager);
+            await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
 
             // Step 4 - Backing up files
             BackupFiles(onProgressChanged, configuration, fileManager);
@@ -177,7 +177,7 @@ namespace Deplora.App
         /// <param name="configuration"></param>
         /// <param name="dataAccessManager"></param>
         /// <returns></returns>
-        private static async Task BackupDatabase(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, DataAccessManager dataAccessManager)
+        private static async Task BackupDatabase(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, DataAccessManager dataAccessManager, string customBackupName)
         {
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backing up database..."));
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Connecting to database..."));
@@ -185,6 +185,12 @@ namespace Deplora.App
             if (!canConnect) throw new CannotConnectToDatabaseException();
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Connection OK"));
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Creating backup..."));
+            string fileName;
+            if (!string.IsNullOrWhiteSpace(customBackupName))
+            {
+                fileName = Path.Combine(configuration.BackupPath, string.Format("{0:yyyyMMdd}_{1}.bak", DateTime.Now, customBackupName));
+            }
+            else fileName = string.Format("{0:yyyyMMdd}_BACKUP.bak", DateTime.Now);
             await dataAccessManager.BackupDatabase(configuration.BackupPath);
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backup done."));
         }
