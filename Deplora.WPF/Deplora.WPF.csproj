@@ -4,6 +4,20 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Version>0.1.0</Version>
+    <Company>Marvin Binder</Company>
+    <Product>Deplora</Product>
+    <Copyright>Marvin Binder 2020</Copyright>
+    <PackageProjectUrl>https://github.com/BinderDyn/Deplora/</PackageProjectUrl>
+    <PackageReleaseNotes>BETA</PackageReleaseNotes>
+    <PackageId>Deplora</PackageId>
+    <Authors>Marvin Binder</Authors>
+    <StartupObject>Deplora.WPF.App</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Deplora.Application\Deplora.App.csproj" />
+    <ProjectReference Include="..\Deplora.Shared\Deplora.Shared.csproj" />
+  </ItemGroup>
 
 </Project>

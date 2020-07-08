@@ -1,20 +1,20 @@
 ﻿Deplora.WPF
-1.0.0.0
+0.1.0.0
 
 winexe
 C#
 .cs
-C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
+G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
 Deplora.WPF
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-C:\Development\Deplora\Deplora\Deplora.WPF\App.xaml
+G:\Development\Deplora\Deplora.WPF\App.xaml
+6-601359568
 
-
-4-1346642478
-1921654412462
-
+19-1175008577
+1991878736371
+AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;ExecuteDeploy.xaml;MainWindow.xaml;ManualDeploy.xaml;
 
 False
 

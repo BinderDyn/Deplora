@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Deplora.DataAccess\Deplora.DataAccess.csproj" />
+    <ProjectReference Include="..\Deplora.IIS\Deplora.IIS.csproj" />
+    <ProjectReference Include="..\Deplora.Shared\Deplora.Shared.csproj" />
+    <ProjectReference Include="..\Deplora.XML\Deplora.XML.csproj" />
+  </ItemGroup>
+
+</Project>

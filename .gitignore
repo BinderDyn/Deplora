@@ -1,0 +1,10 @@
+**/bin/**
+**/obj/**
+**/bin
+**/obj
+.vs
+*.cache
+*.props
+*.json
+*.cache
+*.cache

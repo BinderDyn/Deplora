@@ -1,0 +1,26 @@
+﻿<Window x:Class="Deplora.WPF.ApplicationSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Deplora.WPF"
+        mc:Ignorable="d"
+        Title="Settings" Height="130" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="IIS Path"></Label>
+                <TextBox Width="350" Text="{Binding IISPath}" Padding="2"></TextBox>
+                <Button Content="..." Padding="5" Command="{Binding OpenIISDirectyPathDialog}" 
+                        CommandParameter="{Binding ViewModel}"></Button>
+           </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button x:Name="btnSave" Click="btnSave_Click" Margin="0 1 10 1" Padding="2" Content="Save"></Button>
+                <Button x:Name="btnCancel" Click="btnCancel_Click"  Margin="10 1 0 1" Padding="2" Content="Cancel"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
