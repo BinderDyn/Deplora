@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "yWeceBthmpcIQSRaAjVqH9n0GJHcMwpeI3rvXduUVZmYdS2Dy+ki8Q3pKgyRCh+EPmTxnGA2tVBUhn/iyXn74A==",
+  "dgSpecHash": "iZVIFCXbZEz8vRdZ9fJqiAMJ15M3XojzMR81rvptlinNj5wMKEciIIp42JQffzfAsoQbDdOBXEfH7F0/GBguFw==",
   "success": true,
   "projectFilePath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\marvi\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\3.1.4\\microsoft.netcore.app.runtime.win-x64.3.1.4.nupkg.sha512",
+    "C:\\Users\\marvi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\3.1.4\\microsoft.windowsdesktop.app.runtime.win-x64.3.1.4.nupkg.sha512",
+    "C:\\Users\\marvi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\3.1.4\\microsoft.aspnetcore.app.runtime.win-x64.3.1.4.nupkg.sha512",
     "C:\\Users\\marvi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
   ],
   "logs": []

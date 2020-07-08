@@ -582,10 +582,10 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "0.1.0",
     "restore": {
       "projectUniqueName": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
-      "projectName": "Deplora.WPF",
+      "projectName": "Deplora",
       "projectPath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
       "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
       "outputPath": "G:\\Development\\Deplora\\Deplora.WPF\\obj\\",
