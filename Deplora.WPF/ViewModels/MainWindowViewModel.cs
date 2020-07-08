@@ -1,4 +1,5 @@
-﻿using Deplora.WPF.Commands;
+﻿using Deplora.Application;
+using Deplora.WPF.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Deplora.WPF.ViewModels
 
         public MainWindowViewModel()
         {
+            ConfigurationController.GetCurrentSettings();
             this.ShowAppSettings = new RelayCommand(ShowAppSettingsWindow);
             this.ShowDeployConfigurations = new RelayCommand(ShowDeployConfigurationsWindow);
             this.LaunchDeploy = new RelayCommand(ShowLaunchManualDeploy);

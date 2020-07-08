@@ -50,22 +50,21 @@ namespace Deplora.WPF.ViewModels
         public async void ExecuteDeploy()
         {
             var progress = new Progress<DeployProgress>((dp) => { this.Progress = dp.ProgressPercentage; this.LogMessages.Add(dp.Message); });
-            try
+
+            await Task.Run(() =>
             {
-                await Task.Run(() =>
+                try
                 {
                     DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges);
-                });
-                MessageBox.Show("Deploy successfully completed!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                this.CanClose = true;
-            }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+            MessageBox.Show("Deploy successfully completed!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            this.CanClose = true;
         }
 
         private ObservableCollection<string> logMessages;

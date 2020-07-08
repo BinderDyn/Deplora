@@ -1,5 +1,5 @@
 ﻿Deplora.WPF
-1.0.0.0
+0.1.0.0
 
 winexe
 C#
@@ -16,5 +16,5 @@ G:\Development\Deplora\Deplora.WPF\App.xaml
 1991878736371
 AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;ExecuteDeploy.xaml;MainWindow.xaml;ManualDeploy.xaml;
 
-True
+False
 
