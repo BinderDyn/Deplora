@@ -2,6 +2,7 @@
 using Deplora.WPF.Commands;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -15,10 +16,11 @@ namespace Deplora.WPF.ViewModels
 
         public MainWindowViewModel()
         {
-            ConfigurationController.GetCurrentSettings();
+            // Create Settings if not available at first start
+            _ = ConfigurationController.GetCurrentSettings();
             this.ShowAppSettings = new RelayCommand(ShowAppSettingsWindow);
             this.ShowDeployConfigurations = new RelayCommand(ShowDeployConfigurationsWindow);
-            this.LaunchDeploy = new RelayCommand(ShowLaunchManualDeploy);
+            this.LaunchDeploy = new RelayCommand(ShowLaunchManualDeploy, CanLaunchDeploy);
         }
 
         private void ShowAppSettingsWindow()
@@ -31,6 +33,12 @@ namespace Deplora.WPF.ViewModels
         {
             var deployConfigurationsWindow = new DeployConfigurationList();
             deployConfigurationsWindow.Show();
+        }
+
+        private bool CanLaunchDeploy()
+        {
+            var configurations = ConfigurationController.GetDeployConfigurations();
+            return configurations.Any();
         }
 
         private void ShowLaunchManualDeploy()

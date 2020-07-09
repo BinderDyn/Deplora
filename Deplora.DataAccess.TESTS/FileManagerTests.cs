@@ -173,7 +173,6 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IOException))]
         public void ExtractToDestination_Test_Exception()
         {
             // ARRANGE
