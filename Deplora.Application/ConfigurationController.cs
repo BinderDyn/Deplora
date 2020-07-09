@@ -17,18 +17,18 @@ namespace Deplora.Application
         /// Gets the current configuration or creates a new
         /// </summary>
         /// <returns></returns>
-        public static ApplicationConfiguration GetCurrentSettings(string customPath = null)
+        public static ApplicationConfiguration GetCurrentSettings()
         {
             var xmlManager = new XMLManager();
             ApplicationConfiguration applicationConfiguration = null;
             try
             {
-                applicationConfiguration = xmlManager.GetApplicationConfiguration(customPath);
+                applicationConfiguration = xmlManager.GetApplicationConfiguration();
             }
             catch (IOException)
             {
-                xmlManager.SaveApplicationConfigurationToFile(CreateDefaultConfiguration(), customPath);
-                applicationConfiguration = xmlManager.GetApplicationConfiguration(customPath);
+                xmlManager.SaveApplicationConfigurationToFile(CreateDefaultConfiguration());
+                applicationConfiguration = xmlManager.GetApplicationConfiguration();
             }
             return applicationConfiguration;
         }
@@ -57,10 +57,10 @@ namespace Deplora.Application
         /// </summary>
         /// <param name="deployConfigurationId"></param>
         /// <returns></returns>
-        public static DeployConfiguration GetDeployConfiguration(Guid id, string customConfigFilePath = null)
+        public static DeployConfiguration GetDeployConfiguration(Guid id)
         {
             var xmlManager = new XMLManager();
-            var currentConfig = xmlManager.GetApplicationConfiguration(customConfigFilePath);
+            var currentConfig = xmlManager.GetApplicationConfiguration();
             return currentConfig.DeployConfigurations.SingleOrDefault(config => config.ID == id);
         }
 
@@ -68,13 +68,12 @@ namespace Deplora.Application
         /// Creates a new deploy configuration and saves it to the application config file
         /// </summary>
         /// <param name="param"></param>
-        /// <param name="customConfigPath"></param>
-        public static Guid CreateDeployConfiguration(DeployConfigurationCreateParam param, string customConfigPath = null)
+        public static Guid CreateDeployConfiguration(DeployConfigurationCreateParam param)
         {
             var xmlManager = new XMLManager();
-            var currentConfig = xmlManager.GetApplicationConfiguration(customConfigPath);
+            var currentConfig = xmlManager.GetApplicationConfiguration();
             var id = currentConfig.AddDeployConfig(param, param.ExcludedPaths, param.ExcludedPathsForBackup);
-            xmlManager.SaveApplicationConfigurationToFile(currentConfig, customConfigPath);
+            xmlManager.SaveApplicationConfigurationToFile(currentConfig);
             return id;
         }
 
@@ -83,23 +82,12 @@ namespace Deplora.Application
         /// </summary>
         /// <param name="param"></param>
         /// <param name="configurationId"></param>
-        /// <param name="customConfigPath"></param>
-        public static void UpdateDeployConfiguration(DeployConfigurationUpdateParam param, Guid configurationId, string customConfigPath = null)
+        public static void UpdateDeployConfiguration(DeployConfigurationUpdateParam param, Guid configurationId)
         {
             var xmlManager = new XMLManager();
-            var currentConfig = xmlManager.GetApplicationConfiguration(customConfigPath);
+            var currentConfig = xmlManager.GetApplicationConfiguration();
             currentConfig.UpdateDeployConfig(param, configurationId, param.ExcludedPaths, param.ExcludedPathsForBackup);
-            xmlManager.SaveApplicationConfigurationToFile(currentConfig, customConfigPath);
-        }
-
-        /// <summary>
-        /// Creates a default configuration at the specific path
-        /// </summary>
-        /// <param name="customPath"></param>
-        public static void CreateDefaultConfigurationWithCustomPath(string customPath)
-        {
-            var xmlManager = new XMLManager();
-            xmlManager.SaveApplicationConfigurationToFile(CreateDefaultConfiguration(), customPath);
+            xmlManager.SaveApplicationConfigurationToFile(currentConfig);
         }
 
         /// <summary>

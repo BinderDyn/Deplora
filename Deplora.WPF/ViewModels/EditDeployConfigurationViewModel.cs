@@ -140,7 +140,10 @@ namespace Deplora.WPF.ViewModels
 
         private bool CanSave()
         {
-            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(DeployPath) && !string.IsNullOrWhiteSpace(BackupPath);
+            return !string.IsNullOrWhiteSpace(Name) && 
+                !string.IsNullOrWhiteSpace(DeployPath) && 
+                !string.IsNullOrWhiteSpace(BackupPath) &&
+                (DatabaseAdapter != DatabaseAdapter.None ? DatabaseAdapter != DatabaseAdapter.None && !string.IsNullOrWhiteSpace(ConnectionString) : true);
         }
 
         /// <summary>

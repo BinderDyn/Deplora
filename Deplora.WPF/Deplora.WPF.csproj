@@ -13,6 +13,7 @@
     <PackageId>Deplora</PackageId>
     <Authors>Marvin Binder</Authors>
     <StartupObject>Deplora.WPF.App</StartupObject>
+    <ApplicationIcon>LogoDraft.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
