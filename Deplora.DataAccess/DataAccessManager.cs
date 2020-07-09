@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -95,15 +96,40 @@ namespace Deplora.DataAccess
                 try
                 {
                     await connection.OpenAsync();
-                    var command = new SqlCommand(commands, connection);
-                    var queryResult = await command.ExecuteNonQueryAsync();
-                    result.Success = true;
-                    result.Message = GetRowsAffected(queryResult);
+                    SqlCommand command = connection.CreateCommand();
+                    SqlTransaction transaction;
+                    transaction = connection.BeginTransaction("ExecutingSqlCommands");
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+                    try
+                    {
+                        command.CommandText = commands;
+                        var queryResult = await command.ExecuteNonQueryAsync();
+                        await transaction.CommitAsync();
+                        result.Success = true;
+                        result.Message = GetRowsAffected(queryResult);
+                    }
+                    catch (Exception commitException)
+                    {
+                        result.Exception = commitException;
+                        result.Message = string.Format("{0}{1}{2}", commitException.Message, System.Environment.NewLine, "Rolling back transaction");
+                        result.Success = false;
+                        try
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                        catch (Exception rollbackException)
+                        {
+                            result.Exception = rollbackException;
+                            result.Message = rollbackException.Message;
+                            result.Success = false;
+                        }
+                    }
                 }
-                catch (Exception ex)
+                catch (Exception connectionException)
                 {
-                    result.Exception = ex;
-                    result.Message = ex.Message;
+                    result.Exception = connectionException;
+                    result.Message = connectionException.Message;
                     result.Success = false;
                 }
             }
@@ -123,15 +149,40 @@ namespace Deplora.DataAccess
                 try
                 {
                     await connection.OpenAsync();
-                    var command = new MySqlCommand(commands, connection);
-                    var queryResult = await command.ExecuteNonQueryAsync();
-                    result.Success = true;
-                    result.Message = GetRowsAffected(queryResult);
+                    MySqlCommand command = connection.CreateCommand();
+                    MySqlTransaction transaction;
+                    transaction = connection.BeginTransaction();
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+                    try
+                    {
+                        command.CommandText = commands;
+                        var queryResult = await command.ExecuteNonQueryAsync();
+                        await transaction.CommitAsync();
+                        result.Success = true;
+                        result.Message = GetRowsAffected(queryResult);
+                    }
+                    catch (Exception commitException)
+                    {
+                        result.Exception = commitException;
+                        result.Message = string.Format("{0}{1}{2}", commitException.Message, System.Environment.NewLine, "Rolling back transaction");
+                        result.Success = false;
+                        try
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                        catch (Exception rollbackException)
+                        {
+                            result.Exception = rollbackException;
+                            result.Message = rollbackException.Message;
+                            result.Success = false;
+                        }
+                    }
                 }
-                catch (Exception ex)
+                catch (Exception connectionException)
                 {
-                    result.Exception = ex;
-                    result.Message = ex.Message;
+                    result.Exception = connectionException;
+                    result.Message = connectionException.Message;
                     result.Success = false;
                 }
             }

@@ -16,7 +16,7 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="directoryInfo"></param>
         /// <param name="exclude"></param>
-        public void Backup(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null, params string[] exclude)
+        public string Backup(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null, params string[] exclude)
         {
             if (directoryInfo == null) throw new InvalidOperationException("DirectoryInfo cannot be null!");
             string temporaryDirectoryPath = CreateTemporaryDirectory(directoryInfo.FullName);
@@ -26,8 +26,9 @@ namespace Deplora.DataAccess
             {
                 Directory.CreateDirectory(outputPath);
             }
-            ZipContents(new DirectoryInfo(temporaryDirectoryPath), outputPath, customBackupName);
+            string fileName = ZipContents(new DirectoryInfo(temporaryDirectoryPath), outputPath, customBackupName);
             DeleteTemporaryDirectory(temporaryDirectoryPath);
+            return fileName;
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Deplora.DataAccess
         /// <param name="directoryInfo"></param>
         /// <param name="outputPath"></param>
         /// <param name="customBackupName"></param>
-        public void ZipContents(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null)
+        public string ZipContents(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null)
         {
             string backupName;
             if (customBackupName != null) backupName = string.Format("{0:yyyyMMdd}_{1}.zip", DateTime.Now, customBackupName);
@@ -94,7 +95,9 @@ namespace Deplora.DataAccess
                 var maxFilesWithSameNameCount = Directory.GetFiles(outputPath).Count(f => f.StartsWith(Path.Combine(outputPath, firstPart)));
                 backupName = firstPart + $"({maxFilesWithSameNameCount}).zip";
             }
-            ZipFile.CreateFromDirectory(directoryInfo.FullName, Path.Combine(outputPath, backupName));
+            string finalOutputName = Path.Combine(outputPath, backupName);
+            ZipFile.CreateFromDirectory(directoryInfo.FullName, finalOutputName);
+            return finalOutputName;
         }
 
         /// <summary>

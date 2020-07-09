@@ -43,22 +43,34 @@ namespace Deplora.App
             await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
 
             // Step 4 - Backing up files
-            BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            var fileName = BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            try
+            {
+                // Step 5 - Deploy files
+                DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
 
-            // Step 5 - Deploy files
-            DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
+                // Step 6 - Restarting app pool
+                await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
 
-            // Step 6 - Restarting app pool
-            await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
+                // Step 7 - Running SQL commands if any
+                await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
 
-            // Step 7 - Running SQL commands if any
-            await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
-
+                // Step 9 - Finishing
+                onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
+            }
+            catch (Exception ex)
+            {
+                Rollback(onProgressChanged, configuration.BackupPath, configuration.DeployPath, fileManager);
+            }
             // Step 8 - Restarting web site
             RestartWebsite(onProgressChanged, iisManager);
+        }
 
-            // Step 9 - Finishing
-            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
+        public static void Rollback(IProgress<DeployProgress> onProgressChanged, string backupPath, string deployDirectory, FileManager fileManager)
+        {
+            onProgressChanged.Report(new DeployProgress(DeployStep.Rollback, "Something went wrong, rolling back changes"));
+            fileManager.ExtractToDestination(backupPath, deployDirectory);
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Roll back complete!"));
         }
 
         /// <summary>
@@ -68,7 +80,7 @@ namespace Deplora.App
         /// <param name="zipFilePath"></param>
         /// <param name="configuration"></param>
         /// <param name="fileManager"></param>
-        private static void DeployToDestination(IProgress<DeployProgress> onProgressChanged, string zipFilePath, DeployConfiguration configuration, FileManager fileManager)
+        public static void DeployToDestination(IProgress<DeployProgress> onProgressChanged, string zipFilePath, DeployConfiguration configuration, FileManager fileManager)
         {
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deploying to designated path..."));
             try
@@ -156,18 +168,20 @@ namespace Deplora.App
         /// <param name="configuration"></param>
         /// <param name="fileManager"></param>
         /// <param name="customBackupName"></param>
-        private static void BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
+        private static string  BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
         {
+            string fileName = null;
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backing up files..."));
             try
             {
-                fileManager.Backup(new DirectoryInfo(configuration.DeployPath), configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
+                fileName = fileManager.Backup(new DirectoryInfo(configuration.DeployPath), configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
             }
             catch (Exception ex)
             {
                 throw new BackupFailedException(ex.Message);
             }
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backup completed."));
+            return fileName;
         }
 
         /// <summary>
