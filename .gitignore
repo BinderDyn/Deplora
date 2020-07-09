@@ -2,6 +2,7 @@
 **/obj/**
 **/bin
 **/obj
+Deplora.WPF/obj/**
 .vs
 *.cache
 *.props
