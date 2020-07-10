@@ -9,3 +9,4 @@ Deplora.WPF/obj/**
 *.json
 *.cache
 *.cache
+.vs/Deplora/v16/.suo
