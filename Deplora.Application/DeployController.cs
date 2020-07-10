@@ -55,15 +55,14 @@ namespace Deplora.App
                 // Step 7 - Running SQL commands if any
                 await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
 
-                // Step 9 - Finishing
-                onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Rollback(onProgressChanged, configuration.BackupPath, configuration.DeployPath, fileManager);
             }
             // Step 8 - Restarting web site
             RestartWebsite(onProgressChanged, iisManager);
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
         }
 
         public static void Rollback(IProgress<DeployProgress> onProgressChanged, string backupPath, string deployDirectory, FileManager fileManager)
@@ -205,7 +204,8 @@ namespace Deplora.App
                 fileName = Path.Combine(configuration.BackupPath, string.Format("{0:yyyyMMdd}_{1}.bak", DateTime.Now, customBackupName));
             }
             else fileName = string.Format("{0:yyyyMMdd}_BACKUP.bak", DateTime.Now);
-            await dataAccessManager.BackupDatabase(configuration.BackupPath);
+            string backupFullPath = Path.Combine(configuration.BackupPath, fileName);
+            await dataAccessManager.BackupDatabase(backupFullPath);
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backup done."));
         }
 
