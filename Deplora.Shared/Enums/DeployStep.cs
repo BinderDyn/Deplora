@@ -6,7 +6,6 @@ namespace Deplora.Shared.Enums
 {
     public enum DeployStep
     {
-        Rollback = -1,
         InPreparation = 0,
         StoppingAppPool = 1,
         StoppingWebsite = 2,
@@ -16,6 +15,7 @@ namespace Deplora.Shared.Enums
         StartingAppPool = 6,
         RunningSqlCommands = 7,
         StartingWebsite = 8,
-        Finished = 9
+        Finished = 9,
+        Rollback = 10
     }
 }

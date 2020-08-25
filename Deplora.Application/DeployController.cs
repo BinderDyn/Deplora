@@ -34,6 +34,7 @@ namespace Deplora.App
             var iisManager = new IISManager(configuration.AppPoolName, iisPath, configuration.WebSiteName);
             var dataAccessManager = new DataAccessManager(configuration.ConnectionString, configuration.DatabaseAdapter);
             var fileManager = new FileManager();
+            bool completedWithErrors = false;
             onProgressChanged.Report(new DeployProgress(DeployStep.InPreparation, "Configuration loaded."));
 
             // Step 1,2 - Stopping application pool & website
@@ -55,14 +56,16 @@ namespace Deplora.App
                 // Step 7 - Running SQL commands if any
                 await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
 
-            }
+            } 
             catch (Exception)
             {
-                Rollback(onProgressChanged, configuration.BackupPath, configuration.DeployPath, fileManager);
+                Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);
+                completedWithErrors = true;
             }
             // Step 8 - Restarting web site
             RestartWebsite(onProgressChanged, iisManager);
-            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
+            string finalMessage = completedWithErrors ? "Deploy aborted and rolled back changes" : "Deploy completed successfully";
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, finalMessage));
         }
 
         public static void Rollback(IProgress<DeployProgress> onProgressChanged, string backupPath, string deployDirectory, FileManager fileManager)
@@ -130,7 +133,7 @@ namespace Deplora.App
             if (configuration.HasSqlCommands && !string.IsNullOrWhiteSpace(sqlCommands))
             {
                 onProgressChanged.Report(new DeployProgress(DeployStep.RunningSqlCommands, "SQL Commands found, running..."));
-                var result = await dataAccessManager.ExecuteSqlCommands(sqlCommands);
+                var result = await dataAccessManager.ExecuteSqlCommands(sqlCommands, true);
                 if (!result.Success) throw new SqlCommandsFailedException(result.Exception.Message);
                 else
                 {
@@ -167,7 +170,7 @@ namespace Deplora.App
         /// <param name="configuration"></param>
         /// <param name="fileManager"></param>
         /// <param name="customBackupName"></param>
-        private static string  BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
+        private static string BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
         {
             string fileName = null;
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backing up files..."));

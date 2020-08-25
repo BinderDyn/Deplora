@@ -13,7 +13,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <ListBox Grid.Row="0" x:Name="txt_Log" SelectionMode="Single" ItemsSource="{Binding LogMessages}" Margin="10"></ListBox>
-        <ProgressBar Grid.Row="1" x:Name="bar_Progress" IsEnabled="False" Value="{Binding Progress}" Maximum="100" Margin="20"></ProgressBar>
+        <ProgressBar Grid.Row="1" x:Name="bar_Progress" Value="{Binding Progress}" Maximum="100" Margin="20">
+        </ProgressBar>
         <Button Grid.Row="2" x:Name="btn_Close" Content="Close" Command="{Binding Close}"  Margin="20"></Button>
     </Grid>
 </Window>

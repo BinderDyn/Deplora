@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Deplora.Application\Deplora.App.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestDeployFolder\" />
+    <Folder Include="TestFolder\" />
+  </ItemGroup>
+
 </Project>
