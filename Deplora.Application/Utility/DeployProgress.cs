@@ -19,6 +19,7 @@ namespace Deplora.App.Utility
 
         private decimal GetProgressBasedOnStep(DeployStep step)
         {
+            if (step == DeployStep.Rollback) return 100m; // Returning 100% if rollback state
             var maxStep = ((DeployStep[])Enum.GetValues(typeof(DeployStep))).Where(ds => ds != DeployStep.Rollback).LastOrDefault();
             return (decimal)step / (maxStep != 0 ? (decimal)maxStep : throw new InvalidOperationException("Enum has no values!"));
         }
