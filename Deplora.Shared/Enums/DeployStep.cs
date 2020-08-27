@@ -15,6 +15,7 @@ namespace Deplora.Shared.Enums
         StartingAppPool = 6,
         RunningSqlCommands = 7,
         StartingWebsite = 8,
-        Finished = 9
+        Finished = 9,
+        Rollback = 10
     }
 }

@@ -34,6 +34,7 @@ namespace Deplora.App
             var iisManager = new IISManager(configuration.AppPoolName, iisPath, configuration.WebSiteName);
             var dataAccessManager = new DataAccessManager(configuration.ConnectionString, configuration.DatabaseAdapter);
             var fileManager = new FileManager();
+            bool completedWithErrors = false;
             onProgressChanged.Report(new DeployProgress(DeployStep.InPreparation, "Configuration loaded."));
 
             // Step 1,2 - Stopping application pool & website
@@ -43,22 +44,35 @@ namespace Deplora.App
             await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
 
             // Step 4 - Backing up files
-            BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            var fileName = BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            try
+            {
+                // Step 5 - Deploy files
+                DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
 
-            // Step 5 - Deploy files
-            DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
+                // Step 6 - Restarting app pool
+                await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
 
-            // Step 6 - Restarting app pool
-            await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
+                // Step 7 - Running SQL commands if any
+                await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
 
-            // Step 7 - Running SQL commands if any
-            await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
-
+            } 
+            catch (Exception)
+            {
+                Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);
+                completedWithErrors = true;
+            }
             // Step 8 - Restarting web site
             RestartWebsite(onProgressChanged, iisManager);
+            string finalMessage = completedWithErrors ? "Deploy aborted and rolled back changes" : "Deploy completed successfully";
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, finalMessage));
+        }
 
-            // Step 9 - Finishing
-            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Deploy completed successfully."));
+        public static void Rollback(IProgress<DeployProgress> onProgressChanged, string backupPath, string deployDirectory, FileManager fileManager)
+        {
+            onProgressChanged.Report(new DeployProgress(DeployStep.Rollback, "Something went wrong, rolling back changes"));
+            fileManager.ExtractToDestination(backupPath, deployDirectory);
+            onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Roll back complete!"));
         }
 
         /// <summary>
@@ -68,7 +82,7 @@ namespace Deplora.App
         /// <param name="zipFilePath"></param>
         /// <param name="configuration"></param>
         /// <param name="fileManager"></param>
-        private static void DeployToDestination(IProgress<DeployProgress> onProgressChanged, string zipFilePath, DeployConfiguration configuration, FileManager fileManager)
+        public static void DeployToDestination(IProgress<DeployProgress> onProgressChanged, string zipFilePath, DeployConfiguration configuration, FileManager fileManager)
         {
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deploying to designated path..."));
             try
@@ -119,7 +133,7 @@ namespace Deplora.App
             if (configuration.HasSqlCommands && !string.IsNullOrWhiteSpace(sqlCommands))
             {
                 onProgressChanged.Report(new DeployProgress(DeployStep.RunningSqlCommands, "SQL Commands found, running..."));
-                var result = await dataAccessManager.ExecuteSqlCommands(sqlCommands);
+                var result = await dataAccessManager.ExecuteSqlCommands(sqlCommands, true);
                 if (!result.Success) throw new SqlCommandsFailedException(result.Exception.Message);
                 else
                 {
@@ -156,18 +170,20 @@ namespace Deplora.App
         /// <param name="configuration"></param>
         /// <param name="fileManager"></param>
         /// <param name="customBackupName"></param>
-        private static void BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
+        private static string BackupFiles(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, FileManager fileManager, string customBackupName = null)
         {
+            string fileName = null;
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backing up files..."));
             try
             {
-                fileManager.Backup(new DirectoryInfo(configuration.DeployPath), configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
+                fileName = fileManager.Backup(new DirectoryInfo(configuration.DeployPath), configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
             }
             catch (Exception ex)
             {
                 throw new BackupFailedException(ex.Message);
             }
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backup completed."));
+            return fileName;
         }
 
         /// <summary>
@@ -191,7 +207,8 @@ namespace Deplora.App
                 fileName = Path.Combine(configuration.BackupPath, string.Format("{0:yyyyMMdd}_{1}.bak", DateTime.Now, customBackupName));
             }
             else fileName = string.Format("{0:yyyyMMdd}_BACKUP.bak", DateTime.Now);
-            await dataAccessManager.BackupDatabase(configuration.BackupPath);
+            string backupFullPath = Path.Combine(configuration.BackupPath, fileName);
+            await dataAccessManager.BackupDatabase(backupFullPath);
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backup done."));
         }
 
