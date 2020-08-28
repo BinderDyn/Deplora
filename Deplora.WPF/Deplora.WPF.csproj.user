@@ -16,6 +16,9 @@
     <Compile Update="ExecuteDeploy.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="FolderBrowser\FolderBrowserDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ManualDeploy.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ExecuteDeploy.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FolderBrowser\FolderBrowserDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ManualDeploy.xaml">
