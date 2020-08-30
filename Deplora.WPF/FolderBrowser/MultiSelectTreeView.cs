@@ -25,7 +25,7 @@ namespace Deplora.WPF.FolderBrowser
             DependencyProperty.RegisterAttached("IsItemSelected", typeof(bool), typeof(MultiSelectTreeView));
 
         public static readonly DependencyProperty MultiselectProperty =
-           DependencyProperty.Register("MultiselectProperty", typeof(bool), typeof(MultiSelectTreeView), new PropertyMetadata(false));
+           DependencyProperty.RegisterAttached("MultiselectProperty", typeof(bool), typeof(MultiSelectTreeView), new PropertyMetadata(false));
 
         public static void SetIsItemSelected(UIElement element, bool value)
         {
@@ -34,6 +34,16 @@ namespace Deplora.WPF.FolderBrowser
         public static bool GetIsItemSelected(UIElement element)
         {
             return (bool)element.GetValue(IsItemSelectedProperty);
+        }
+
+        public static void SetMultiselectProperty(DependencyObject target, object value)
+        {
+            target.SetValue(MultiselectProperty, value);
+        }
+
+        public static bool GetMultiselectProperty(DependencyObject target)
+        {
+            return (bool)target.GetValue(MultiselectProperty);
         }
 
 

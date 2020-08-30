@@ -170,6 +170,7 @@
             Width="760"
             Height="380"
             Grid.Row="0"
+            local:MultiSelectTreeView.MultiselectProperty="{Binding Multiselect}"
             >
             <local:MultiSelectTreeView.Resources>
                 <Style TargetType="TreeViewItem">

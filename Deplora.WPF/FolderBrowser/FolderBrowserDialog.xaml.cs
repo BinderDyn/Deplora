@@ -19,14 +19,14 @@ namespace Deplora.WPF.FolderBrowser
     {
         public FolderBrowserDialog()
         {
-            InitializeComponent();
             this.DataContext = new FolderBrowserDialogViewModel(new FolderBrowserDialogOptions());
+            InitializeComponent();
         }
 
         public FolderBrowserDialog(FolderBrowserDialogOptions folderBrowserDialogOptions)
         {
-            InitializeComponent();
             this.DataContext = new FolderBrowserDialogViewModel(folderBrowserDialogOptions);
+            InitializeComponent();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
