@@ -20,6 +20,13 @@ namespace Deplora.WPF.FolderBrowser
         public FolderBrowserDialog()
         {
             InitializeComponent();
+            this.DataContext = new FolderBrowserDialogViewModel(new FolderBrowserDialogOptions());
+        }
+
+        public FolderBrowserDialog(FolderBrowserDialogOptions folderBrowserDialogOptions)
+        {
+            InitializeComponent();
+            this.DataContext = new FolderBrowserDialogViewModel(folderBrowserDialogOptions);
         }
     }
 }

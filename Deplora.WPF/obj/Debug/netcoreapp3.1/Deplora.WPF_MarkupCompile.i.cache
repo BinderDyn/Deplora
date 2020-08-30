@@ -12,9 +12,9 @@ TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 G:\Development\Deplora\Deplora.WPF\App.xaml
 7-1644570283
 
-22-378799067
+25-1968301727
 1991878736371
 AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;ExecuteDeploy.xaml;FolderBrowser\FolderBrowserDialog.xaml;MainWindow.xaml;ManualDeploy.xaml;
 
-False
+True
 

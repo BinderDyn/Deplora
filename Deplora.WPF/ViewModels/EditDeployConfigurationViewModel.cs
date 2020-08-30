@@ -2,6 +2,7 @@
 using Deplora.Shared.Enums;
 using Deplora.Shared.Models;
 using Deplora.WPF.Commands;
+using Deplora.WPF.FolderBrowser;
 using Deplora.XML.Models;
 using Microsoft.Win32;
 using System;
@@ -199,11 +200,12 @@ namespace Deplora.WPF.ViewModels
         /// </summary>
         private void OpenBackupPathDialog()
         {
-            var dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
-            {
-                this.BackupPath = new FileInfo(dialog.FileName).DirectoryName;
-            }
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = false, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders });
+            dialog.Show();
+            //if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            //{
+            //    this.BackupPath = new FileInfo(dialog.FileName).DirectoryName;
+            //}
         }
 
         /// <summary>
