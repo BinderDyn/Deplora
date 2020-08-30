@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <Company>Marvin Binder</Company>
     <Product>Deplora</Product>
     <Copyright>Marvin Binder 2020</Copyright>
@@ -14,12 +14,25 @@
     <Authors>Marvin Binder</Authors>
     <StartupObject>Deplora.WPF.App</StartupObject>
     <ApplicationIcon>LogoDraft.ico</ApplicationIcon>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <RepositoryUrl>https://github.com/BinderDyn/Deplora</RepositoryUrl>
+    <PackageIcon>LogoDraft.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\drive2.png" />
     <None Remove="Images\new_document.png" />
     <None Remove="Images\normal_folder.png" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="LogoDraft.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
