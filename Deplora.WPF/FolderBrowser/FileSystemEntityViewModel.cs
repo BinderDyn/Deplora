@@ -13,12 +13,14 @@ namespace Deplora.WPF.FolderBrowser
     public class FileSystemEntityViewModel : ViewModelBase
     {
         public ICommand ToggleCollapsed { get; private set; }
+        private readonly bool hideFiles;
 
         public FileSystemEntityViewModel(FileSystemNode node, bool hideFiles = false)
         {
+            this.hideFiles = hideFiles;
             this.type = node.FileSystemEntityType;
             this.ToggleCollapsed = new RelayCommand(OnToggleCollapsed);
-            this.children = new ObservableCollection<FileSystemEntityViewModel>(node.Children.Select(c => new FileSystemEntityViewModel(c)));
+            this.children = new ObservableCollection<FileSystemEntityViewModel>(node.Children.Select(c => new FileSystemEntityViewModel(c, hideFiles)));
             this.children.CollectionChanged += Children_CollectionChanged;
             this.path = node.Name;
             this.fullPath = node.Path;
@@ -33,9 +35,9 @@ namespace Deplora.WPF.FolderBrowser
             if (!this.Collapsed)
             {
                 var newChildren = new List<FileSystemEntityViewModel>();
-                foreach (var child in this.children)
+                foreach (var child in hideFiles ? this.children.Where(c => c.Type != FileSystemEntityType.File) : this.children)
                 {
-                     newChildren.Add(new FileSystemEntityViewModel(FileSystemNode.GetNodesRecursively(child.FullPath, maxDepth: 1)));
+                     newChildren.Add(new FileSystemEntityViewModel(FileSystemNode.GetNodesRecursively(child.FullPath, maxDepth: 1), hideFiles));
                 }
                 this.children = new ObservableCollection<FileSystemEntityViewModel>(newChildren);
                 this.SetCollection("Children");

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Deplora.WPF.FolderBrowser"
         xmlns:bindTreeViewExpand="clr-namespace:Deplora.WPF.Behaviours"
         mc:Ignorable="d"
-        Title="Select directory..." Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Select directory..." Height="470" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!--<local:FolderBrowserDialogViewModel x:Key="ViewModel" />-->
         <Style x:Key="TreeViewItemFocusVisual">
@@ -187,7 +187,7 @@
         </local:MultiSelectTreeView>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Select" Margin="5" Padding="40 0 40 0"></Button>
-            <Button Content="Cancel" Margin="5" Padding="40 0 40 0"></Button>
+            <Button x:Name="CancelBtn" Content="Cancel" Margin="5" Padding="40 0 40 0" Click="CancelBtn_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>

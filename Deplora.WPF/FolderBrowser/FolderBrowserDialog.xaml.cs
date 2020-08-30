@@ -28,5 +28,10 @@ namespace Deplora.WPF.FolderBrowser
             InitializeComponent();
             this.DataContext = new FolderBrowserDialogViewModel(folderBrowserDialogOptions);
         }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
