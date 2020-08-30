@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetNodesRecursively_Test()
         {
             // ACT
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ASSERT
             Assert.IsNotNull(node);
@@ -55,7 +56,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetNodesRecursively_Test_Depth()
         {
             // ACT
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ASSERT
             var nodeChildrenDepth1 = node.Children.ToList();
@@ -69,18 +70,18 @@ namespace Deplora.DataAccess.TESTS
         {
             // ACT
             var excluded = Path.Combine(testPath, "depth1_2");
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath), excludedPaths: excluded);
+            var node = FileSystemNode.GetNodesRecursively(testPath, excludedPaths: excluded);
 
             // ASSERT
             var nodeChildrenDepth1 = node.Children.ToList();
-            Assert.AreEqual(1, nodeChildrenDepth1.Count);
+            Assert.AreEqual(3, nodeChildrenDepth1.Count);
         }
 
         [TestMethod]
         public void GetNodesAtDepth_Test_Zero()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var nodes = node.GetNodesAtDepth(0);
@@ -93,7 +94,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetNodesAtDepth_Test_One()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var nodes = node.GetNodesAtDepth(1);
@@ -106,7 +107,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetNodesAtDepth_Test_Negative()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var nodes = node.GetNodesAtDepth(-1);
@@ -119,7 +120,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetNodesAtDepth_Test_TooDeep()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var nodes = node.GetNodesAtDepth(5);
@@ -132,7 +133,7 @@ namespace Deplora.DataAccess.TESTS
         public void GetMaxDepth_Test()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var maxDepth = node.GetMaxDepth();
@@ -142,16 +143,53 @@ namespace Deplora.DataAccess.TESTS
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void GetMaxDepth_Test_Negative()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
             var maxDepth = node.GetMaxDepth(-1);
+        }
+
+        [TestMethod]
+        public void GetFileSystemEntityType_File()
+        {
+            // ARRANGE
+            var fileNode = FileSystemNode.GetNodesRecursively(Path.Combine(testPath, "FileDepth0_1.txt"), maxDepth: 1);
+
+            // ACT
+            var type = FileSystemNode.GetFileSystemEntityType(fileNode);
 
             // ASSERT
-            Assert.AreEqual(2, maxDepth);
+            Assert.AreEqual(FileSystemEntityType.File, type);
+        }
+
+        [TestMethod]
+        public void GetFileSystemEntityType_Folder()
+        {
+            // ARRANGE
+            var folderNode = FileSystemNode.GetNodesRecursively(testPath, maxDepth: 1);
+
+            // ACT
+            var type = FileSystemNode.GetFileSystemEntityType(folderNode);
+
+            // ASSERT
+            Assert.AreEqual(FileSystemEntityType.Folder, type);
+        }
+
+        [TestMethod]
+        public void GetFileSystemEntityType_Drive()
+        {
+            // ARRANGE
+            var driveNode = FileSystemNode.GetNodesRecursively("C:\\", maxDepth: 1);
+
+            // ACT
+            var type = FileSystemNode.GetFileSystemEntityType(driveNode);
+
+            // ASSERT
+            Assert.AreEqual(FileSystemEntityType.Drive, type);
         }
 
         [TestCleanup]

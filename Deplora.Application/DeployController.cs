@@ -92,7 +92,7 @@ namespace Deplora.App
                 fileManager.ExtractToDestination(zipFilePath, temporaryExtractionDestination);
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files and directories into deploy directory..."));
                 fileManager.CopyToDestination(configuration.DeployPath,
-                    FileSystemNode.GetNodesRecursively(new DirectoryInfo(temporaryExtractionDestination),
+                    FileSystemNode.GetNodesRecursively(temporaryExtractionDestination,
                     excludedPaths: configuration.ExcludedPaths.ToArray()), false);
                 if (Directory.Exists(temporaryExtractionDestination))
                 {
@@ -176,7 +176,7 @@ namespace Deplora.App
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpFiles, "Backing up files..."));
             try
             {
-                fileName = fileManager.Backup(new DirectoryInfo(configuration.DeployPath), configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
+                fileName = fileManager.Backup(configuration.DeployPath, configuration.BackupPath, customBackupName: customBackupName, exclude: configuration.ExcludedForBackupPaths.ToArray());
             }
             catch (Exception ex)
             {

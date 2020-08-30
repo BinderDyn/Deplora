@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Deplora.Shared\Deplora.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
 </Project>

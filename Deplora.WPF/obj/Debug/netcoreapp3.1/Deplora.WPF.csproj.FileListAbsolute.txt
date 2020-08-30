@@ -88,3 +88,5 @@ G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.csproj.Co
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.dll
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.pdb
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.genruntimeconfig.cache
+G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\FolderBrowser\FolderBrowserDialog.g.cs
+G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\FolderBrowser\FolderBrowserDialog.baml

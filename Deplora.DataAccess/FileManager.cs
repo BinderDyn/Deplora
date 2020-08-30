@@ -16,11 +16,11 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="directoryInfo"></param>
         /// <param name="exclude"></param>
-        public string Backup(DirectoryInfo directoryInfo, string outputPath, string customBackupName = null, params string[] exclude)
+        public string Backup(string path, string outputPath, string customBackupName = null, params string[] exclude)
         {
-            if (directoryInfo == null) throw new InvalidOperationException("DirectoryInfo cannot be null!");
-            string temporaryDirectoryPath = CreateTemporaryDirectory(directoryInfo.FullName);
-            var tree = FileSystemNode.GetNodesRecursively(directoryInfo, excludedPaths: exclude);
+            if (string.IsNullOrWhiteSpace(path) || string.IsNullOrEmpty(path)) throw new InvalidOperationException("path cannot be null!");
+            string temporaryDirectoryPath = CreateTemporaryDirectory(new DirectoryInfo(path).FullName);
+            var tree = FileSystemNode.GetNodesRecursively(path, excludedPaths: exclude);
             CopyToDestination(temporaryDirectoryPath, tree);
             if (!Directory.Exists(outputPath))
             {
@@ -42,9 +42,9 @@ namespace Deplora.DataAccess
             {
                 if (copyRoot)
                 {
-                    destinationPath = Path.Combine(destinationPath, tree.DirectoryName);
+                    destinationPath = Path.Combine(destinationPath, tree.Name);
                 }
-                if (!Directory.Exists(destinationPath))
+                if (!Directory.Exists(destinationPath) && !File.Exists(destinationPath))
                 {
                     Directory.CreateDirectory(destinationPath);
                 }
@@ -54,7 +54,7 @@ namespace Deplora.DataAccess
                 }
                 foreach (var child in tree.Children)
                 {
-                    var newDirectoryPath = Path.Combine(destinationPath, child.DirectoryName);
+                    var newDirectoryPath = Path.Combine(destinationPath, child.Name);
                     CopyToDestination(newDirectoryPath, child, false);
                 }
             }
