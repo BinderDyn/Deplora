@@ -18,6 +18,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -77,7 +78,7 @@
             <Label x:Name="lbl_SqlCommands" Grid.Column="3" Grid.Row="4" Content="Uses SQL commands" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
             <CheckBox x:Name="txt_HasSQLCommands" Grid.Column="4" Grid.Row="4" 
-                      HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9 0 0 0" IsChecked="{Binding HasSqlCommands, Mode=TwoWay}"></CheckBox>
+                      HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" IsChecked="{Binding HasSqlCommands, Mode=TwoWay}"></CheckBox>
 
             <Label x:Name="lbl_NewestVersionURL" Grid.Column="3" Grid.Row="0" Content="Update-API URL" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"></Label>
@@ -99,27 +100,31 @@
             <TextBox x:Name="txt_AppPoolName" Grid.Column="4" Grid.Row="3" 
                      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10" Text="{Binding AppPoolName, Mode=TwoWay}"></TextBox>
 
-            <Label x:Name="lbl_ExcludedPaths" Grid.Column="0" Grid.Row="5" Content="Paths excluded from overwriting" 
+            <Label x:Name="lbl_IsWebDeploy" Grid.Column="0" Grid.Row="5" Content="Web app deploy"></Label>
+            <CheckBox x:Name="txt_IsWebDeploy" Grid.Column="1" Grid.Row="5"  Margin="10" 
+                      IsChecked="{Binding IsWebDeploy}" VerticalAlignment="Center" HorizontalAlignment="Left"></CheckBox>
+            
+            <Label x:Name="lbl_ExcludedPaths" Grid.Column="0" Grid.Row="6" Content="Paths excluded from overwriting" 
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
-            <ListBox x:Name="txt_ExcludedPaths" Grid.Column="1" Grid.Row="5" 
+            <ListBox x:Name="txt_ExcludedPaths" Grid.Column="1" Grid.Row="6" 
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" ItemsSource="{Binding ExcludedPaths}"></ListBox>
             <Button x:Name="btn_ExcludedPathsOverwriteSelect" 
                     Grid.Column="2" 
-                    Grid.Row="5" 
+                    Grid.Row="6" 
                     Content="..." 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
                     Width="25"
                     Command="{Binding SelectExcludedPathsOverwrite}"></Button>
 
-            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="3" Grid.Row="5" Content="Excluded paths for backup" 
+            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="3" Grid.Row="6" Content="Excluded paths for backup" 
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
-            <ListBox x:Name="txt_ExcludedPathsForBackup" Grid.Column="4" Grid.Row="5" 
+            <ListBox x:Name="txt_ExcludedPathsForBackup" Grid.Column="4" Grid.Row="6" 
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" ItemsSource="{Binding ExcludedPathsForBackup}"></ListBox>
             <Button x:Name="btn_ExcludedPathsBackupSelect" 
                     Grid.Column="5" 
-                    Grid.Row="5" 
-                    Content="..." 
+                    Grid.Row="6" 
+                    Content="..."
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
                     Width="25"

@@ -79,6 +79,9 @@ namespace Deplora.WPF.ViewModels
         private string connectionString;
         public string ConnectionString { get => connectionString; set => SetProperty(ref connectionString, value); }
 
+        private bool isWebDeploy;
+        public bool IsWebDeploy { get => isWebDeploy; set => SetProperty(ref isWebDeploy, value); } 
+
         private void ExcludedPaths_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SetCollection("ExcludedPaths");

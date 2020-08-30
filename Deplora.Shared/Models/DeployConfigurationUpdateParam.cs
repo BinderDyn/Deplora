@@ -20,5 +20,6 @@ namespace Deplora.Shared.Models
         public string[] ExcludedPaths { get; set; }
         public string[] ExcludedPathsForBackup { get; set; }
         public string ConnectionString { get; set; }
+        public bool IsWebDeploy { get; set; }
     }
 }
