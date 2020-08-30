@@ -201,11 +201,11 @@ namespace Deplora.WPF.ViewModels
         private void OpenBackupPathDialog()
         {
             var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = false, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders });
-            dialog.Show();
-            //if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
-            //{
-            //    this.BackupPath = new FileInfo(dialog.FileName).DirectoryName;
-            //}
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value == true && !string.IsNullOrEmpty(((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath))
+            {
+                this.BackupPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
+            }
         }
 
         /// <summary>
@@ -213,10 +213,11 @@ namespace Deplora.WPF.ViewModels
         /// </summary>
         private void OpenDeployPathDialog()
         {
-            var dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = false, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value == true && !string.IsNullOrEmpty(((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath))
             {
-                this.DeployPath = new FileInfo(dialog.FileName).DirectoryName;
+                this.DeployPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
             }
         }
 

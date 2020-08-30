@@ -29,9 +29,24 @@ namespace Deplora.WPF.FolderBrowser
             InitializeComponent();
         }
 
+        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.DialogResult = false;
+        }
+
+        private void mstv_Browser_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            ((FolderBrowserDialogViewModel)DataContext).Selected.Clear();
+            foreach (var addedItem in mstv_Browser.SelectedItems)
+            {
+                ((FolderBrowserDialogViewModel)DataContext).Selected.Add((FileSystemEntityViewModel)addedItem);
+            }
+            e.Handled = true;
         }
     }
 }

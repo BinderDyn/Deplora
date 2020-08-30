@@ -17,14 +17,26 @@ namespace Deplora.WPF.FolderBrowser
             this.multiselect = options.Multiselect;
             var startingNodes = DriveInfo.GetDrives().Where(d => d.IsReady).Select(d => FileSystemNode.GetNodesRecursively(d.Name, maxDepth: 1));
             this.nodes = new ObservableCollection<FileSystemEntityViewModel>(startingNodes.Select(n => new FileSystemEntityViewModel(n, options.DialogSelectionMode == FolderBrowserDialogOptions.SelectionMode.Folders)));
+            this.selected = new ObservableCollection<FileSystemEntityViewModel>();
             nodes.CollectionChanged += Directories_CollectionChanged;
+            selected.CollectionChanged += Selected_CollectionChanged;
         }
+
+        
 
         private ObservableCollection<FileSystemEntityViewModel> nodes;
         public ObservableCollection<FileSystemEntityViewModel> Nodes { get => nodes; }
+
         private void Directories_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             SetCollection("Nodes");
+        }
+
+        private ObservableCollection<FileSystemEntityViewModel> selected;
+        public ObservableCollection<FileSystemEntityViewModel> Selected { get => selected; }
+        private void Selected_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SetCollection("Selected");
         }
 
         private bool multiselect;

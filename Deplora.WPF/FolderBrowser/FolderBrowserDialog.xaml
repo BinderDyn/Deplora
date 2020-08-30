@@ -171,6 +171,7 @@
             Height="380"
             Grid.Row="0"
             local:MultiSelectTreeView.MultiselectProperty="{Binding Multiselect}"
+            SelectedItemChanged="mstv_Browser_SelectedItemChanged"
             >
             <local:MultiSelectTreeView.Resources>
                 <Style TargetType="TreeViewItem">
@@ -187,8 +188,8 @@
             </local:MultiSelectTreeView.ItemTemplate>
         </local:MultiSelectTreeView>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Select" Margin="5" Padding="40 0 40 0"></Button>
-            <Button x:Name="CancelBtn" Content="Cancel" Margin="5" Padding="40 0 40 0" Click="CancelBtn_Click"></Button>
+            <Button x:Name="AcceptButton" Content="Select" Margin="5" Padding="40 0 40 0" IsDefault="True" Click="AcceptButton_Click"></Button>
+            <Button x:Name="CancelBtn" Content="Cancel" Margin="5" Padding="40 0 40 0" IsCancel="True" Click="CancelBtn_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>
