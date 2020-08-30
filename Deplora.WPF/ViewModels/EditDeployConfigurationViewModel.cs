@@ -94,7 +94,10 @@ namespace Deplora.WPF.ViewModels
 
         private string connectionString;
         public string ConnectionString { get => connectionString; set => SetProperty(ref connectionString, value); }
-        
+
+        private bool isWebDeploy;
+        public bool IsWebDeploy { get => isWebDeploy; set => SetProperty(ref isWebDeploy, value); }
+
         public string ExcludedPathsAsString 
         { 
             get
@@ -164,7 +167,8 @@ namespace Deplora.WPF.ViewModels
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
-                ConnectionString = this.ConnectionString
+                ConnectionString = this.ConnectionString,
+                IsWebDeploy = this.IsWebDeploy
             };
             ConfigurationController.UpdateDeployConfiguration(updateParam, this.ID);
             this.View.Close();
@@ -188,7 +192,8 @@ namespace Deplora.WPF.ViewModels
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
-                ConnectionString = this.ConnectionString
+                ConnectionString = this.ConnectionString,
+                IsWebDeploy = this.IsWebDeploy
             };
             ConfigurationController.CreateDeployConfiguration(createParam);
             this.View.Close();

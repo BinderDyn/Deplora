@@ -27,6 +27,7 @@ namespace Deplora.XML.Models
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
             this.ConnectionString = param.ConnectionString;
+            this.IsWebDeploy = param.IsWebDeploy;
             UpdatePaths(excludedPaths, excludedPathsForBackup);
         }
 
@@ -46,6 +47,7 @@ namespace Deplora.XML.Models
             this.WebSiteName = param.WebSiteName;
             this.BackupPath = param.BackupPath;
             this.ConnectionString = param.ConnectionString;
+            this.IsWebDeploy = param.IsWebDeploy;
         }
 
         /// <summary>
@@ -113,6 +115,11 @@ namespace Deplora.XML.Models
         /// </summary>
         public List<string> ExcludedForBackupPaths { get; set; }
 
+        /// <summary>
+        /// Decides whether the deployment process should start/stop IIS processes
+        /// </summary>
+        public bool IsWebDeploy { get; set; }
+
         public interface ICreateParam : IUpdateParam
         {
             Guid ID { get; set; }
@@ -130,6 +137,7 @@ namespace Deplora.XML.Models
             string AppPoolName { get; set; }
             string WebSiteName { get; set; }
             string BackupPath { get; set; }
+            bool IsWebDeploy { get; set; }
         }
     }
 }
