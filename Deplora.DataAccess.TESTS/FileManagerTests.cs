@@ -50,7 +50,7 @@ namespace Deplora.DataAccess.TESTS
         public void CopyToDestination_Test()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
             var fileManager = new FileManager();
             Directory.CreateDirectory(copyToPath);
 
@@ -67,7 +67,7 @@ namespace Deplora.DataAccess.TESTS
         public void ZipContents_Test()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
             var fileManager = new FileManager();
             Directory.CreateDirectory(zipPath);
 
@@ -84,7 +84,7 @@ namespace Deplora.DataAccess.TESTS
         public void ZipContents_Test_CustomName()
         {
             // ARRANGE
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
             var fileManager = new FileManager();
             Directory.CreateDirectory(zipPath);
 
@@ -103,10 +103,10 @@ namespace Deplora.DataAccess.TESTS
         {
             // ARRANGE
             var fileManager = new FileManager();
-            var node = FileSystemNode.GetNodesRecursively(new DirectoryInfo(testPath));
+            var node = FileSystemNode.GetNodesRecursively(testPath);
 
             // ACT
-            fileManager.Backup(new DirectoryInfo(node.Path), backupPath);
+            fileManager.Backup(node.Path, backupPath);
 
             // ASSERT
             Assert.IsTrue(Directory.Exists(backupPath));
@@ -121,7 +121,7 @@ namespace Deplora.DataAccess.TESTS
             var fileManager = new FileManager();
 
             // ACT
-            fileManager.Backup(new DirectoryInfo(testPath), backupPath, "TEST");
+            fileManager.Backup(testPath, backupPath, "TEST");
 
             // ASSERT
             Assert.IsTrue(Directory.Exists(backupPath));
@@ -141,7 +141,7 @@ namespace Deplora.DataAccess.TESTS
             };
 
             // ACT
-            fileManager.Backup(new DirectoryInfo(testPath), backupPath, exclude: toBeExcludedPaths);
+            fileManager.Backup(testPath, backupPath, exclude: toBeExcludedPaths);
 
             // ASSERT
             Assert.IsTrue(Directory.Exists(backupPath));
@@ -159,7 +159,7 @@ namespace Deplora.DataAccess.TESTS
         {
             // ARRANGE
             var fileManager = new FileManager();
-            fileManager.Backup(new DirectoryInfo(testPath), backupPath);
+            fileManager.Backup(testPath, backupPath);
             var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
             Directory.CreateDirectory(extractPath);
 
@@ -177,7 +177,7 @@ namespace Deplora.DataAccess.TESTS
         {
             // ARRANGE
             var fileManager = new FileManager();
-            fileManager.Backup(new DirectoryInfo(testPath), backupPath);
+            fileManager.Backup(testPath, backupPath);
             var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
 
             // ACT
