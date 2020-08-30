@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="Select directory..." Height="450" Width="800">
     <Grid>
-        <TreeView Margin="10" Name="tv_Folders" HorizontalAlignment="Left" VerticalAlignment="Top" Width="780" Height="410"></TreeView>
+        <TreeView 
+            Margin="10" 
+            Name="tv_Folders" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="780" 
+            Height="410"
+            ItemsSource="{Binding FileSystemNodes}"
+            >
+            <TreeViewItem>
+                <TreeViewItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding TypeImage}"></Image>
+                        <TextBlock Text="{Binding }"></TextBlock>
+                    </StackPanel>
+                </TreeViewItem.Header>
+            </TreeViewItem>
+        </TreeView>
     </Grid>
 </Window>

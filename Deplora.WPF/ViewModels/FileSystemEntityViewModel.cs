@@ -1,17 +1,33 @@
 ﻿using Deplora.DataAccess;
+using Deplora.WPF.Commands;
 using System;
-using System.Collections.Generic;
-using System.IO.Packaging;
-using System.Text;
+using System.Windows.Input;
 
 namespace Deplora.WPF.ViewModels
 {
     public class FileSystemEntityViewModel : ViewModelBase
     {
+        public ICommand ToggleCollapsed { get; private set; }
+
         public FileSystemEntityViewModel(FileSystemNode node)
         {
-            //node.
+            this.type = node.FileSystemEntityType;
+            this.ToggleCollapsed = new RelayCommand(OnToggleCollapsed);
         }
+
+        private void OnToggleCollapsed()
+        {
+            this.Collapsed = !this.Collapsed;
+        }
+
+        private bool collapsed;
+        public bool Collapsed { get => collapsed; set => SetProperty(ref collapsed, value); }
+
+        private string fullPath;
+        public string FullPath { get => fullPath; set => SetProperty(ref fullPath, value); }
+
+        private string path;
+        public string Path { get => path; set => SetProperty(ref path, value); }
 
         private FileSystemEntityType type;
         public FileSystemEntityType Type { get => type; set => SetProperty(ref type, value); }
