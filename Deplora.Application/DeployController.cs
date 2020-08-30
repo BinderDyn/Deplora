@@ -35,13 +35,17 @@ namespace Deplora.App
             var dataAccessManager = new DataAccessManager(configuration.ConnectionString, configuration.DatabaseAdapter);
             var fileManager = new FileManager();
             bool completedWithErrors = false;
+            bool hasConnectionString = !string.IsNullOrEmpty(configuration.ConnectionString);
             onProgressChanged.Report(new DeployProgress(DeployStep.InPreparation, "Configuration loaded."));
 
             // Step 1,2 - Stopping application pool & website
             StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
 
-            // Step 3 - Backing up database
-            await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
+            if (hasConnectionString)
+            {
+                // Step 3 - Backing up database
+                await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
+            }
 
             // Step 4 - Backing up files
             var fileName = BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
@@ -53,10 +57,13 @@ namespace Deplora.App
                 // Step 6 - Restarting app pool
                 await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
 
-                // Step 7 - Running SQL commands if any
-                await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
+                if (hasConnectionString)
+                {
+                    // Step 7 - Running SQL commands if any
+                    await RunSqlCommandsIfAvailable(onProgressChanged, sqlCommands, configuration, dataAccessManager);
+                }
 
-            } 
+            }
             catch (Exception)
             {
                 Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);

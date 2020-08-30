@@ -39,13 +39,13 @@ namespace Deplora.WPF.ViewModels
         private void ShowAppSettingsWindow()
         {
             var appSettings = new ApplicationSettings();
-            appSettings.Show();
+            appSettings.ShowDialog();
         }
 
         private void ShowDeployConfigurationsWindow()
         {
             var deployConfigurationsWindow = new DeployConfigurationList();
-            deployConfigurationsWindow.Show();
+            deployConfigurationsWindow.ShowDialog();
         }
 
         private bool CanLaunchDeploy()

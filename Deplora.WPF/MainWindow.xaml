@@ -6,7 +6,7 @@
         xmlns:commands="clr-namespace:Deplora.WPF.Commands"
         xmlns:local="clr-namespace:Deplora.WPF"
         mc:Ignorable="d"
-        Title="{Binding WindowTitleWithVersion}" Height="310" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="{Binding WindowTitleWithVersion}" Height="310" Width="410" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.9*"></RowDefinition>
@@ -19,7 +19,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5">
             <TextBlock Text="Marvin Binder, 2020" Margin="0 0 240 0"></TextBlock>
-            <TextBlock Margin="5 0 0 0">
+            <TextBlock Margin="0 0 5 0">
                 <Hyperlink x:Name="GithubLink" 
                            NavigateUri="http://github.com/BinderDyn/Deplora/" 
                            RequestNavigate="GithubLink_RequestNavigate">Github</Hyperlink>

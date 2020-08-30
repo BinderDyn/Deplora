@@ -14,13 +14,15 @@ namespace Deplora.WPF.FolderBrowser
     {
         public ICommand ToggleCollapsed { get; private set; }
         private readonly bool hideFiles;
+        private readonly string[] allowedFileEndings;
 
-        public FileSystemEntityViewModel(FileSystemNode node, bool hideFiles = false)
+        public FileSystemEntityViewModel(FileSystemNode node, bool hideFiles = false, params string[] allowedFileEndings)
         {
             this.hideFiles = hideFiles;
+            this.allowedFileEndings = allowedFileEndings.ToArray();
             this.type = node.FileSystemEntityType;
             this.ToggleCollapsed = new RelayCommand(OnToggleCollapsed);
-            this.children = new ObservableCollection<FileSystemEntityViewModel>(node.Children.Select(c => new FileSystemEntityViewModel(c, hideFiles)));
+            this.children = new ObservableCollection<FileSystemEntityViewModel>(node.Children.Select(c => new FileSystemEntityViewModel(c, hideFiles, allowedFileEndings)));
             this.children.CollectionChanged += Children_CollectionChanged;
             this.path = node.Name;
             this.fullPath = node.Path;
@@ -35,9 +37,11 @@ namespace Deplora.WPF.FolderBrowser
             if (!this.Collapsed)
             {
                 var newChildren = new List<FileSystemEntityViewModel>();
-                foreach (var child in hideFiles ? this.children.Where(c => c.Type != FileSystemEntityType.File) : this.children)
+                var filtered = hideFiles ? this.children.Where(c => c.Type != FileSystemEntityType.File) : this.children;
+                if (allowedFileEndings.Any()) filtered = filtered.Except(filtered.Where(f => f.Type == FileSystemEntityType.File && !allowedFileEndings.Any(af => f.Path.EndsWith(af))));
+                foreach (var child in filtered)
                 {
-                     newChildren.Add(new FileSystemEntityViewModel(FileSystemNode.GetNodesRecursively(child.FullPath, maxDepth: 1), hideFiles));
+                     newChildren.Add(new FileSystemEntityViewModel(FileSystemNode.GetNodesRecursively(child.FullPath, maxDepth: 1), hideFiles, allowedFileEndings));
                 }
                 this.children = new ObservableCollection<FileSystemEntityViewModel>(newChildren);
                 this.SetCollection("Children");

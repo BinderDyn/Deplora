@@ -29,5 +29,15 @@ namespace Deplora.WPF.FolderBrowser
         /// Can select more than one item
         /// </summary>
         public bool Multiselect { get; set; } = false;
+
+        /// <summary>
+        /// Contains all allowed file endings the browser should display (folders are always displayed!)
+        /// </summary>
+        public string[] AllowOnlyFileEndings { get; set; } = new string[0];
+
+        /// <summary>
+        /// The title for the dialog
+        /// </summary>
+        public string Title { get; set; }
     }
 }

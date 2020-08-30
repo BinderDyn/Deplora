@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Deplora.WPF.FolderBrowser"
         xmlns:bindTreeViewExpand="clr-namespace:Deplora.WPF.Behaviours"
         mc:Ignorable="d"
-        Title="Select directory..." Height="470" Width="800" WindowStartupLocation="CenterScreen">
+        Title="{Binding Title}" Height="470" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!--<local:FolderBrowserDialogViewModel x:Key="ViewModel" />-->
         <Style x:Key="TreeViewItemFocusVisual">
@@ -182,7 +182,7 @@
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Image Source="{Binding TypeImage}" Height="25" Width="25"></Image>
-                        <TextBlock Text="{Binding Path}"></TextBlock>
+                        <TextBlock Text="{Binding Path}" Margin="5 0 0 0"></TextBlock>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </local:MultiSelectTreeView.ItemTemplate>

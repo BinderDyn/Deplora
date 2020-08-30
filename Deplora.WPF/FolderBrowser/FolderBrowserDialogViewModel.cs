@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 namespace Deplora.WPF.FolderBrowser
 {
@@ -16,13 +17,15 @@ namespace Deplora.WPF.FolderBrowser
             this.nodes = new ObservableCollection<FileSystemEntityViewModel>();
             this.multiselect = options.Multiselect;
             var startingNodes = DriveInfo.GetDrives().Where(d => d.IsReady).Select(d => FileSystemNode.GetNodesRecursively(d.Name, maxDepth: 1));
-            this.nodes = new ObservableCollection<FileSystemEntityViewModel>(startingNodes.Select(n => new FileSystemEntityViewModel(n, options.DialogSelectionMode == FolderBrowserDialogOptions.SelectionMode.Folders)));
+            this.nodes = new ObservableCollection<FileSystemEntityViewModel>(startingNodes.Select(n => new FileSystemEntityViewModel(n, options.DialogSelectionMode == FolderBrowserDialogOptions.SelectionMode.Folders, options.AllowOnlyFileEndings)));
             this.selected = new ObservableCollection<FileSystemEntityViewModel>();
+            this.title = options.Title;
             nodes.CollectionChanged += Directories_CollectionChanged;
             selected.CollectionChanged += Selected_CollectionChanged;
         }
 
-        
+        private string title;
+        public string Title { get => title; set => SetProperty(ref title, value); }
 
         private ObservableCollection<FileSystemEntityViewModel> nodes;
         public ObservableCollection<FileSystemEntityViewModel> Nodes { get => nodes; }
