@@ -2,6 +2,7 @@
 using Deplora.Shared.Enums;
 using Deplora.Shared.Models;
 using Deplora.WPF.Commands;
+using Deplora.WPF.FolderBrowser;
 using Deplora.XML.Models;
 using Microsoft.Win32;
 using System;
@@ -21,6 +22,8 @@ namespace Deplora.WPF.ViewModels
         public ICommand SelectDeployPath { get; private set; }
         public ICommand SelectBackupPath { get; private set; }
         public ICommand SaveConfiguration { get; private set; }
+        public ICommand SelectExcludedPathsOverwrite { get; private set; }
+        public ICommand SelectExcludedPathsBackup { get; private set; }
         public EditDeployConfigurationViewModel(AddEditDeployConfiguration view)
         {
             excludedPaths = new ObservableCollection<string>();
@@ -29,9 +32,12 @@ namespace Deplora.WPF.ViewModels
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
             SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
+            SelectExcludedPathsOverwrite = new RelayCommand(OpenExcludedOverwritePathsDialog);
+            SelectExcludedPathsBackup = new RelayCommand(OpenExcludedBackupPathsDialog);
             this.SaveConfiguration = new RelayCommand(this.SaveNewConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = "Add new deploy configuration";
+            this.IsWebDeploy = true;
         }
 
         public EditDeployConfigurationViewModel(AddEditDeployConfiguration view, DeployConfiguration configuration)
@@ -49,10 +55,13 @@ namespace Deplora.WPF.ViewModels
             this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
             this.BackupPath = configuration.BackupPath;
             this.ConnectionString = configuration.ConnectionString;
+            this.IsWebDeploy = configuration.IsWebDeploy;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged; ;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
             SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
+            SelectExcludedPathsOverwrite = new RelayCommand(OpenExcludedOverwritePathsDialog);
+            SelectExcludedPathsBackup = new RelayCommand(OpenExcludedBackupPathsDialog);
             this.SaveConfiguration = new RelayCommand(this.UpdateConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = string.Format("Edit configuration \"{0}\"", this.Name);
@@ -94,17 +103,20 @@ namespace Deplora.WPF.ViewModels
 
         private string connectionString;
         public string ConnectionString { get => connectionString; set => SetProperty(ref connectionString, value); }
-        
-        public string ExcludedPathsAsString 
-        { 
+
+        private bool isWebDeploy;
+        public bool IsWebDeploy { get => isWebDeploy; set => SetProperty(ref isWebDeploy, value); }
+
+        public string ExcludedPathsAsString
+        {
             get
             {
                 return string.Join(System.Environment.NewLine, this.excludedPaths);
-            } 
+            }
             set
             {
                 this.excludedPaths = new ObservableCollection<string>(value?.Split(System.Environment.NewLine));
-            } 
+            }
         }
 
         public string ExcludedBackupPathsAsString
@@ -140,7 +152,10 @@ namespace Deplora.WPF.ViewModels
 
         private bool CanSave()
         {
-            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(DeployPath) && !string.IsNullOrWhiteSpace(BackupPath);
+            return !string.IsNullOrWhiteSpace(Name) &&
+                !string.IsNullOrWhiteSpace(DeployPath) &&
+                !string.IsNullOrWhiteSpace(BackupPath) &&
+                (DatabaseAdapter != DatabaseAdapter.None ? DatabaseAdapter != DatabaseAdapter.None && !string.IsNullOrWhiteSpace(ConnectionString) : true);
         }
 
         /// <summary>
@@ -161,7 +176,8 @@ namespace Deplora.WPF.ViewModels
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
-                ConnectionString = this.ConnectionString
+                ConnectionString = this.ConnectionString,
+                IsWebDeploy = this.IsWebDeploy
             };
             ConfigurationController.UpdateDeployConfiguration(updateParam, this.ID);
             this.View.Close();
@@ -185,7 +201,8 @@ namespace Deplora.WPF.ViewModels
                 WebSiteName = this.WebSiteName,
                 ExcludedPaths = this.ExcludedPaths.ToArray(),
                 ExcludedPathsForBackup = this.ExcludedPathsForBackup.ToArray(),
-                ConnectionString = this.ConnectionString
+                ConnectionString = this.ConnectionString,
+                IsWebDeploy = this.IsWebDeploy
             };
             ConfigurationController.CreateDeployConfiguration(createParam);
             this.View.Close();
@@ -196,10 +213,11 @@ namespace Deplora.WPF.ViewModels
         /// </summary>
         private void OpenBackupPathDialog()
         {
-            var dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = false, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders, Title = "Select backup folder..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
             {
-                this.BackupPath = new FileInfo(dialog.FileName).DirectoryName;
+                this.BackupPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
             }
         }
 
@@ -208,10 +226,49 @@ namespace Deplora.WPF.ViewModels
         /// </summary>
         private void OpenDeployPathDialog()
         {
-            var dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = false, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders, Title = "Select deploy folder..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
             {
-                this.DeployPath = new FileInfo(dialog.FileName).DirectoryName;
+                this.DeployPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
+            }
+        }
+
+        /// <summary>
+        /// Opens the dialog for choosing the paths to exclude deployment from
+        /// </summary>
+        private void OpenExcludedBackupPathsDialog()
+        {
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = true, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Files, Title = "Select folders and files excluded in backup..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
+            {
+                this.excludedPathsForBackup.Clear();
+                var paths = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Select(s => s.FullPath);
+                foreach (var p in paths)
+                {
+                    this.excludedPathsForBackup.Add(p);
+                }
+                SetCollection("ExcludedPathsForBackup");
+            }
+        }
+
+        /// <summary>
+        /// Opens the dialog for choosing the paths to exclude overwrite from
+        /// </summary>
+        private void OpenExcludedOverwritePathsDialog()
+        {
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { Multiselect = true, DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Files, Title = "Select folders and files excluded from overwrite..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value == true && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
+            {
+                this.excludedPaths.Clear();
+                var paths = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Select(s => s.FullPath);
+                foreach (var p in paths)
+                {
+                    this.excludedPaths.Add(p);
+                }
+                SetCollection("ExcludedPaths");
             }
         }
 

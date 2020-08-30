@@ -2,6 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_LastSelectedProfileId>G:\Development\Deplora\Deplora.WPF\Properties\PublishProfiles\DeploraRelease.pubxml</_LastSelectedProfileId>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="AddEditDeployConfiguration.xaml.cs">
@@ -14,6 +15,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ExecuteDeploy.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FolderBrowser\FolderBrowserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ManualDeploy.xaml.cs">
@@ -31,6 +35,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ExecuteDeploy.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FolderBrowser\FolderBrowserDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ManualDeploy.xaml">

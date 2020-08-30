@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -87,18 +88,33 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="commands"></param>
         /// <returns></returns>
-        private async Task<SqlCommandExecutionResult> ExecuteMsSqlCommands(string commands)
+        private async Task<SqlCommandExecutionResult> ExecuteMsSqlCommands(string commands, bool useTransaction)
         {
             var result = new SqlCommandExecutionResult();
+            if (useTransaction) await TryMsSqlTransaction(commands, result);
+            else await ExecuteMsSqlWithoutTransaction(commands, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Executes MSSQL commands without a transaction scope
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private async Task ExecuteMsSqlWithoutTransaction(string commands, SqlCommandExecutionResult result)
+        {
             using (var connection = new SqlConnection(connectionString))
             {
                 try
                 {
+                    SqlCommand command = connection.CreateCommand();
+                    command.Connection = connection;
+                    command.CommandText = commands;
                     await connection.OpenAsync();
-                    var command = new SqlCommand(commands, connection);
                     var queryResult = await command.ExecuteNonQueryAsync();
-                    result.Success = true;
                     result.Message = GetRowsAffected(queryResult);
+                    result.Success = true;
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +123,58 @@ namespace Deplora.DataAccess
                     result.Success = false;
                 }
             }
-            return result;
+        }
+
+        /// <summary>
+        /// Executes MSSQL commands within a transaction scope and will try rollback on fail
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private async Task TryMsSqlTransaction(string commands, SqlCommandExecutionResult result)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    SqlCommand command = connection.CreateCommand();
+                    SqlTransaction transaction;
+                    transaction = connection.BeginTransaction("ExecutingSqlCommands");
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+                    try
+                    {
+                        command.CommandText = commands;
+                        var queryResult = await command.ExecuteNonQueryAsync();
+                        await transaction.CommitAsync();
+                        result.Success = true;
+                        result.Message = GetRowsAffected(queryResult);
+                    }
+                    catch (Exception commitException)
+                    {
+                        result.Exception = commitException;
+                        result.Message = string.Format("{0}{1}{2}", commitException.Message, System.Environment.NewLine, "Rolling back transaction");
+                        result.Success = false;
+                        try
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                        catch (Exception rollbackException)
+                        {
+                            result.Exception = rollbackException;
+                            result.Message = rollbackException.Message;
+                            result.Success = false;
+                        }
+                    }
+                }
+                catch (Exception connectionException)
+                {
+                    result.Exception = connectionException;
+                    result.Message = connectionException.Message;
+                    result.Success = false;
+                }
+            }
         }
 
         /// <summary>
@@ -115,18 +182,33 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="commands"></param>
         /// <returns></returns>
-        private async Task<SqlCommandExecutionResult> ExecuteMySqlCommands(string commands)
+        private async Task<SqlCommandExecutionResult> ExecuteMySqlCommands(string commands, bool useTransaction)
         {
             var result = new SqlCommandExecutionResult();
+            if (useTransaction) await TryMySqlTransaction(commands, result);
+            else await ExecuteMySqlCommandsWithoutTransaction(commands, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Executes MySql commands without a transaction scope
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private async Task ExecuteMySqlCommandsWithoutTransaction(string commands, SqlCommandExecutionResult result)
+        {
             using (var connection = new MySqlConnection(connectionString))
             {
                 try
                 {
+                    MySqlCommand command = connection.CreateCommand();
+                    command.Connection = connection;
+                    command.CommandText = commands;
                     await connection.OpenAsync();
-                    var command = new MySqlCommand(commands, connection);
                     var queryResult = await command.ExecuteNonQueryAsync();
-                    result.Success = true;
                     result.Message = GetRowsAffected(queryResult);
+                    result.Success = true;
                 }
                 catch (Exception ex)
                 {
@@ -135,7 +217,58 @@ namespace Deplora.DataAccess
                     result.Success = false;
                 }
             }
-            return result;
+        }
+
+        /// <summary>
+        /// Executes MySql commands within a transaction scope and will try rollback on fail
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private async Task TryMySqlTransaction(string commands, SqlCommandExecutionResult result)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    MySqlCommand command = connection.CreateCommand();
+                    MySqlTransaction transaction;
+                    transaction = connection.BeginTransaction();
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+                    try
+                    {
+                        command.CommandText = commands;
+                        var queryResult = await command.ExecuteNonQueryAsync();
+                        await transaction.CommitAsync();
+                        result.Success = true;
+                        result.Message = GetRowsAffected(queryResult);
+                    }
+                    catch (Exception commitException)
+                    {
+                        result.Exception = commitException;
+                        result.Message = string.Format("{0}{1}{2}", commitException.Message, System.Environment.NewLine, "Rolling back transaction");
+                        result.Success = false;
+                        try
+                        {
+                            await transaction.RollbackAsync();
+                        }
+                        catch (Exception rollbackException)
+                        {
+                            result.Exception = rollbackException;
+                            result.Message = rollbackException.Message;
+                            result.Success = false;
+                        }
+                    }
+                }
+                catch (Exception connectionException)
+                {
+                    result.Exception = connectionException;
+                    result.Message = connectionException.Message;
+                    result.Success = false;
+                }
+            }
         }
 
         /// <summary>
@@ -143,13 +276,13 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="commands"></param>
         /// <returns></returns>
-        public async Task<SqlCommandExecutionResult> ExecuteSqlCommands(string commands)
+        public async Task<SqlCommandExecutionResult> ExecuteSqlCommands(string commands, bool useTransaction = true)
         {
             return databaseAdapter switch
             {
                 DatabaseAdapter.None => new SqlCommandExecutionResult() { Success = false, Message = "No database adapter specified" },
-                DatabaseAdapter.MSSQL => await ExecuteMsSqlCommands(commands),
-                DatabaseAdapter.MySQL => await ExecuteMySqlCommands(commands),
+                DatabaseAdapter.MSSQL => await ExecuteMsSqlCommands(commands, useTransaction),
+                DatabaseAdapter.MySQL => await ExecuteMySqlCommands(commands, useTransaction),
                 _ => throw new NotImplementedException(databaseAdapter.ToString())
             };
         }
@@ -159,10 +292,10 @@ namespace Deplora.DataAccess
         /// </summary>
         /// <param name="backupPath"></param>
         /// <returns></returns>
-        public async Task<SqlCommandExecutionResult> BackupDatabase(string backupPath)
+        public async Task<SqlCommandExecutionResult> BackupDatabase(string backupPath, bool useTransaction = false)
         {
             var command = string.Format("BACKUP DATABASE {0} TO DISK = '{1}';", GetDatabaseName(connectionString), backupPath);
-            return await ExecuteSqlCommands(command);
+            return await ExecuteSqlCommands(command, useTransaction);
         }
 
         /// <summary>

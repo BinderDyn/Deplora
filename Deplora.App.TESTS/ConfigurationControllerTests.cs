@@ -12,15 +12,15 @@ namespace Deplora.App.TESTS
     [TestClass]
     public class ConfigurationControllerTests
     {
-        private string testCustomPath { get => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
+        private string defaultPath { get => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
 
 
         [TestInitialize]
         public void Initialize()
         {
-            if (File.Exists(Path.Combine(testCustomPath, "DeploraConfig.xml")))
+            if (File.Exists(Path.Combine(defaultPath, "DeploraConfig.xml")))
             {
-                File.Delete(Path.Combine(testCustomPath, "DeploraConfig.xml"));
+                File.Delete(Path.Combine(defaultPath, "DeploraConfig.xml"));
             }
         }
 
@@ -159,23 +159,6 @@ namespace Deplora.App.TESTS
             Assert.AreEqual(2, currentSettings.DeployConfigurations.Count);
         }
 
-
-        [TestMethod]
-        public void CreateDefaultConfigurationWithCustomPath_Test()
-        {
-            // ARRANGE
-            var customPath = Path.Combine(testCustomPath, "testcustom");
-            var customConfigPath = Path.Combine(customPath, "DeploraConfig.xml");
-            Directory.CreateDirectory(customPath);
-
-            // ACT
-            ConfigurationController.CreateDefaultConfigurationWithCustomPath(customConfigPath);
-
-            // ASSERT
-            var currentSettings = ConfigurationController.GetCurrentSettings(customConfigPath);
-            Assert.IsNotNull(currentSettings);
-        }
-
         [TestMethod]
         public void SaveApplicationConfiguration_Test()
         {
@@ -233,15 +216,15 @@ namespace Deplora.App.TESTS
         [TestCleanup]
         public void Cleanup()
         {
-            var customPath = Path.Combine(testCustomPath, "testcustom");
+            var customPath = Path.Combine(defaultPath, "testcustom");
             if (Directory.Exists(customPath))
             {
                 Directory.Delete(customPath, true);
             }
 
-            if (File.Exists(Path.Combine(testCustomPath, "DeploraConfig.xml")))
+            if (File.Exists(Path.Combine(defaultPath, "DeploraConfig.xml")))
             {
-                File.Delete(Path.Combine(testCustomPath, "DeploraConfig.xml"));
+                File.Delete(Path.Combine(defaultPath, "DeploraConfig.xml"));
             }
         }
     }

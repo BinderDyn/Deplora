@@ -25,6 +25,7 @@ namespace Deplora.Shared.Models
             this.AppPoolName = param.AppPoolName;
             this.WebSiteName = param.WebSiteName;
             this.ConnectionString = param.ConnectionString;
+            this.IsWebDeploy = param.IsWebDeploy;
         }
 
         public Guid ID { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Deplora.Application;
 using Deplora.WPF.Commands;
+using Deplora.WPF.FolderBrowser;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
@@ -93,10 +94,17 @@ namespace Deplora.WPF.ViewModels
 
         private void ShowChooseFile()
         {
-            var fileDialog = new OpenFileDialog() { CheckFileExists = true, DefaultExt = "Zipped folders | *.zip", Multiselect = false, Filter = "Zipped folders | *.zip" };
-            if (fileDialog.ShowDialog() != null)
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions 
+            { 
+                AllowOnlyFileEndings = new string[] { ".zip" },
+                DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Files,
+                Multiselect = false,
+                Title = "Select .zip-File for deployment..."
+            });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
             {
-                this.ZipFilePath = fileDialog.FileName;
+                this.ZipFilePath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
             }
         }
 

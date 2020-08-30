@@ -5,6 +5,7 @@ using Deplora.XML.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,21 +50,16 @@ namespace Deplora.WPF.ViewModels
 
         public async void ExecuteDeploy()
         {
-            var progress = new Progress<DeployProgress>((dp) => { this.Progress = dp.ProgressPercentage; this.LogMessages.Add(dp.Message); });
+            var progress = new Progress<DeployProgress>((dp) =>
+            {
+                this.Progress = dp.ProgressPercentage;
+                this.LogMessages.Add(dp.Message);
+            });
 
             await Task.Run(() =>
             {
-                try
-                {
-                    DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges, sqlCommands);
             });
-            MessageBox.Show("Deploy successfully completed!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
             this.CanClose = true;
         }
 

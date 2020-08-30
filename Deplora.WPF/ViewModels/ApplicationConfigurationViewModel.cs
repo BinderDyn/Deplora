@@ -1,5 +1,6 @@
 ﻿using Deplora.Shared.Models;
 using Deplora.WPF.Commands;
+using Deplora.WPF.FolderBrowser;
 using Deplora.XML.Models;
 using Microsoft.Win32;
 using System;
@@ -78,10 +79,11 @@ namespace Deplora.WPF.ViewModels
 
         private void OpenIISPathDialog()
         {
-            var dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog().HasValue && !string.IsNullOrEmpty(dialog.FileName))
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders, Multiselect = false, Title = "Select IIS-Installation folder..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
 {
-                this.IISPath = new FileInfo(dialog.FileName).DirectoryName;
+                this.IISPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
             }
         }
     }

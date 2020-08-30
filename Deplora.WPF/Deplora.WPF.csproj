@@ -13,11 +13,28 @@
     <PackageId>Deplora</PackageId>
     <Authors>Marvin Binder</Authors>
     <StartupObject>Deplora.WPF.App</StartupObject>
+    <ApplicationIcon>LogoDraft.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\drive2.png" />
+    <None Remove="Images\new_document.png" />
+    <None Remove="Images\normal_folder.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Deplora.Application\Deplora.App.csproj" />
     <ProjectReference Include="..\Deplora.Shared\Deplora.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\drive2.png" />
+    <Resource Include="Images\new_document.png" />
+    <Resource Include="Images\normal_folder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>
