@@ -37,6 +37,7 @@ namespace Deplora.WPF.ViewModels
             this.SaveConfiguration = new RelayCommand(this.SaveNewConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = "Add new deploy configuration";
+            this.IsWebDeploy = true;
         }
 
         public EditDeployConfigurationViewModel(AddEditDeployConfiguration view, DeployConfiguration configuration)
@@ -54,6 +55,7 @@ namespace Deplora.WPF.ViewModels
             this.excludedPathsForBackup = new ObservableCollection<string>(configuration.ExcludedForBackupPaths);
             this.BackupPath = configuration.BackupPath;
             this.ConnectionString = configuration.ConnectionString;
+            this.IsWebDeploy = configuration.IsWebDeploy;
             excludedPaths.CollectionChanged += ExcludedPaths_CollectionChanged; ;
             excludedPathsForBackup.CollectionChanged += ExcludedPathsForBackup_CollectionChanged;
             SelectBackupPath = new RelayCommand(OpenBackupPathDialog);
@@ -105,8 +107,6 @@ namespace Deplora.WPF.ViewModels
         private bool isWebDeploy;
         public bool IsWebDeploy { get => isWebDeploy; set => SetProperty(ref isWebDeploy, value); }
 
-        public string ExcludedPathsAsString 
-        { 
         public string ExcludedPathsAsString
         {
             get

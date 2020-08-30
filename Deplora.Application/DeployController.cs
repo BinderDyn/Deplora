@@ -38,8 +38,11 @@ namespace Deplora.App
             bool hasConnectionString = !string.IsNullOrEmpty(configuration.ConnectionString);
             onProgressChanged.Report(new DeployProgress(DeployStep.InPreparation, "Configuration loaded."));
 
-            // Step 1,2 - Stopping application pool & website
-            StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
+            if (configuration.IsWebDeploy)
+            {
+                // Step 1,2 - Stopping application pool & website
+                StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
+            }
 
             if (hasConnectionString)
             {
@@ -54,8 +57,11 @@ namespace Deplora.App
                 // Step 5 - Deploy files
                 DeployToDestination(onProgressChanged, zipFilePath, configuration, fileManager);
 
-                // Step 6 - Restarting app pool
-                await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
+                if (configuration.IsWebDeploy)
+                {
+                    // Step 6 - Restarting app pool
+                    await RestartAppPool(onProgressChanged, hasDatabaseChanges, iisManager);
+                }
 
                 if (hasConnectionString)
                 {
@@ -69,8 +75,12 @@ namespace Deplora.App
                 Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);
                 completedWithErrors = true;
             }
-            // Step 8 - Restarting web site
-            RestartWebsite(onProgressChanged, iisManager);
+
+            if (configuration.IsWebDeploy)
+            {
+                // Step 8 - Restarting web site
+                RestartWebsite(onProgressChanged, iisManager);
+            }
             string finalMessage = completedWithErrors ? "Deploy aborted and rolled back changes" : "Deploy completed successfully";
             onProgressChanged.Report(new DeployProgress(DeployStep.Finished, finalMessage));
         }
