@@ -134,7 +134,7 @@ namespace Deplora.DataAccess.TESTS
         {
             // ARRANGE
             var fileManager = new FileManager();
-            var toBeExcludedPaths = new string[] 
+            var toBeExcludedPaths = new string[]
             {
                 Path.Combine(testPath, "depth1_2"),
                 Path.Combine(testPath, "depth1", "FileDepth1_2.txt")
@@ -171,6 +171,24 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
             Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
         }
+
+        //[TestMethod]
+        //public void ExtractToDesintation_Test_ExcludedPaths()
+        //{
+        //    // ARRANGE
+        //    var fileManager = new FileManager();
+        //    fileManager.Backup(testPath, backupPath);
+        //    var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
+        //    Directory.CreateDirectory(extractPath);
+
+        //    // ACT
+        //    fileManager.ExtractToDestination(filePath, extractPath);
+
+        //    // ASSERT
+        //    Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
+        //    Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
+        //    Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
+        //}
 
         [TestMethod]
         public void ExtractToDestination_Test_Exception()
