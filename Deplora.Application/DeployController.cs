@@ -216,6 +216,7 @@ namespace Deplora.App
         /// <returns></returns>
         private static async Task BackupDatabase(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, DataAccessManager dataAccessManager, string customBackupName)
         {
+            if (configuration.DatabaseAdapter == DatabaseAdapter.None) return;
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backing up database..."));
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Connecting to database..."));
             var canConnect = await dataAccessManager.CanEstablishConnection();
