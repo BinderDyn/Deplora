@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Deplora.WPF"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="550" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="{Binding WindowTitle}" Height="580" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.8*"></RowDefinition>
@@ -108,7 +108,8 @@
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
             <ListBox x:Name="txt_ExcludedPaths" Grid.Column="1" Grid.Row="6" 
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" ItemsSource="{Binding ExcludedPaths}"></ListBox>
-            <Button x:Name="btn_ExcludedPathsOverwriteSelect" 
+            <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btn_ExcludedPathsOverwriteSelect" 
                     Grid.Column="2" 
                     Grid.Row="6" 
                     Content="..." 
@@ -116,19 +117,38 @@
                     HorizontalAlignment="Left" 
                     Width="25"
                     Command="{Binding SelectExcludedPathsOverwrite}"></Button>
-
-            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="3" Grid.Row="6" Content="Excluded paths for backup" 
+                <Button x:Name="btn_ClearExcludedPathList" 
+                    Grid.Column="3" 
+                    Grid.Row="6" 
+                    Content="Clear" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left" 
+                    Width="40"
+                    Command="{Binding ClearExcludedPathList}"></Button>
+            </StackPanel>
+            <Label x:Name="lbl_ExcludedPathsForBackup" Grid.Column="3" Grid.Row="6" Content="Paths excluded from backup" 
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"></Label>
             <ListBox x:Name="txt_ExcludedPathsForBackup" Grid.Column="4" Grid.Row="6" 
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" ItemsSource="{Binding ExcludedPathsForBackup}"></ListBox>
-            <Button x:Name="btn_ExcludedPathsBackupSelect" 
-                    Grid.Column="5" 
+            <StackPanel Grid.Row="6" Grid.Column="6" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btn_ExcludedPathsBackupSelect" 
+                    Grid.Column="6" 
                     Grid.Row="6" 
                     Content="..."
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
                     Width="25"
                     Command="{Binding SelectExcludedPathsBackup}"></Button>
+                <Button x:Name="btn_ClearExcludedPathForBackupList" 
+                    Grid.Column="7" 
+                    Grid.Row="6" 
+                    Content="Clear"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Left" 
+                    Width="40"
+                    Command="{Binding ClearExcludedPathForBackupList}"></Button>
+            </StackPanel>
+            
 
         </Grid>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Height="40">

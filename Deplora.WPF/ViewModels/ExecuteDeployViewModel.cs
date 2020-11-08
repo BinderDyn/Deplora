@@ -58,7 +58,14 @@ namespace Deplora.WPF.ViewModels
 
             await Task.Run(() =>
             {
-                DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges, sqlCommands);
+                try
+                {
+                    DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges, sqlCommands);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Critical error occured");
+                }
             });
             this.CanClose = true;
         }
