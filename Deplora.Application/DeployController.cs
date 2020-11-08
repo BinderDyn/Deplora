@@ -112,7 +112,7 @@ namespace Deplora.App
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files and directories into deploy directory..."));
                 fileManager.CopyToDestination(configuration.DeployPath,
                     FileSystemNode.GetNodesRecursively(temporaryExtractionDestination,
-                    excludedPaths: GetPathOfExcludedTemporaryDirectoriesAndFilesBasedOnExcluded(configuration.ExcludedPaths.ToArray(), configuration.DeployPath, TEMPORARY_DIRECTORY_NAME)), false);
+                    excludedPaths: fileManager.InsertTemporaryPathInDeployPathForAll(configuration.ExcludedPaths.ToArray(), configuration.DeployPath, TEMPORARY_DIRECTORY_NAME)), false);
                 if (Directory.Exists(temporaryExtractionDestination))
                 {
                     onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deleting temporary directory..."));
@@ -126,16 +126,7 @@ namespace Deplora.App
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files to destination folder completed!"));
         }
 
-        private static string[] GetPathOfExcludedTemporaryDirectoriesAndFilesBasedOnExcluded(string[] excluded, string oldDeployRootPath, string temporaryDirectoryName)
-        {
-            List<string> adaptedExcludedPaths = new List<string>();
-            foreach (var path in excluded)
-            {
-                var newPath = path.Insert((oldDeployRootPath.Length), ("\\" + temporaryDirectoryName));
-                adaptedExcludedPaths.Add(newPath);
-            }
-            return adaptedExcludedPaths.ToArray();
-        }
+        
 
         /// <summary>
         /// Starts the website in IIS

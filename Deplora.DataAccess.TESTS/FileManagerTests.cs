@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Deplora.DataAccess;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -172,24 +173,6 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
         }
 
-        //[TestMethod]
-        //public void ExtractToDesintation_Test_ExcludedPaths()
-        //{
-        //    // ARRANGE
-        //    var fileManager = new FileManager();
-        //    fileManager.Backup(testPath, backupPath);
-        //    var filePath = Path.Combine(backupPath, string.Format("{0:yyyyMMdd}_BACKUP.zip", DateTime.Now));
-        //    Directory.CreateDirectory(extractPath);
-
-        //    // ACT
-        //    fileManager.ExtractToDestination(filePath, extractPath);
-
-        //    // ASSERT
-        //    Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
-        //    Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
-        //    Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
-        //}
-
         [TestMethod]
         public void ExtractToDestination_Test_Exception()
         {
@@ -205,6 +188,22 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
             Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
             Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
+        }
+
+        [TestMethod()]
+        public void InsertTemporaryPathInDeployPathForAll_Test()
+        {
+            // ARRANGE
+            var fileManager = new FileManager();
+            string[] paths = new string[] { "G:\\deployPath\\folder1", "G:\\deployPath\\folder2\\test.txt", "G:\\deployPath\\readme.txt" };
+            string deployPathFull = "G:\\deployPath";
+            string temporayPath = "temporary";
+
+            // ACT
+            var newPaths = fileManager.InsertTemporaryPathInDeployPathForAll(paths, deployPathFull, temporayPath);
+
+            // ASSERT
+            Assert.IsTrue(newPaths.All(p => p.StartsWith("G:\\deployPath\\temporary\\")));
         }
 
         [TestCleanup]

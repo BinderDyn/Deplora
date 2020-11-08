@@ -117,5 +117,23 @@ namespace Deplora.DataAccess
                 ExtractToDestination(sourcePath, destinationPath);
             }
         }
+
+        /// <summary>
+        /// Returns an array of adapted paths that matches the given temporary directory. E.g. for re-adjusting overwrite configurations
+        /// </summary>
+        /// <param name="excluded"></param>
+        /// <param name="oldDeployRootPath"></param>
+        /// <param name="temporaryDirectoryName"></param>
+        /// <returns></returns>
+        public string[] InsertTemporaryPathInDeployPathForAll(string[] excluded, string oldDeployRootPath, string temporaryDirectoryName)
+        {
+            List<string> adaptedExcludedPaths = new List<string>();
+            foreach (var path in excluded)
+            {
+                var newPath = path.Insert((oldDeployRootPath.Length), ("\\" + temporaryDirectoryName));
+                adaptedExcludedPaths.Add(newPath);
+            }
+            return adaptedExcludedPaths.ToArray();
+        }
     }
 }
