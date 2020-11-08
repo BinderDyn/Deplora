@@ -43,7 +43,7 @@ namespace Deplora.DataAccess
         public static FileSystemEntityType GetFileSystemEntityType(FileSystemNode node)
         {
             if (node == null) return FileSystemEntityType.File;
-            if (node.FileInfos.Any() || node.Directories.Any())
+            if (node.FileInfos.Any() || node.Directories.Any() || Directory.Exists(node.Path))
             {
                 return DriveInfo.GetDrives().Select(di => di.Name).Contains(node.Name) ? FileSystemEntityType.Drive : FileSystemEntityType.Folder;
             }
