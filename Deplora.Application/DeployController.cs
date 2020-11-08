@@ -6,6 +6,7 @@ using Deplora.Shared.Enums;
 using Deplora.XML;
 using Deplora.XML.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -23,13 +24,21 @@ namespace Deplora.App
         /// <param name="id"></param>
         /// <param name="onProgressChanged"></param>
         /// <param name="configFilePath"></param>
-        public static async void Deploy(Guid id, IProgress<DeployProgress> onProgressChanged, string zipFilePath,
+        public static async Task Deploy(Guid id, IProgress<DeployProgress> onProgressChanged, string zipFilePath,
             string customBackupName = null, bool hasDatabaseChanges = false,
             string sqlCommands = null, string configFilePath = null)
         {
             // Step 0 - Preparation
             onProgressChanged.Report(new DeployProgress(DeployStep.InPreparation, "Loading configuration..."));
-            var configuration = LoadConfiguration(id, configFilePath);
+            DeployConfiguration configuration = null;
+            try
+            {
+                configuration = LoadConfiguration(id, configFilePath);
+            }
+            catch (Exception ex)
+            {
+                onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"Could not load configuration: \"{ex.Message}\""));
+            }
             string iisPath = new XMLManager().GetApplicationConfiguration(configFilePath)?.IISPath;
             var iisManager = new IISManager(configuration.AppPoolName, iisPath, configuration.WebSiteName);
             var dataAccessManager = new DataAccessManager(configuration.ConnectionString, configuration.DatabaseAdapter);
@@ -40,14 +49,30 @@ namespace Deplora.App
 
             if (configuration.IsWebDeploy)
             {
-                // Step 1,2 - Stopping application pool & website
-                StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
+                try
+                {
+                    // Step 1,2 - Stopping application pool & website
+                    StopApplicationPoolAndWebsite(onProgressChanged, iisPath, iisManager);
+                }
+                catch (Exception ex)
+                {
+                    onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"ABORTED DEPLOY: \"{ex.Message}\""));
+                    return;
+                }
             }
 
             if (hasConnectionString)
             {
-                // Step 3 - Backing up database
-                await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
+                try
+                {
+                    // Step 3 - Backing up database
+                    await BackupDatabase(onProgressChanged, configuration, dataAccessManager, customBackupName);
+                }
+                catch (Exception ex)
+                {
+                    onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"ABORTED DEPLOY: \"{ex.Message}\""));
+                    return;
+                }
             }
 
             // Step 4 - Backing up files
@@ -70,16 +95,32 @@ namespace Deplora.App
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);
-                completedWithErrors = true;
+                onProgressChanged.Report(new DeployProgress(DeployStep.Rollback, $"ERROR: \"{ex.Message}\""));
+                try
+                {
+                    Rollback(onProgressChanged, fileName, configuration.DeployPath, fileManager);
+                    completedWithErrors = true;
+                }
+                catch (Exception innerEx)
+                {
+                    onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"FATAL ERROR - ROLLBACK FAILED: \"{innerEx.Message}\""));
+                }
             }
 
             if (configuration.IsWebDeploy)
             {
-                // Step 8 - Restarting web site
-                RestartWebsite(onProgressChanged, iisManager);
+                try
+                {
+                    // Step 8 - Restarting web site
+                    RestartWebsite(onProgressChanged, iisManager);
+                }
+                catch (Exception ex)
+                {
+                    onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"Deploy finished but the website could not be restarted: \"{ex.Message}\". Check manually."));
+                    return;
+                }
             }
             string finalMessage = completedWithErrors ? "Deploy aborted and rolled back changes" : "Deploy completed successfully";
             onProgressChanged.Report(new DeployProgress(DeployStep.Finished, finalMessage));
@@ -88,7 +129,7 @@ namespace Deplora.App
         public static void Rollback(IProgress<DeployProgress> onProgressChanged, string backupPath, string deployDirectory, FileManager fileManager)
         {
             onProgressChanged.Report(new DeployProgress(DeployStep.Rollback, "Something went wrong, rolling back changes"));
-            fileManager.ExtractToDestination(backupPath, deployDirectory);
+            fileManager.ExtractToDestination(backupPath, Path.Combine(deployDirectory, ".."));
             onProgressChanged.Report(new DeployProgress(DeployStep.Finished, "Roll back complete!"));
         }
 
@@ -104,13 +145,14 @@ namespace Deplora.App
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deploying to designated path..."));
             try
             {
+                const string TEMPORARY_DIRECTORY_NAME = "deplora_temp";
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Creating temporary directory inside deploy path..."));
-                string temporaryExtractionDestination = Path.Combine(configuration.DeployPath, "deplora_temp");
+                string temporaryExtractionDestination = Path.Combine(configuration.DeployPath, TEMPORARY_DIRECTORY_NAME);
                 fileManager.ExtractToDestination(zipFilePath, temporaryExtractionDestination);
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files and directories into deploy directory..."));
                 fileManager.CopyToDestination(configuration.DeployPath,
                     FileSystemNode.GetNodesRecursively(temporaryExtractionDestination,
-                    excludedPaths: configuration.ExcludedPaths.ToArray()), false);
+                    excludedPaths: fileManager.InsertTemporaryPathInDeployPathForAll(configuration.ExcludedPaths.ToArray(), configuration.DeployPath, TEMPORARY_DIRECTORY_NAME)), false);
                 if (Directory.Exists(temporaryExtractionDestination))
                 {
                     onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deleting temporary directory..."));
@@ -123,6 +165,8 @@ namespace Deplora.App
             }
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files to destination folder completed!"));
         }
+
+
 
         /// <summary>
         /// Starts the website in IIS
@@ -212,6 +256,7 @@ namespace Deplora.App
         /// <returns></returns>
         private static async Task BackupDatabase(IProgress<DeployProgress> onProgressChanged, DeployConfiguration configuration, DataAccessManager dataAccessManager, string customBackupName)
         {
+            if (configuration.DatabaseAdapter == DatabaseAdapter.None) return;
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Backing up database..."));
             onProgressChanged.Report(new DeployProgress(DeployStep.BackingUpDatabase, "Connecting to database..."));
             var canConnect = await dataAccessManager.CanEstablishConnection();
