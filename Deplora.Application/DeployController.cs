@@ -6,6 +6,7 @@ using Deplora.Shared.Enums;
 using Deplora.XML;
 using Deplora.XML.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -104,13 +105,14 @@ namespace Deplora.App
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deploying to designated path..."));
             try
             {
+                const string TEMPORARY_DIRECTORY_NAME = "deplora_temp";
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Creating temporary directory inside deploy path..."));
-                string temporaryExtractionDestination = Path.Combine(configuration.DeployPath, "deplora_temp");
+                string temporaryExtractionDestination = Path.Combine(configuration.DeployPath, TEMPORARY_DIRECTORY_NAME);
                 fileManager.ExtractToDestination(zipFilePath, temporaryExtractionDestination);
                 onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files and directories into deploy directory..."));
                 fileManager.CopyToDestination(configuration.DeployPath,
                     FileSystemNode.GetNodesRecursively(temporaryExtractionDestination,
-                    excludedPaths: configuration.ExcludedPaths.ToArray()), false);
+                    excludedPaths: GetPathOfExcludedTemporaryDirectoriesAndFilesBasedOnExcluded(configuration.ExcludedPaths.ToArray(), configuration.DeployPath, TEMPORARY_DIRECTORY_NAME)), false);
                 if (Directory.Exists(temporaryExtractionDestination))
                 {
                     onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Deleting temporary directory..."));
@@ -122,6 +124,17 @@ namespace Deplora.App
                 throw new DeployFailedException(ex.Message);
             }
             onProgressChanged.Report(new DeployProgress(DeployStep.Deploying, "Copying files to destination folder completed!"));
+        }
+
+        private static string[] GetPathOfExcludedTemporaryDirectoriesAndFilesBasedOnExcluded(string[] excluded, string oldDeployRootPath, string temporaryDirectoryName)
+        {
+            List<string> adaptedExcludedPaths = new List<string>();
+            foreach (var path in excluded)
+            {
+                var newPath = path.Insert((oldDeployRootPath.Length), ("\\" + temporaryDirectoryName));
+                adaptedExcludedPaths.Add(newPath);
+            }
+            return adaptedExcludedPaths.ToArray();
         }
 
         /// <summary>
