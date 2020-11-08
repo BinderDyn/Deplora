@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Deplora.DataAccess
 {
@@ -134,6 +135,23 @@ namespace Deplora.DataAccess
                 adaptedExcludedPaths.Add(newPath);
             }
             return adaptedExcludedPaths.ToArray();
+        }
+
+        /// <summary>
+        /// Creates a new logfile at the application destination
+        /// </summary>
+        /// <param name="logs"></param>
+        public async Task CreateLogFile(string[] logs, string deployName)
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var filePath = Path.Combine(path, string.Format("{0:yyyy.MM.dd.HH.mm.ss}_{1}.txt", DateTimeOffset.Now, deployName));
+            using (var sw = new StreamWriter(filePath))
+            {
+                foreach (var log in logs)
+                {
+                   await sw.WriteLineAsync(log);
+                }
+            }
         }
     }
 }

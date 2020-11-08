@@ -24,7 +24,7 @@ namespace Deplora.App
         /// <param name="id"></param>
         /// <param name="onProgressChanged"></param>
         /// <param name="configFilePath"></param>
-        public static async void Deploy(Guid id, IProgress<DeployProgress> onProgressChanged, string zipFilePath,
+        public static async Task Deploy(Guid id, IProgress<DeployProgress> onProgressChanged, string zipFilePath,
             string customBackupName = null, bool hasDatabaseChanges = false,
             string sqlCommands = null, string configFilePath = null)
         {
