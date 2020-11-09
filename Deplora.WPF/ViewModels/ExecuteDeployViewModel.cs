@@ -1,11 +1,14 @@
 ﻿using Deplora.App;
 using Deplora.App.Utility;
+using Deplora.Application;
+using Deplora.DataAccess;
 using Deplora.WPF.Commands;
 using Deplora.XML.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +21,7 @@ namespace Deplora.WPF.ViewModels
     public class ExecuteDeployViewModel : ViewModelBase
     {
         public ICommand Close { get; private set; }
+        public ICommand CreateLogFile { get; private set; }
 
         private ExecuteDeploy view;
         private readonly Guid id;
@@ -30,6 +34,7 @@ namespace Deplora.WPF.ViewModels
         public ExecuteDeployViewModel(Guid id, string zipFilePath, string sqlCommands, string customBackupName, bool hasSqlCommands, bool hasDatabaseChanges)
         {
             this.Close = new RelayCommand(CloseWindow, GetCanClose);
+            this.CreateLogFile = new RelayCommand(CreateTxtLogFile, GetCanClose);
             this.logMessages = new ObservableCollection<string>();
             this.logMessages.CollectionChanged += LogMessages_CollectionChanged;
             this.id = id;
@@ -56,11 +61,17 @@ namespace Deplora.WPF.ViewModels
                 this.LogMessages.Add(dp.Message);
             });
 
-            await Task.Run(() =>
-            {
-                DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges, sqlCommands);
-            });
+            await DeployController.Deploy(id, progress, zipFilePath, customBackupName, hasDatabaseChanges, sqlCommands);
+            MessageBox.Show("Deploy process finished. See log for details.", "Deploy finished", MessageBoxButton.OK, MessageBoxImage.Information);
             this.CanClose = true;
+        }
+
+        public async void CreateTxtLogFile()
+        {
+            var fileManager = new FileManager();
+            var deployName = ConfigurationController.GetDeployConfiguration(this.id).Name;
+            await fileManager.CreateLogFile(this.LogMessages.ToArray(), deployName);
+            MessageBox.Show("Logs successfully saved");
         }
 
         private ObservableCollection<string> logMessages;

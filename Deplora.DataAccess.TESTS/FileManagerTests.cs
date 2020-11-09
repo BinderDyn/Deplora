@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Deplora.DataAccess;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -134,7 +135,7 @@ namespace Deplora.DataAccess.TESTS
         {
             // ARRANGE
             var fileManager = new FileManager();
-            var toBeExcludedPaths = new string[] 
+            var toBeExcludedPaths = new string[]
             {
                 Path.Combine(testPath, "depth1_2"),
                 Path.Combine(testPath, "depth1", "FileDepth1_2.txt")
@@ -187,6 +188,22 @@ namespace Deplora.DataAccess.TESTS
             Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0")));
             Assert.IsTrue(Directory.Exists(Path.Combine(extractPath, "depth0", "depth1")));
             Assert.IsTrue(File.Exists(Path.Combine(extractPath, "depth0", "depth1", "FileDepth1_1.txt")));
+        }
+
+        [TestMethod()]
+        public void InsertTemporaryPathInDeployPathForAll_Test()
+        {
+            // ARRANGE
+            var fileManager = new FileManager();
+            string[] paths = new string[] { "G:\\deployPath\\folder1", "G:\\deployPath\\folder2\\test.txt", "G:\\deployPath\\readme.txt" };
+            string deployPathFull = "G:\\deployPath";
+            string temporayPath = "temporary";
+
+            // ACT
+            var newPaths = fileManager.InsertTemporaryPathInDeployPathForAll(paths, deployPathFull, temporayPath);
+
+            // ASSERT
+            Assert.IsTrue(newPaths.All(p => p.StartsWith("G:\\deployPath\\temporary\\")));
         }
 
         [TestCleanup]

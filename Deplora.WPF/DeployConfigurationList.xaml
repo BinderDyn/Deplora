@@ -15,18 +15,22 @@
                   IsReadOnly="True" 
                   Grid.Row="0" 
                   Margin="5" 
-                  Width="Auto" 
+                  ColumnWidth="*"
+                  EnableRowVirtualization="false" 
+                  EnableColumnVirtualization="false"
                   ItemsSource="{Binding DeployConfigurations}"
                   AutoGenerateColumns="False"
-                  SelectionChanged="gv_DeployConfigurationList_SelectionChanged" 
+                  SelectionChanged="gv_DeployConfigurationList_SelectionChanged"
+                  CanUserAddRows="False" 
+                  CanUserReorderColumns="False"
                   SelectionMode="Extended">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Width="250" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridCheckBoxColumn Header="SQL" Width="40" Binding="{Binding HasSqlCommands}"></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="SQL Adapter" Width="100" Binding="{Binding DatabaseAdapterAsString}"></DataGridTextColumn>
-                <DataGridTextColumn Header="AppPool Name" Width="250" Binding="{Binding AppPoolName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Website name" Width="250" Binding="{Binding WebSiteName}"></DataGridTextColumn>
-                <!--<DataGridCheckBoxColumn Header="Auto deploy" Width="110" Binding="{Binding AutoDeploy}"></DataGridCheckBoxColumn>-->
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="SQL" Binding="{Binding HasSqlCommands}"></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="SQL Adapter" Binding="{Binding DatabaseAdapterAsString}"></DataGridTextColumn>
+                <DataGridTextColumn Header="AppPool Name"  Binding="{Binding AppPoolName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Website name" Binding="{Binding WebSiteName}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Auto deploy" Binding="{Binding AutoDeploy}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50">

@@ -4,17 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Company>Marvin Binder</Company>
     <Product>Deplora</Product>
     <Copyright>Marvin Binder 2020</Copyright>
     <PackageProjectUrl>https://github.com/BinderDyn/Deplora/</PackageProjectUrl>
-    <PackageReleaseNotes>BETA</PackageReleaseNotes>
+    <PackageReleaseNotes>Bugfix v1.0.1</PackageReleaseNotes>
     <PackageId>Deplora</PackageId>
     <Authors>Marvin Binder</Authors>
     <StartupObject>Deplora.WPF.App</StartupObject>
     <ApplicationIcon>LogoDraft.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <RepositoryUrl>https://github.com/BinderDyn/Deplora</RepositoryUrl>
     <PackageIcon>LogoDraft.png</PackageIcon>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

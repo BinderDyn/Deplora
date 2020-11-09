@@ -24,6 +24,8 @@ namespace Deplora.WPF.ViewModels
         public ICommand SaveConfiguration { get; private set; }
         public ICommand SelectExcludedPathsOverwrite { get; private set; }
         public ICommand SelectExcludedPathsBackup { get; private set; }
+        public ICommand ClearExcludedPathList { get; private set; }
+        public ICommand ClearExcludedPathForBackupList { get; private set; }
         public EditDeployConfigurationViewModel(AddEditDeployConfiguration view)
         {
             excludedPaths = new ObservableCollection<string>();
@@ -34,6 +36,8 @@ namespace Deplora.WPF.ViewModels
             SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
             SelectExcludedPathsOverwrite = new RelayCommand(OpenExcludedOverwritePathsDialog);
             SelectExcludedPathsBackup = new RelayCommand(OpenExcludedBackupPathsDialog);
+            ClearExcludedPathList = new RelayCommand(ExecuteClearExcludedPathList);
+            ClearExcludedPathForBackupList = new RelayCommand(ExecuteClearExcludedPathForBackupList);
             this.SaveConfiguration = new RelayCommand(this.SaveNewConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = "Add new deploy configuration";
@@ -62,6 +66,8 @@ namespace Deplora.WPF.ViewModels
             SelectDeployPath = new RelayCommand(OpenDeployPathDialog);
             SelectExcludedPathsOverwrite = new RelayCommand(OpenExcludedOverwritePathsDialog);
             SelectExcludedPathsBackup = new RelayCommand(OpenExcludedBackupPathsDialog);
+            ClearExcludedPathList = new RelayCommand(ExecuteClearExcludedPathList);
+            ClearExcludedPathForBackupList = new RelayCommand(ExecuteClearExcludedPathForBackupList);
             this.SaveConfiguration = new RelayCommand(this.UpdateConfiguration, CanSave);
             this.View = view;
             this.WindowTitle = string.Format("Edit configuration \"{0}\"", this.Name);
@@ -270,6 +276,24 @@ namespace Deplora.WPF.ViewModels
                 }
                 SetCollection("ExcludedPaths");
             }
+        }
+
+        /// <summary>
+        /// Clears the list of excluded paths
+        /// </summary>
+        private void ExecuteClearExcludedPathList() 
+        {
+            this.ExcludedPaths.Clear();
+            SetCollection("ExcludedPaths");
+        }
+
+        /// <summary>
+        /// Clears the list of excluded paths for backup
+        /// </summary>
+        private void ExecuteClearExcludedPathForBackupList()
+        {
+            this.ExcludedPathsForBackup.Clear();
+            SetCollection("ExcludedPathsForBackup");
         }
 
         private AddEditDeployConfiguration View { get; set; }

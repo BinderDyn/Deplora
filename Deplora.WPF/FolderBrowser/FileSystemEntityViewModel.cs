@@ -26,10 +26,7 @@ namespace Deplora.WPF.FolderBrowser
             this.children.CollectionChanged += Children_CollectionChanged;
             this.path = node.Name;
             this.fullPath = node.Path;
-            this.node = node;
         }
-
-        
 
         private void OnToggleCollapsed()
         {
@@ -47,8 +44,6 @@ namespace Deplora.WPF.FolderBrowser
                 this.SetCollection("Children");
             }
         }
-
-        private FileSystemNode node;
 
         private bool collapsed = true;
         public bool Collapsed { get => collapsed; set => SetProperty(ref collapsed, value); }
