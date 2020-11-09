@@ -17,12 +17,17 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>LogoDraft.png</PackageIcon>
     <RepositoryUrl>https://github.com/BinderDyn/Deplora/</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\drive2.png" />
     <None Remove="Images\new_document.png" />
     <None Remove="Images\normal_folder.png" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="LogoDraft.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
