@@ -1,20 +1,20 @@
 ﻿Deplora.WPF
-1.0.0.0
+1.0.1.0
 
 winexe
 C#
 .cs
-G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\
 Deplora.WPF
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-G:\Development\Deplora\Deplora.WPF\App.xaml
+C:\Development\Deplora\Deplora\Deplora.WPF\App.xaml
 7-1644570283
 
 25-1968301727
-1991878736371
+1992084446630
 AddEditDeployConfiguration.xaml;ApplicationSettings.xaml;DeployConfigurationList.xaml;ExecuteDeploy.xaml;FolderBrowser\FolderBrowserDialog.xaml;MainWindow.xaml;ManualDeploy.xaml;
 
-True
+False
 
