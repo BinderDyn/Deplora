@@ -91,3 +91,10 @@ G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.AssemblyI
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.csproj.CoreCompileInputs.cache
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.csproj.CopyComplete
 G:\Development\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\Deplora.WPF.genruntimeconfig.cache
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\ExecuteDeploy.g.cs
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\FolderBrowser\FolderBrowserDialog.g.cs
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\ManualDeploy.g.cs
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\ExecuteDeploy.baml
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\FolderBrowser\FolderBrowserDialog.baml
+C:\Development\Deplora\Deplora\Deplora.WPF\obj\Debug\netcoreapp3.1\ManualDeploy.baml
