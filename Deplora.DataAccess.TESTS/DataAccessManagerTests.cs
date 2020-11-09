@@ -99,7 +99,7 @@ namespace Deplora.DataAccess.TESTS
         public void ExecuteSqlCommands_Test_MSSQL()
         {
             // ARRANGE
-            var sqlCommands = "SELECT * FROM ApplicationUsers";
+            var sqlCommands = "SELECT name FROM master.dbo.sysdatabases";
             var dataAccessManager = new DataAccessManager(defaultConnectionString, Shared.Enums.DatabaseAdapter.MSSQL);
 
             // ACT

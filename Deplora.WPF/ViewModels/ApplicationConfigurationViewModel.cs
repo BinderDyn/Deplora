@@ -21,13 +21,16 @@ namespace Deplora.WPF.ViewModels
     public class ApplicationConfigurationViewModel : ViewModelBase
     {
         public ICommand OpenIISDirectyPathDialog { get; private set; }
+        public ICommand OpenLogPathDirectyPathDialog { get; private set; }
 
         public ApplicationConfigurationViewModel ViewModel { get => this;}
 
         public ApplicationConfigurationViewModel(ApplicationConfiguration appConfig)
         {
             OpenIISDirectyPathDialog = new RelayCommand(OpenIISPathDialog);
+            OpenLogPathDirectyPathDialog = new RelayCommand(OpenLogPathDialog);
             iisPath = appConfig.IISPath;
+            logPath = appConfig.LogPath;
             deployConfigurations = new ObservableCollection<DeployConfigurationViewModel>(appConfig.DeployConfigurations.Select(dc => new DeployConfigurationViewModel(dc)));
             deployConfigurations.CollectionChanged += DeployConfigurations_CollectionChanged;
         }
@@ -55,9 +58,26 @@ namespace Deplora.WPF.ViewModels
             }
         }
 
+        private string logPath;
+
+        public string LogPath
+        {
+            get => logPath;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    value = ApplicationConfiguration.LogPathDefault;
+                    MessageBox.Show("Value cannot be empty! Setting to default path...", "Invalid value", MessageBoxButton.OK);
+                }
+                SetProperty(ref logPath, value);
+
+            }
+        }
+
         public static ApplicationConfiguration CreateConfigurationFromViewModel(ApplicationConfigurationViewModel viewModel)
         {
-            var configuration = new ApplicationConfiguration() { IISPath = viewModel.IISPath };
+            var configuration = new ApplicationConfiguration() { IISPath = viewModel.IISPath, LogPath = viewModel.LogPath  };
             foreach (var deployConfig in viewModel.deployConfigurations)
             {
                 configuration.DeployConfigurations.Add(new DeployConfiguration
@@ -84,6 +104,16 @@ namespace Deplora.WPF.ViewModels
             if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
 {
                 this.IISPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
+            }
+        }
+
+        private void OpenLogPathDialog()
+        {
+            var dialog = new FolderBrowserDialog(new FolderBrowserDialogOptions { DialogSelectionMode = FolderBrowserDialogOptions.SelectionMode.Folders, Multiselect = false, Title = "Select path for saving logs..." });
+            var shown = dialog.ShowDialog();
+            if (shown.HasValue && shown.Value && ((FolderBrowserDialogViewModel)dialog.DataContext).Selected.Any())
+            {
+                this.LogPath = ((FolderBrowserDialogViewModel)dialog.DataContext).Selected[0].FullPath;
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Deplora.XML.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -87,10 +88,15 @@ namespace Deplora.Shared.Models
 
         [XmlElement("IISPath")]
         public string IISPath { get; set; }
+        [XmlElement("LogPath")]
+        public string LogPath { get; set; }
+
+        public static string LogPathDefault { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "Logs"); }
 
         public interface ICreateParam
         {
             string IISPath { get; set; }
+            string LogPath { get; set; }
         }
     }
 }

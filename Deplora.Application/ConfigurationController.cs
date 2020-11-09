@@ -118,13 +118,18 @@ namespace Deplora.Application
         {
             string defaultIISPath = null;
             const string predictedDefaultIISPath = "C:\\Windows\\System32\\inetsrv\\";
-            if (Directory.Exists(predictedDefaultIISPath))
+            try
             {
-                defaultIISPath = predictedDefaultIISPath;
+                if (Directory.Exists(predictedDefaultIISPath))
+                {
+                    defaultIISPath = predictedDefaultIISPath;
+                }
             }
+            catch (Exception) { }
             return new ApplicationConfiguration()
             {
-                IISPath = defaultIISPath
+                IISPath = defaultIISPath,
+                LogPath = ApplicationConfiguration.LogPathDefault
             };
         }
     }

@@ -141,10 +141,10 @@ namespace Deplora.DataAccess
         /// Creates a new logfile at the application destination
         /// </summary>
         /// <param name="logs"></param>
-        public async Task CreateLogFile(string[] logs, string deployName)
+        public async Task CreateLogFile(string[] logs, string deployName, string logPath)
         {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var filePath = Path.Combine(path, string.Format("{0:yyyy.MM.dd.HH.mm.ss}_{1}.txt", DateTimeOffset.Now, deployName));
+            if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
+            var filePath = Path.Combine(logPath, string.Format("{0:yyyy.MM.dd.HH.mm.ss}_{1}.txt", DateTimeOffset.Now, deployName));
             using (var sw = new StreamWriter(filePath))
             {
                 foreach (var log in logs)

@@ -51,6 +51,7 @@ namespace Deplora.XML
         public void SaveApplicationConfigurationToFile(ApplicationConfiguration.ICreateParam applicationConfigurationState, string configFilePath = null)
         {
             if (string.IsNullOrEmpty(configFilePath)) configFilePath = GetDefaultPath();
+            if (!Directory.Exists(configFilePath)) Directory.CreateDirectory(Path.GetDirectoryName(configFilePath));
             var serializer = new XmlSerializer(typeof(ApplicationConfiguration));
             using (Stream writer = new FileStream(configFilePath, FileMode.OpenOrCreate))
             {
@@ -67,7 +68,7 @@ namespace Deplora.XML
         /// <returns></returns>
         private string GetDefaultPath()
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DEFAULT_FILE_NAME);
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", DEFAULT_FILE_NAME);
         }
 
         public const string DEFAULT_FILE_NAME = "DeploraConfig.xml";

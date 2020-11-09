@@ -20,7 +20,7 @@ namespace Deplora.XML.TESTS
         [TestInitialize]
         public void CreateXMLFile_Test()
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DeploraConfig.xml");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "DeploraConfig.xml");
             ApplicationConfiguration applicationConfigurationState = new ApplicationConfiguration
             {
                 DeployConfigurations = new List<DeployConfiguration>
@@ -103,14 +103,14 @@ namespace Deplora.XML.TESTS
                 }
             };
             var xmlManager = new XMLManager();
-            var alternativePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test", "DeploraConfig.xml");
+            var alternativePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "DeploraConfig.xml");
             Directory.CreateDirectory(Path.GetDirectoryName(alternativePath));
 
             // ACT
             xmlManager.SaveApplicationConfigurationToFile(appConfig, alternativePath);
 
             // ASSERT
-            var savedConfig = xmlManager.GetApplicationConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test", "DeploraConfig.xml"));
+            var savedConfig = xmlManager.GetApplicationConfiguration(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "DeploraConfig.xml"));
             Assert.IsNotNull(savedConfig);
             Assert.AreEqual(3, savedConfig.DeployConfigurations.Count);
         }
@@ -118,14 +118,14 @@ namespace Deplora.XML.TESTS
         [TestCleanup]
         public void Cleanup()
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DeploraConfig.xml");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "DeploraConfig.xml");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
-            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test")))
+            if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "Test")))
             {
-                Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test"), true);
+                Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora", "Test"), true);
             }
         }
     }
