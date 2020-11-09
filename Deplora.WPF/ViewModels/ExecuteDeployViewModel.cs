@@ -70,8 +70,16 @@ namespace Deplora.WPF.ViewModels
         {
             var fileManager = new FileManager();
             var deployName = ConfigurationController.GetDeployConfiguration(this.id).Name;
-            await fileManager.CreateLogFile(this.LogMessages.ToArray(), deployName);
-            MessageBox.Show("Logs successfully saved");
+            var logPath = ConfigurationController.GetCurrentSettings().LogPath;
+            try
+            {
+                await fileManager.CreateLogFile(this.LogMessages.ToArray(), deployName, logPath);
+                MessageBox.Show("Log successfully saved to location provided in settings");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Saving logs failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private ObservableCollection<string> logMessages;

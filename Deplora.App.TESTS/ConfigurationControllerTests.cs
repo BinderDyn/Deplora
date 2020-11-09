@@ -12,7 +12,7 @@ namespace Deplora.App.TESTS
     [TestClass]
     public class ConfigurationControllerTests
     {
-        private string defaultPath { get => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
+        private string defaultPath { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Deplora"); }
 
 
         [TestInitialize]
@@ -85,6 +85,7 @@ namespace Deplora.App.TESTS
         public void CreateDeployConfiguration_Test()
         {
             // ARRANGE
+            Cleanup();
             var deployConfigurationParam = new DeployConfigurationCreateParam
             {
                 Name = "Test",
@@ -105,6 +106,7 @@ namespace Deplora.App.TESTS
         public void CreateDeployConfiguration_Test_WithExcludedPaths()
         {
             // ARRANGE
+            Cleanup();
             var deployConfigurationParam = new DeployConfigurationCreateParam
             {
                 Name = "Test",

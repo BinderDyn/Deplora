@@ -75,8 +75,18 @@ namespace Deplora.App
                 }
             }
 
-            // Step 4 - Backing up files
-            var fileName = BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            string fileName = null;
+            try
+            {
+                // Step 4 - Backing up files
+                fileName = BackupFiles(onProgressChanged, configuration, fileManager, customBackupName);
+            }
+            catch (Exception ex)
+            {
+                onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"An Error occured while trying to backup files, deployment aborted. Error: \"{ex.Message}\""));
+                return;
+            }
+
             try
             {
                 // Step 5 - Deploy files
