@@ -12,6 +12,18 @@
           "bin/placeholder/Deplora.Shared.dll": {}
         }
       }
+    },
+    ".NETCoreApp,Version=v3.1/win-x64": {
+      "Deplora.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Deplora.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Deplora.Shared.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -27,17 +39,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marvi\\.nuget\\packages\\": {}
+    "C:\\Users\\marvi\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+      "projectUniqueName": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
       "projectName": "Deplora.XML",
-      "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+      "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
       "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\obj\\",
+      "outputPath": "G:\\Development\\Deplora\\Deplora.XML\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -52,8 +68,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-              "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+            "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+              "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
             }
           }
         }
@@ -76,12 +92,35 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.2, 3.1.2]"
+          },
+          {
+            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+            "version": "[3.1.4, 3.1.4]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Runtime.win-x64",
+            "version": "[3.1.4, 3.1.4]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+            "version": "[3.1.4, 3.1.4]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+      }
+    },
+    "runtimes": {
+      "win-x64": {
+        "#import": []
       }
     }
   }

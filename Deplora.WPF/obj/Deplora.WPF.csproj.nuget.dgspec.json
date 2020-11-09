@@ -1,18 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {}
+    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {}
   },
   "projects": {
-    "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
+    "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj",
         "projectName": "Deplora.App",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -27,17 +30,17 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj"
+              "G:\\Development\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj"
               },
-              "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj"
+              "G:\\Development\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj"
               },
-              "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+              "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
               },
-              "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj"
+              "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj"
               }
             }
           }
@@ -60,24 +63,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj": {
+    "G:\\Development\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj",
         "projectName": "Deplora.DataAccess",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.DataAccess\\Deplora.DataAccess.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.DataAccess\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -92,8 +104,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+              "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
               }
             }
           }
@@ -126,24 +138,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj": {
+    "G:\\Development\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj",
         "projectName": "Deplora.IIS",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.IIS\\Deplora.IIS.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.IIS\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.IIS\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -178,24 +199,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+    "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
         "projectName": "Deplora.Shared",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.Shared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -230,24 +260,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {
-      "version": "1.0.1",
+    "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj": {
+      "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
         "projectName": "Deplora",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.WPF\\Deplora.WPF.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.WPF\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.WPF\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -262,11 +301,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Application\\Deplora.App.csproj"
+              "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.Application\\Deplora.App.csproj"
               },
-              "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+              "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
               }
             }
           }
@@ -289,6 +328,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -297,19 +342,22 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
+    "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+        "projectUniqueName": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
         "projectName": "Deplora.XML",
-        "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
+        "projectPath": "G:\\Development\\Deplora\\Deplora.XML\\Deplora.XML.csproj",
         "packagesPath": "C:\\Users\\marvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Development\\Deplora\\Deplora\\Deplora.XML\\obj\\",
+        "outputPath": "G:\\Development\\Deplora\\Deplora.XML\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\marvi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -324,8 +372,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
-                "projectPath": "C:\\Development\\Deplora\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
+              "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj": {
+                "projectPath": "G:\\Development\\Deplora\\Deplora.Shared\\Deplora.Shared.csproj"
               }
             }
           }
@@ -348,12 +396,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

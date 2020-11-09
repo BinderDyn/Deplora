@@ -14,9 +14,10 @@
     <Authors>Marvin Binder</Authors>
     <StartupObject>Deplora.WPF.App</StartupObject>
     <ApplicationIcon>LogoDraft.ico</ApplicationIcon>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <RepositoryUrl>https://github.com/BinderDyn/Deplora</RepositoryUrl>
     <PackageIcon>LogoDraft.png</PackageIcon>
-    <RepositoryUrl>https://github.com/BinderDyn/Deplora/</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
