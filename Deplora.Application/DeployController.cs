@@ -84,6 +84,7 @@ namespace Deplora.App
             catch (Exception ex)
             {
                 onProgressChanged.Report(new DeployProgress(DeployStep.Finished, $"An Error occured while trying to backup files, deployment aborted. Error: \"{ex.Message}\""));
+                return;
             }
 
             try
